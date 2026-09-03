@@ -3,7 +3,7 @@
 本项目使用两个独立的 GitHub Actions 工作流：
 
 1. `CI` 构建并校验网站，但不保存构建 Artifact。
-2. `Deploy to Tencent Cloud` 监听 `main` 分支上成功的 CI，检出该 CI 对应的准确 commit，临时重新构建并直接上传腾讯云。
+2. 用户手动启动 `Deploy to Tencent Cloud` 后，工作流查询 `main` 最近一次成功的 push CI，检出对应的准确 commit，临时重新构建并直接上传腾讯云。
 
 CD 的临时 `dist` 和压缩包只存在于 GitHub Runner 的生命周期内，不会上传到 GitHub Artifact。腾讯云服务器保留最近 3 个发布版本。
 
@@ -53,9 +53,9 @@ DEPLOY_PUBLIC_KEY='粘贴 tripeer_github_actions.pub 的完整内容' sudo -E ba
 
 - Pull Request 会执行 CI，但不会部署。
 - 推送到 `main` 后执行 CI。
-- 只有 `main` 的 push CI 成功，才自动触发 CD。
-- CD 使用成功 CI 的 commit SHA，不会错误部署后来发生变化的 `main`。
-- GitHub Actions 页面支持手动指定分支、标签或 commit SHA 进行部署。
+- CD 不会被 CI 自动触发，只能在 GitHub Actions 页面手动启动。
+- 手动启动 CD 后，它会查询 `main` 最近一次成功的 push CI。
+- CD 使用该成功 CI 的 commit SHA，不会错误部署后来发生变化或尚未通过 CI 的代码。
 
 ## 5. 网络放行
 

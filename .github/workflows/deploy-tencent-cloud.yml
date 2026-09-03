@@ -1,19 +1,10 @@
 name: Deploy to Tencent Cloud
 
 on:
-  workflow_run:
-    workflows:
-      - CI
-    types:
-      - completed
   workflow_dispatch:
-    inputs:
-      ref:
-        description: Git ref or commit SHA to deploy
-        required: true
-        default: main
 
 permissions:
+  actions: read
   contents: read
 
 concurrency:
@@ -28,13 +19,7 @@ env:
 
 jobs:
   deploy:
-    name: Rebuild and deploy successful CI version
-    if: >-
-      github.event_name == 'workflow_dispatch' ||
-      (github.event.workflow_run.conclusion == 'success' &&
-       github.event.workflow_run.head_branch == 'main' &&
-       github.event.workflow_run.event == 'push' &&
-       github.event.workflow_run.head_repository.full_name == github.repository)
+    name: Deploy latest successful CI version
     runs-on: ubuntu-latest
     timeout-minutes: 15
     environment:
@@ -45,14 +30,19 @@ jobs:
       - name: Resolve source revision
         id: source
         env:
-          WORKFLOW_RUN_SHA: ${{ github.event.workflow_run.head_sha }}
-          MANUAL_REF: ${{ inputs.ref }}
+          GH_TOKEN: ${{ github.token }}
         run: |
-          if [[ "${{ github.event_name }}" == "workflow_run" ]]; then
-            echo "ref=$WORKFLOW_RUN_SHA" >> "$GITHUB_OUTPUT"
-          else
-            echo "ref=$MANUAL_REF" >> "$GITHUB_OUTPUT"
+          RUN_JSON="$(gh api --method GET \
+            "repos/${GITHUB_REPOSITORY}/actions/workflows/ci.yml/runs?branch=main&status=success&event=push&per_page=1")"
+          SHA="$(jq -r '.workflow_runs[0].head_sha // empty' <<< "$RUN_JSON")"
+          CI_RUN_ID="$(jq -r '.workflow_runs[0].id // empty' <<< "$RUN_JSON")"
+          if [[ -z "$SHA" || -z "$CI_RUN_ID" ]]; then
+            echo "No successful CI run was found for a push to main" >&2
+            exit 1
           fi
+          echo "ref=$SHA" >> "$GITHUB_OUTPUT"
+          echo "ci_run_id=$CI_RUN_ID" >> "$GITHUB_OUTPUT"
+          echo "Selected CI run $CI_RUN_ID at commit $SHA"
 
       - name: Check out successful CI revision
         uses: actions/checkout@v4
