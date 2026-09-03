@@ -1,0 +1,130 @@
+name: Deploy to Tencent Cloud
+
+on:
+  workflow_run:
+    workflows:
+      - CI
+    types:
+      - completed
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Git ref or commit SHA to deploy
+        required: true
+        default: main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tripeer-production
+  cancel-in-progress: false
+
+env:
+  DEPLOY_HOST: 124.220.2.69
+  DEPLOY_PORT: "22"
+  DEPLOY_USER: ubuntu
+  SITE_PORT: "8081"
+
+jobs:
+  deploy:
+    name: Rebuild and deploy successful CI version
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.head_branch == 'main' &&
+       github.event.workflow_run.event == 'push' &&
+       github.event.workflow_run.head_repository.full_name == github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: production
+      url: http://124.220.2.69:8081
+
+    steps:
+      - name: Resolve source revision
+        id: source
+        env:
+          WORKFLOW_RUN_SHA: ${{ github.event.workflow_run.head_sha }}
+          MANUAL_REF: ${{ inputs.ref }}
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_run" ]]; then
+            echo "ref=$WORKFLOW_RUN_SHA" >> "$GITHUB_OUTPUT"
+          else
+            echo "ref=$MANUAL_REF" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Check out successful CI revision
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.source.outputs.ref }}
+
+      - name: Record release version
+        id: release
+        run: |
+          SHA="$(git rev-parse HEAD)"
+          echo "sha=$SHA" >> "$GITHUB_OUTPUT"
+          echo "id=${SHA}-${GITHUB_RUN_ID}" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Rebuild successful CI revision
+        run: npm run build
+
+      - name: Verify temporary build
+        run: |
+          test -s dist/index.html
+          test -d dist/assets
+
+      - name: Create temporary release archive
+        env:
+          RELEASE_ID: ${{ steps.release.outputs.id }}
+        run: tar -C dist -czf "$RUNNER_TEMP/tripeer-${RELEASE_ID}.tar.gz" .
+
+      - name: Configure SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.TENCENT_SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.TENCENT_SSH_KNOWN_HOSTS }}
+        run: |
+          test -n "$SSH_PRIVATE_KEY"
+          test -n "$SSH_KNOWN_HOSTS"
+          install -d -m 700 "$HOME/.ssh"
+          printf '%s\n' "$SSH_PRIVATE_KEY" > "$HOME/.ssh/id_ed25519"
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > "$HOME/.ssh/known_hosts"
+          chmod 600 "$HOME/.ssh/id_ed25519" "$HOME/.ssh/known_hosts"
+
+      - name: Upload temporary build
+        env:
+          RELEASE_ID: ${{ steps.release.outputs.id }}
+        run: |
+          scp \
+            -P "$DEPLOY_PORT" \
+            -i "$HOME/.ssh/id_ed25519" \
+            -o BatchMode=yes \
+            -o IdentitiesOnly=yes \
+            "$RUNNER_TEMP/tripeer-${RELEASE_ID}.tar.gz" \
+            "$DEPLOY_USER@$DEPLOY_HOST:/tmp/tripeer-${RELEASE_ID}.tar.gz"
+
+      - name: Activate release on Tencent Cloud
+        env:
+          RELEASE_ID: ${{ steps.release.outputs.id }}
+        run: |
+          ssh \
+            -p "$DEPLOY_PORT" \
+            -i "$HOME/.ssh/id_ed25519" \
+            -o BatchMode=yes \
+            -o IdentitiesOnly=yes \
+            "$DEPLOY_USER@$DEPLOY_HOST" \
+            "sudo /usr/local/sbin/tripeer-deploy '/tmp/tripeer-${RELEASE_ID}.tar.gz' '${RELEASE_ID}'"
+
+      - name: Remove local temporary build
+        if: always()
+        env:
+          RELEASE_ID: ${{ steps.release.outputs.id }}
+        run: rm -f "$RUNNER_TEMP/tripeer-${RELEASE_ID}.tar.gz"
