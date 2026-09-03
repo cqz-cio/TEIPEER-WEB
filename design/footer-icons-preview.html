@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TRIPEER 页脚图标预览</title>
+    <style>
+      :root {
+        font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+        color: #0a234c;
+        background: #eef2f7;
+      }
+      * { box-sizing: border-box; }
+      body {
+        min-height: 100vh;
+        margin: 0;
+        display: grid;
+        place-items: center;
+        background:
+          radial-gradient(circle at 28% 20%, rgba(255,255,255,.95), transparent 34%),
+          #edf2f7;
+      }
+      .canvas {
+        width: 1080px;
+        padding: 58px 62px 48px;
+        background: #f4f7fb;
+        border-top: 1px solid #d9e1ec;
+        border-bottom: 1px solid #d9e1ec;
+      }
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 220px 1fr 285px;
+        gap: 48px;
+        align-items: start;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 800;
+        letter-spacing: -.04em;
+        color: #7f8793;
+        font-size: 21px;
+      }
+      .brand-mark {
+        width: 34px;
+        height: 34px;
+        position: relative;
+      }
+      .brand-mark::before,
+      .brand-mark::after {
+        content: "";
+        position: absolute;
+        inset: 6px;
+        border: 7px solid #7f8793;
+        transform: rotate(30deg);
+      }
+      .brand-mark::after {
+        inset: 14px 2px 2px 14px;
+        border-color: #f47b20;
+      }
+      .brand-copy {
+        margin-top: 26px;
+        color: #647083;
+        font-size: 13px;
+        line-height: 1.9;
+      }
+      .navs {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 34px;
+      }
+      .nav h3,
+      .contact h3 {
+        margin: 0 0 24px;
+        font-size: 15px;
+        color: #071d43;
+      }
+      .nav h3::after,
+      .contact h3::after {
+        content: "";
+        display: block;
+        width: 24px;
+        height: 2px;
+        margin-top: 10px;
+        background: #ed6a16;
+      }
+      .nav span {
+        display: block;
+        margin: 0 0 14px;
+        color: #6d7789;
+        font-size: 13px;
+      }
+      .contact {
+        padding-left: 34px;
+        border-left: 1px solid #dce3ed;
+      }
+      .contact p {
+        margin: 0;
+        color: #657187;
+        font-size: 13px;
+        line-height: 1.8;
+      }
+      .consult {
+        display: inline-flex;
+        margin-top: 16px;
+        padding: 11px 18px;
+        background: #0d448e;
+        color: #fff;
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .social-label {
+        margin-top: 26px;
+        color: #7b8798;
+        font-size: 11px;
+        letter-spacing: .12em;
+      }
+      .socials {
+        display: flex;
+        gap: 14px;
+        margin-top: 11px;
+      }
+      .social {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        border: 1px solid #d1d9e5;
+        background: #fff;
+        border-radius: 2px;
+        box-shadow: 0 2px 8px rgba(17, 52, 95, .05);
+      }
+      .social img {
+        display: block;
+        width: 21px;
+        height: 21px;
+        object-fit: contain;
+      }
+      .social.linkedin img { width: 22px; height: 22px; }
+      .social.wechat img { width: 24px; height: 24px; }
+      .select {
+        height: 40px;
+        margin-top: 18px;
+        padding: 0 13px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border: 1px solid #d2dae6;
+        background: #fff;
+        color: #697487;
+        font-size: 12px;
+      }
+      .chevron {
+        width: 7px;
+        height: 7px;
+        border-right: 2px solid #748197;
+        border-bottom: 2px solid #748197;
+        transform: rotate(45deg) translateY(-2px);
+      }
+      .note {
+        margin-top: 34px;
+        padding-top: 18px;
+        border-top: 1px solid #dce3ed;
+        color: #8993a3;
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="canvas">
+      <section class="footer-grid">
+        <div>
+          <div class="brand"><i class="brand-mark"></i><span>TRIPEER</span></div>
+          <div class="brand-copy">宁波全品轩国际贸易有限公司，专注消费品国际贸易与供应链协同。</div>
+        </div>
+        <div class="navs">
+          <div class="nav"><h3>公司介绍</h3><span>公司概况</span><span>发展历程</span><span>使命愿景</span></div>
+          <div class="nav"><h3>主营业务</h3><span>业务概览</span><span>产品品类</span><span>供应链服务</span></div>
+          <div class="nav"><h3>核心能力</h3><span>产品研发与寻源</span><span>质量管理</span><span>国际贸易执行</span></div>
+        </div>
+        <aside class="contact">
+          <h3>联系合作</h3>
+          <p>有采购、产品开发或国际贸易合作需求？欢迎与我们联系。</p>
+          <span class="consult">发起合作咨询</span>
+          <div class="social-label">关注与联系</div>
+          <div class="socials" aria-label="社交与联系入口">
+            <span class="social linkedin" title="LinkedIn">
+              <img src="https://static.licdn.com/aero-v1/sc/h/5bukxbhy9xsil5mb7c2wulfbx" alt="LinkedIn" />
+            </span>
+            <span class="social" title="电子邮箱">
+              <img src="https://api.iconify.design/lucide/mail.svg?color=%230d448e" alt="电子邮箱" />
+            </span>
+            <span class="social wechat" title="微信">
+              <img src="https://api.iconify.design/simple-icons/wechat.svg?color=%230d448e" alt="微信" />
+            </span>
+          </div>
+          <div class="select"><span>友情链接（合作伙伴确认）</span><i class="chevron"></i></div>
+        </aside>
+      </section>
+      <div class="note">图标调整预览：品牌标识替代文字按钮；未确认的账号与链接保持不启用。</div>
+    </main>
+  </body>
+</html>

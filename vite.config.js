@@ -1,0 +1,13 @@
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+
+export default defineConfig({
+  plugins: [vue()],
+  optimizeDeps: {
+    entries: ['index.html'],
+  },
+  server: {
+    host: '0.0.0.0',
+    allowedHosts: ['terminal.local'],
+  },
+})
