@@ -107,7 +107,7 @@ echo
 echo "Server bootstrap completed."
 echo "Existing port 80 configuration was not changed."
 echo "Website: http://${PUBLIC_HOST}:${SITE_PORT}/"
-echo "GitHub secret TENCENT_SSH_KNOWN_HOSTS:"
+echo "Add this verified server host key to the deploying computer's SSH known_hosts file:"
 if [[ -f /etc/ssh/ssh_host_ed25519_key.pub ]]; then
   awk -v host="$PUBLIC_HOST" '{ print host " " $1 " " $2 }' /etc/ssh/ssh_host_ed25519_key.pub
 else
