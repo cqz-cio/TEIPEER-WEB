@@ -21,20 +21,20 @@ ssh-keygen -t ed25519 -C "github-actions-tripeer" -f "$env:USERPROFILE\.ssh\trip
 
 ## 2. 初始化腾讯云服务器
 
-先将本次脚本推送到 GitHub。在腾讯云控制台选择“免密连接（TAT）”，登录服务器后执行：
+先将本次脚本推送到 GitHub。在腾讯云控制台选择“免密连接（TAT）”，登录服务器后只下载两个部署脚本，避免克隆完整的大体积仓库：
 
 ```bash
-git clone https://github.com/cqz-cio/TEIPEER-WEB.git
-cd TEIPEER-WEB
-DEPLOY_PUBLIC_KEY='粘贴 tripeer_github_actions.pub 的完整内容' sudo -E bash deploy/bootstrap-server.sh
+mkdir -p ~/tripeer-bootstrap
+cd ~/tripeer-bootstrap
+curl -fsSLO https://raw.githubusercontent.com/cqz-cio/TEIPEER-WEB/main/deploy/bootstrap-server.sh
+curl -fsSLO https://raw.githubusercontent.com/cqz-cio/TEIPEER-WEB/main/deploy/remote-deploy.sh
+DEPLOY_PUBLIC_KEY='粘贴 tripeer_github_actions.pub 的完整内容' sudo -E bash bootstrap-server.sh
 ```
-
-如果仓库已经存在，进入仓库后执行 `git pull --ff-only`，再运行初始化脚本。
 
 初始化脚本会：
 
 - 保留现有的端口 80 配置。
-- 在端口 8081 创建独立的 Nginx 站点。
+- 在端口 18081 创建独立的 Nginx 站点。
 - 创建 `/var/www/tripeer`。
 - 安装受限的 CI 发布命令。
 - 添加 GitHub Actions 专用 SSH 公钥。
@@ -59,8 +59,8 @@ DEPLOY_PUBLIC_KEY='粘贴 tripeer_github_actions.pub 的完整内容' sudo -E ba
 
 ## 5. 网络放行
 
-腾讯云轻量应用服务器防火墙需要允许 TCP `8081`。
+腾讯云轻量应用服务器防火墙需要允许 TCP `18081`。
 
-部署后的访问地址：<http://124.220.2.69:8081/>
+部署后的访问地址：<http://124.220.2.69:18081/>
 
 配置正式域名后，可以通过独立 `server_name` 共用标准的 80/443 端口，并增加 HTTPS。

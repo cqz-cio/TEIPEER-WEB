@@ -15,7 +15,7 @@ env:
   DEPLOY_HOST: 124.220.2.69
   DEPLOY_PORT: "22"
   DEPLOY_USER: ubuntu
-  SITE_PORT: "8081"
+  SITE_PORT: "18081"
 
 jobs:
   deploy:
@@ -24,7 +24,7 @@ jobs:
     timeout-minutes: 15
     environment:
       name: production
-      url: http://124.220.2.69:8081
+      url: http://124.220.2.69:18081
 
     steps:
       - name: Resolve source revision

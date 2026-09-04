@@ -2,7 +2,7 @@
 set -Eeuo pipefail
 
 SITE_ROOT="/var/www/tripeer"
-SITE_PORT="8081"
+SITE_PORT="18081"
 RELEASES_DIR="$SITE_ROOT/releases"
 CURRENT_LINK="$SITE_ROOT/current"
 ARCHIVE="${1:-}"

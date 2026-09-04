@@ -2,12 +2,12 @@
 set -Eeuo pipefail
 
 SITE_ROOT="/var/www/tripeer"
-SITE_PORT="${SITE_PORT:-8081}"
+SITE_PORT="${SITE_PORT:-18081}"
 DEPLOY_USER="${DEPLOY_USER:-ubuntu}"
 SERVER_NAME="${SERVER_NAME:-_}"
 PUBLIC_HOST="${PUBLIC_HOST:-124.220.2.69}"
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
-NGINX_CONFIG="/etc/nginx/sites-available/tripeer"
+NGINX_CONFIG="/etc/nginx/conf.d/tripeer.conf"
 
 if [[ "$EUID" -ne 0 ]]; then
   echo "Please run with sudo: sudo -E bash deploy/bootstrap-server.sh" >&2
@@ -92,8 +92,6 @@ server {
     gzip_types text/plain text/css application/javascript application/json image/svg+xml font/woff2;
 }
 EOF
-
-ln -sfn "$NGINX_CONFIG" /etc/nginx/sites-enabled/tripeer
 
 cat > /etc/sudoers.d/tripeer-deploy <<EOF
 ${DEPLOY_USER} ALL=(root) NOPASSWD: /usr/local/sbin/tripeer-deploy
