@@ -1,0 +1,38 @@
+name: Deploy to Tencent Cloud (local PC)
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Build only; do not upload or activate a release'
+        type: boolean
+        default: false
+
+permissions:
+  actions: read
+  contents: read
+
+concurrency:
+  group: tripeer-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/main' && github.actor == 'cqz-cio'
+    runs-on: [self-hosted, Windows, X64, tripeer-deploy]
+    timeout-minutes: 15
+    steps:
+      - name: Build and deploy using the local computer
+        shell: powershell
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DEPLOY_DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $script = 'D:\TEIPEER WEB\deploy\deploy-local.ps1'
+          if (-not (Test-Path -LiteralPath $script)) {
+            throw "Local deployment script not found: $script"
+          }
+          Write-Host "Runner computer: $env:COMPUTERNAME"
+          Write-Host "Upload uses this computer's connection to Tencent Cloud."
+          & $script -DryRun:($env:DEPLOY_DRY_RUN -eq 'true')
