@@ -169,7 +169,7 @@ watch(
           <h2>{{ t('about.title') }}</h2>
           <p>{{ t('about.paragraph1') }}</p>
           <p>{{ t('about.paragraph2') }}</p>
-          <a class="primary-button about-button" href="#capabilities">{{ t('about.cta') }} <ArrowRight :size="18" /></a>
+          <RouterLink class="primary-button about-button" :to="{ name: 'about-profile' }">{{ t('about.cta') }} <ArrowRight :size="18" /></RouterLink>
         </div>
         <figure class="about-figure">
           <img src="/assets/trade-2026/home-about-team.jpg" :alt="t('about.imageAlt')" />
@@ -183,12 +183,13 @@ watch(
           <h2>{{ locale === 'zh' ? '主营业务' : 'Core Business' }}</h2>
         </div>
         <div class="business-grid">
-          <article v-for="item in businessItems" :key="item.title" class="business-card">
+          <RouterLink v-for="(item, index) in businessItems" :key="item.title" class="business-card" :to="{ name: ['business-categories', 'business-categories', 'business-customization', 'business-supply'][index] }">
             <img :src="item.image" :alt="item.title" />
             <div class="business-card-body">
               <h3>{{ item.title }}</h3>
+              <ArrowRight :size="18" aria-hidden="true" />
             </div>
-          </article>
+          </RouterLink>
         </div>
       </div>
     </section>

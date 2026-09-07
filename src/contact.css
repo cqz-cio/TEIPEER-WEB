@@ -19,11 +19,14 @@
 .contact-section-heading h2::after { content: ""; position: absolute; left: 0; bottom: 0; width: 34px; height: 3px; background: var(--orange); }
 .contact-section-heading > span { color: #637083; font-size: 14px; }
 
-.contact-success { display: flex; align-items: flex-start; gap: 13px; margin-bottom: 22px; padding: 17px 19px; color: #155c3b; border: 1px solid #b8ddca; background: #f1faf5; }
-.contact-success svg { flex: 0 0 auto; }
-.contact-success div { display: grid; gap: 2px; }
-.contact-success strong { font-size: 15px; }
-.contact-success span { color: #39735a; font-size: 13px; }
+.contact-unavailable { display: flex; align-items: flex-start; gap: 13px; margin-bottom: 22px; padding: 17px 19px; color: #70400d; border: 1px solid #ebd4b0; background: #fff8ed; }
+.contact-unavailable svg { flex: 0 0 auto; }
+.contact-unavailable div { display: grid; gap: 5px; }
+.contact-unavailable strong { font-size: 15px; }
+.contact-unavailable span { color: #654d32; font-size: 13px; }
+fieldset.contact-form { min-width: 0; padding: 0; margin: 0; border: 0; }
+.contact-form :disabled, .contact-form:disabled .contact-upload-box { cursor: not-allowed; }
+.contact-submit:disabled { color: #fff; background: #657184; border-color: #657184; transform: none; font-size: 13px; }
 
 .contact-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 24px; }
 .contact-field { display: grid; align-content: start; gap: 8px; }
@@ -55,7 +58,7 @@
 .contact-consent { display: flex; align-items: flex-start; gap: 10px; color: #5d697b; font-size: 12px; line-height: 1.6; }
 .contact-consent input { width: 17px; height: 17px; margin: 2px 0 0; accent-color: var(--navy); }
 .contact-submit { grid-column: 1; width: 190px; min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 18px; padding-inline: 24px; border-left: 4px solid var(--orange); color: #fff; background: var(--navy); font-size: 14px; font-weight: 780; transition: background .18s ease, transform .18s ease; }
-.contact-submit:hover, .contact-submit:focus-visible { background: var(--navy-dark); transform: translateY(-2px); }
+.contact-submit:not(:disabled):hover, .contact-submit:focus-visible { background: var(--navy-dark); transform: translateY(-2px); }
 
 .contact-direct { overflow: hidden; border: 1px solid #e1e6ed; background: #fff; box-shadow: 0 16px 42px rgba(16, 40, 77, .09); }
 .contact-direct-panel { padding: 37px 34px 34px; color: #fff; background: var(--navy); }

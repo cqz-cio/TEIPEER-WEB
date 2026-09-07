@@ -31,7 +31,7 @@ export const createMotionController = () => {
   let observer
 
   const ensureObserver = () => {
-    if (observer || reducedMotion.matches) return
+    if (observer || reducedMotion.matches || !('IntersectionObserver' in window)) return
     observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -40,7 +40,7 @@ export const createMotionController = () => {
           observer.unobserve(entry.target)
         })
       },
-      { rootMargin: '0px 0px -8% 0px', threshold: 0.12 },
+      { rootMargin: '0px 0px -24px 0px', threshold: 0.01 },
     )
   }
 
@@ -54,15 +54,24 @@ export const createMotionController = () => {
       const siblings = [...(element.parentElement?.children || [])]
       const siblingIndex = Math.max(0, siblings.indexOf(element))
       element.dataset.motionReveal = 'true'
-      element.style.setProperty('--reveal-delay', `${Math.min(siblingIndex, 5) * 70}ms`)
+      element.style.setProperty('--reveal-delay', `${Math.min(siblingIndex, 4) * 40}ms`)
       element.classList.add('motion-reveal')
 
-      if (reducedMotion.matches) element.classList.add('is-visible')
+      if (reducedMotion.matches || !observer) element.classList.add('is-visible')
       else observer?.observe(element)
     })
   }
 
+  const handleMotionPreference = () => {
+    if (!reducedMotion.matches) return
+    observer?.disconnect()
+    observer = undefined
+    document.querySelectorAll('.motion-reveal').forEach(element => element.classList.add('is-visible'))
+  }
+  reducedMotion.addEventListener('change', handleMotionPreference)
+
   const destroy = () => {
+    reducedMotion.removeEventListener('change', handleMotionPreference)
     observer?.disconnect()
     observer = undefined
     document.documentElement.classList.remove('motion-enabled')

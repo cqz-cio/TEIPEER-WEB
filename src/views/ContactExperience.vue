@@ -1,5 +1,5 @@
 <script setup>
-import { computed, nextTick, ref } from 'vue'
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import SiteHeader from '../components/SiteHeader.vue'
 import SiteFooter from '../components/SiteFooter.vue'
@@ -8,20 +8,16 @@ import {
   PhCheckCircle as CheckCircle,
   PhClock as Clock,
   PhCube as Cube,
-  PhEnvelopeSimple as EnvelopeSimple,
   PhFileText as FileText,
   PhFolderOpen as FolderOpen,
   PhGlobeHemisphereEast as GlobeHemisphereEast,
   PhMapPin as MapPin,
   PhPaperclip as Paperclip,
-  PhPhone as Phone,
   PhShieldCheck as ShieldCheck,
   PhUsersThree as UsersThree,
 } from '@phosphor-icons/vue'
 
 const { locale } = useI18n()
-const submitted = ref(false)
-const successMessage = ref(null)
 
 const content = computed(() => locale.value === 'zh'
   ? {
@@ -29,7 +25,7 @@ const content = computed(() => locale.value === 'zh'
       heroSubtitle: '让我们从您的需求开始',
       heroBody: '无论是纸制与一次性日用品、相关消费品采购，还是产品与包装定制、订单与出口协同，我们都从具体需求开始。',
       formEyebrow: 'COOPERATION INQUIRY',
-      formTitle: '提交合作需求',
+      formTitle: '合作需求',
       formIntro: '产品参考、规格、材料、包装、数量、目标市场和交期越清晰，我们越能有效评估项目。',
       fields: {
         name: '姓名',
@@ -57,25 +53,23 @@ const content = computed(() => locale.value === 'zh'
       },
       inquiryOptions: ['纸制与一次性日用品', '其他日用消费品采购', '产品与包装定制', '订单与出口协同'],
       countryOptions: ['中国', '欧洲', '北美', '南美', '中东', '东南亚', '其他地区'],
-      upload: '点击选择文件或拖放到此处',
+      upload: '附件功能暂未开放',
       uploadHint: '支持 PDF、Word、Excel、JPG、PNG，单个文件不超过10MB',
       consent: '我已阅读并同意隐私政策，并授权 TRIPEER 为回复本次咨询处理我提交的信息。',
-      submit: '提交咨询',
-      successTitle: '需求已提交',
-      successBody: '感谢您的信任。我们已记录本次咨询，并会尽快与您联系。',
+      submit: '在线咨询暂未开放',
+      unavailableTitle: '在线咨询暂未开放',
+      unavailableBody: '正式联系方式及接收服务尚未启用。本表单仅展示需求信息清单，目前无法填写或提交，也不会保存或发送您的资料。',
       directTitle: '直接联系',
       details: [
-        { label: '邮箱', value: '正式邮箱待确认', icon: EnvelopeSimple },
-        { label: '电话', value: '联系电话待确认', icon: Phone },
         { label: '工作时间', value: '周一至周五 09:00–18:00', icon: Clock },
-        { label: '地址', value: '中国·浙江·宁波（详细地址待补充）', icon: MapPin },
+        { label: '所在地', value: '中国·浙江·宁波', icon: MapPin },
       ],
-      responseTitle: '我们会尽快回复',
-      responseBody: '收到信息后，我们会先确认产品方向与关键条件；如需求可行，再沟通样品、报价和预计周期。',
+      responseTitle: '联系渠道尚未启用',
+      responseBody: '正式邮箱与电话确认后将在此公布，当前页面不接收询盘。',
       processTitle: '合作流程：简单三步，开启合作',
       steps: [
         { title: '描述需求', body: '说明产品、用途、规格、包装、数量、市场与目标交期。', icon: FileText },
-        { title: '提供图片或文件', body: '上传参考产品、规格书、包装示意或其他可用资料。', icon: FolderOpen },
+        { title: '准备图片或文件', body: '准备参考产品、规格书、包装示意或其他可用资料。', icon: FolderOpen },
         { title: '确认可行方向', body: '我们评估产品与订单条件，并沟通样品、报价和下一步。', icon: Cube },
       ],
       trustTitle: '值得信赖的合作伙伴',
@@ -90,7 +84,7 @@ const content = computed(() => locale.value === 'zh'
       heroSubtitle: 'Let’s Start with Your Requirement',
       heroBody: 'Start with a specific requirement for paper-based and disposable daily-use products, related consumer goods, customization or export coordination.',
       formEyebrow: 'COOPERATION INQUIRY',
-      formTitle: 'Submit Your Requirement',
+      formTitle: 'Cooperation Requirements',
       formIntro: 'Product references, specifications, materials, packaging, quantity, market and timing help us assess the project effectively.',
       fields: {
         name: 'Name',
@@ -118,25 +112,23 @@ const content = computed(() => locale.value === 'zh'
       },
       inquiryOptions: ['Paper-based & Disposable Products', 'Other Daily-use Consumer Goods', 'Product & Packaging Customization', 'Order & Export Coordination'],
       countryOptions: ['China', 'Europe', 'North America', 'South America', 'Middle East', 'Southeast Asia', 'Other'],
-      upload: 'Choose a file or drag it here',
+      upload: 'Attachments are not yet available',
       uploadHint: 'PDF, Word, Excel, JPG or PNG, up to 10MB',
       consent: 'I have read the privacy notice and authorize TRIPEER to process the information submitted to respond to this inquiry.',
-      submit: 'Submit Inquiry',
-      successTitle: 'Inquiry Submitted',
-      successBody: 'Thank you. We have recorded your inquiry and will contact you as soon as possible.',
+      submit: 'Online Inquiry Unavailable',
+      unavailableTitle: 'Online inquiries are not yet available',
+      unavailableBody: 'Official contact channels and the receiving service are not active yet. This form is a requirements checklist only. Entry and submission are disabled; no information is saved or sent.',
       directTitle: 'Direct Contact',
       details: [
-        { label: 'Email', value: 'Official email to be confirmed', icon: EnvelopeSimple },
-        { label: 'Phone', value: 'Contact number to be confirmed', icon: Phone },
         { label: 'Business Hours', value: 'Mon–Fri 09:00–18:00', icon: Clock },
-        { label: 'Address', value: 'Ningbo, Zhejiang, China (details TBC)', icon: MapPin },
+        { label: 'Location', value: 'Ningbo, Zhejiang, China', icon: MapPin },
       ],
-      responseTitle: 'We’ll Respond Promptly',
-      responseBody: 'We first review the product direction and key conditions. If feasible, we discuss samples, quotation and estimated timing.',
+      responseTitle: 'Contact channels are not yet active',
+      responseBody: 'Our official email and phone number will appear here once confirmed. This page does not currently receive inquiries.',
       processTitle: 'Three Simple Steps to Start',
       steps: [
         { title: 'Describe Your Needs', body: 'Share the product, application, specifications, packaging, quantity, market and target date.', icon: FileText },
-        { title: 'Add Images or Files', body: 'Upload reference products, specifications or packaging information.', icon: FolderOpen },
+        { title: 'Prepare Images or Files', body: 'Prepare reference products, specifications or packaging information.', icon: FolderOpen },
         { title: 'Confirm a Feasible Direction', body: 'We assess the request and discuss samples, quotation and the next step.', icon: Cube },
       ],
       trustTitle: 'A Dependable Cooperation Partner',
@@ -147,11 +139,6 @@ const content = computed(() => locale.value === 'zh'
       ],
     })
 
-const handleSubmit = async () => {
-  submitted.value = true
-  await nextTick()
-  successMessage.value?.focus()
-}
 </script>
 
 <template>
@@ -180,18 +167,13 @@ const handleSubmit = async () => {
           <span>{{ content.formIntro }}</span>
         </header>
 
-        <div
-          v-if="submitted"
-          ref="successMessage"
-          class="contact-success"
-          role="status"
-          tabindex="-1"
-        >
-          <CheckCircle :size="28" weight="fill" />
-          <div><strong>{{ content.successTitle }}</strong><span>{{ content.successBody }}</span></div>
+        <div id="contact-unavailable" class="contact-unavailable" role="note">
+          <Clock :size="26" aria-hidden="true" />
+          <div><strong>{{ content.unavailableTitle }}</strong><span>{{ content.unavailableBody }}</span></div>
         </div>
 
-        <form class="contact-form" @submit.prevent="handleSubmit">
+        <form @submit.prevent>
+          <fieldset class="contact-form" disabled aria-describedby="contact-unavailable" :aria-label="content.formTitle">
           <label class="contact-field">
             <span>{{ content.fields.name }} <b>*</b></span>
             <input required type="text" name="name" :placeholder="content.placeholders.name" />
@@ -255,6 +237,7 @@ const handleSubmit = async () => {
             {{ content.submit }}
             <ArrowRight :size="19" weight="bold" />
           </button>
+          </fieldset>
         </form>
       </div>
 
