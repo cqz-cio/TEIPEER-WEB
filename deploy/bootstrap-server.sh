@@ -34,9 +34,9 @@ if [[ ! -e "$NGINX_CONFIG" ]] && ss -H -ltn "sport = :$SITE_PORT" | grep -q .; t
   exit 1
 fi
 
-if ! command -v nginx >/dev/null 2>&1 || ! command -v curl >/dev/null 2>&1; then
+if ! command -v nginx >/dev/null 2>&1 || ! command -v curl >/dev/null 2>&1 || ! command -v rsync >/dev/null 2>&1; then
   apt-get update
-  DEBIAN_FRONTEND=noninteractive apt-get install -y nginx curl
+  DEBIAN_FRONTEND=noninteractive apt-get install -y nginx curl rsync
 fi
 
 install -d -m 0755 "$SITE_ROOT" "$SITE_ROOT/releases"

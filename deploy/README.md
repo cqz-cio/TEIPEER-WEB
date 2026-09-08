@@ -1,107 +1,90 @@
 # 腾讯云 CI/CD 部署
 
-本项目采用以下发布方式：
+## 日常部署：只需在 GitHub 手动运行
 
-1. GitHub Actions CI 在 push 或 Pull Request 时构建并校验网站，不保存构建 Artifact。
-2. 用户在 GitHub Actions 手动运行 Deploy to Tencent Cloud (local PC)，由本机 Windows Runner 调用 deploy/deploy-local.ps1；也可继续在本机直接运行脚本。
-3. 本地 CD 查询 main 最近一次成功的 push CI，检出该 CI 的准确 commit，在隔离的临时工作树中重新构建，然后从本地网络上传腾讯云。
-4. 腾讯云服务器激活新版本、执行健康检查，并保留最近 3 个版本供自动回滚。
+1. 推送代码到 `main`，等 **CI** 通过。
+2. 在仓库 **Actions → Deploy to Tencent Cloud → Run workflow** 选择 `main`。
+3. 正式部署不勾选 `Build only`；勾选只重新构建，不连接服务器。
+4. 查看运行摘要中的 CI 链接、准确 commit SHA 和部署结果。
 
-本地 CD 不会修改当前开发目录、切换当前分支，也不会把构建产物保存到 GitHub Artifact。
+CD 使用 **GitHub 云端 Ubuntu Runner**。电脑可以关机，不依赖 `C:\actions-runner`、本地项目路径或本机计划任务。旧 Runner 没有被此修改卸载或停止；已经排队的旧任务仍使用旧工作流，应手动取消，修改推送后重新 Run workflow，不要 Re-run 旧任务。
 
-## 1. 本地环境要求
+CI 与 CD 都不保存构建 Artifact。CD 使用 npm 下载缓存加速安装（这是依赖缓存，不是 `dist` 构建产物）。
 
-部署电脑需要安装并配置：
+## CD 做什么
 
-- Git
-- GitHub CLI，并已执行 gh auth login
-- Node.js 22 或更高版本（CI 固定使用 Node.js 22）
-- npm
-- Windows OpenSSH Client，包含 ssh 和 scp
-- tar
+1. 查询 `ci.yml` 中 `main` 最近创建且成功的 **push CI**，锁定该 run 的 SHA；排除 PR 和其他分支。最新提交 CI 尚未成功时，可能选择更早的成功版本，摘要会显示选择结果。
+2. 使用该准确 SHA 重新执行 `npm ci`、`npm run build`，只在临时 Runner 上生成 `dist`。部署工具来自本次手动选择的可信 `main` 工作流版本，不使用旧 CI 版本中的部署脚本。
+3. 检查 SSH、服务器 rsync 和现有受限发布命令，错误立即报告。
+4. 在服务器 `/tmp/tripeer-upload-<release>.<随机字符>` 创建独立临时目录，并在服务器内复制当前网站文件作为增量基线。不硬链接、不写入正在服务的目录。
+5. 用 rsync 校验文件内容，只上传新增/变化的内容。`--delete-delay` 只清理该临时目录里的旧文件，绝不对线上站点直接执行删除同步。
+6. 在服务器本地生成兼容压缩包，调用现有 `/usr/local/sbin/tripeer-deploy`，沿用原有版本切换、本机健康检查失败回滚、默认保留 3 个版本逻辑。不经过公网上传整个压缩包。
+7. 验证 `http://124.220.2.69:18081/deploy-version.txt` 返回本次准确版本标识，避免把旧站点的 HTTP 200 当成部署成功。
+8. 清理临时目录、压缩包和 Runner 上的私钥/构建目录。每次部署尝试使用不同版本目录，不覆盖历史版本。
 
-默认使用下面的 SSH 私钥：
+端口仍是 **18081**，不会修改已有 80 端口站点或重新写 Nginx 配置。公网验证失败时只报告失败，不擅自回滚：有可能只是公网防火墙/网络不可达，而服务器内已发布成功。服务器原有健康检查失败时仍由原有命令自动回滚。
 
-    C:\Users\当前用户\.ssh\tripeer_github_actions
+## 一次性配置
 
-私钥不能提交到 Git 仓库，也不要发送给其他人。
+### 1. GitHub Secrets
 
-## 2. 运行部署
+仓库 **Settings → Secrets and variables → Actions → Repository secrets** 需要：
 
-在项目根目录打开 PowerShell：
+| 名称 | 内容 |
+| --- | --- |
+| `TENCENT_SSH_PRIVATE_KEY` | `tripeer_github_actions` 私钥的完整内容，包括 BEGIN/END 行，不是 `.pub`，不是指纹。必须无口令。 |
+| `TENCENT_SSH_KNOWN_HOSTS` | 从服务器可信终端取得的完整主机公钥行，包含 `124.220.2.69 ssh-ed25519 ...`。 |
 
-    powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\deploy\deploy-local.ps1"
+之前已创建且仍有效的 Secrets 可以继续用。不要把私钥提交到仓库，也不要把服务器主机密钥验证改为关闭。
 
-仅验证选定版本、依赖安装和构建，不上传服务器：
+### 2. 已初始化服务器检查
 
-    powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\deploy\deploy-local.ps1" -DryRun
+在腾讯云控制台终端执行：
 
-脚本会自动：
+```bash
+command -v rsync
+test -x /usr/local/sbin/tripeer-deploy && echo 'Deploy helper OK'
+```
 
-- 查询 main 最近一次成功的 push CI；
-- 使用该 CI 的 commit SHA，而不是当前未验证的本地代码；
-- 创建临时 Git worktree，不影响当前工作目录；
-- 执行 npm ci 和 npm run build；
-- 检查 dist/index.html 和 dist/assets；
-- 创建临时 tar.gz；
-- 从本机通过 scp 上传腾讯云；
-- 调用服务器受限部署命令激活版本；
-- 检查公网地址是否返回 HTTP 200；
-- 删除本地临时工作树和压缩包。
+如果没有 rsync，只需安装它（无需重新运行 bootstrap、改 Nginx 或重置 SSH）：
 
-## 3. 初始化腾讯云服务器
+```bash
+sudo apt-get update
+sudo apt-get install -y rsync
+```
 
-服务器已经初始化过时不需要重复执行本节。
+脚本固定使用 `ubuntu@124.220.2.69:22`。腾讯云防火墙/系统防火墙需要允许部署来源通过 SSH 22，以及用户通过 TCP 18081 访问网站。若 SSH 仅允许本机 IP，云端 Runner 不在允许范围内，需先调整受控访问方案；不要为解决部署问题关闭整个防火墙。
 
-首次初始化时，在腾讯云控制台使用终端登录服务器，只下载两个小脚本，避免在服务器克隆完整仓库：
+### 3. 全新服务器初始化（现有服务器不必重做）
 
-    mkdir -p ~/tripeer-bootstrap
-    cd ~/tripeer-bootstrap
-    curl -fsSLO https://raw.githubusercontent.com/cqz-cio/TEIPEER-WEB/main/deploy/bootstrap-server.sh
-    curl -fsSLO https://raw.githubusercontent.com/cqz-cio/TEIPEER-WEB/main/deploy/remote-deploy.sh
-    DEPLOY_PUBLIC_KEY='粘贴 tripeer_github_actions.pub 的完整内容' sudo -E bash bootstrap-server.sh
+下载并检查本仓库的 `bootstrap-server.sh`、`remote-deploy.sh` 后，在两者所在目录执行：
 
-初始化脚本会：
+```bash
+DEPLOY_PUBLIC_KEY='粘贴部署公钥完整内容' sudo -E bash bootstrap-server.sh
+```
 
-- 保留现有端口 80 配置；
-- 在端口 18081 创建独立 Nginx 站点；
-- 创建 /var/www/tripeer；
-- 安装受限的发布命令；
-- 为部署用户添加 SSH 公钥。
+初始化脚本安装 Nginx、curl、rsync，创建 `/var/www/tripeer` 和独立 18081 站点，安装受限发布命令及 SSH 公钥。必须先确认端口不被其他站点占用。
 
-## 4. 发布与回滚规则
+## 上传速度和排障
 
-- CI 不会自动部署。
-- CD 可在 GitHub Actions 手动启动，也可在本地手动启动。GitHub CD 仅允许 cqz-cio 从 main 触发，使用 tripeer-deploy 标签的 Windows Runner。PR CI 不使用本机 Runner。
-- 只部署 main 最近一次成功 CI 对应的版本。
-- 服务器健康检查失败时自动恢复上一个版本。
-- 服务器默认只保留最近 3 个正式发布版本。
-- GitHub 仓库中的 TENCENT_SSH_PRIVATE_KEY 和 TENCENT_SSH_KNOWN_HOSTS Secrets 不再被本地 CD 使用，可以删除。
+`Incremental upload, activate and verify` 日志会显示：
 
-## 5. 网站地址
+- SSH 连接/认证检查耗时；
+- rsync 总文件量、实际传输文件量、发送/接收字节数、进度及平均传输速率；
+- 增量上传耗时、服务器激活耗时和整体耗时。
 
-腾讯云轻量应用服务器防火墙需要允许 TCP 18081。
+rsync 按内容校验，忽略重新构建造成的时间戳变化，详见 [rsync 官方手册](https://download.samba.org/pub/rsync/rsync.1)。SSH 建连最长 10 秒；上传连续 60 秒无 I/O 或累计 5 分钟即失败；整个部署步骤最多 10 分钟，工作流最多 15 分钟。不自动退回全量 SCP，也不自动触发第二次部署。
 
-部署地址：<http://124.220.2.69:18081/>
+当前服务器已有相同图片/字体时，首次使用本脚本也可复用这些资源。空站点或大量大资源发生变化时，仍需传输相应内容。增量上传减少传输量，但不保证跨网络速度一定达到 Cloudways 的 20 秒。
 
-配置正式域名后，可以通过独立 server_name 共用标准的 80/443 端口，并增加 HTTPS。
+失败/取消时会尽力清理本次临时目录；机器断网或强制终止可能留下临时文件，日志会给出确切路径。不要递归删除 `/tmp` 或 `/var/www/tripeer` 根目录。
 
-## 6. GitHub 手动 CD 与本机 Runner
+## 本地备用部署
 
-Runner 安装在 C:\actions-runner，以配置了 SSH 密钥的本机用户运行。工作流调用 D:\TEIPEER WEB\deploy\deploy-local.ps1，因此需要保留该目录。工作流使用临时 GITHUB_TOKEN 查询 CI，私钥从本机用户的 .ssh 目录读取。
+原 `deploy-local.ps1` 保留为手动备用，不由 GitHub CD 调用，仍是本机全量 SCP：
 
-本机计划任务 TRIPEER GitHub Runner 在用户登录后自动启动 Runner。注销、休眠或关机会使 Runner 离线。后台日志位于 C:\actions-runner\runner-background.log，详细日志位于 C:\actions-runner\_diag。
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File ".\deploy\deploy-local.ps1"
+```
 
-手动启动后台任务：
-
-    Start-ScheduledTask -TaskName 'TRIPEER GitHub Runner'
-
-查看后台任务状态：
-
-    Get-ScheduledTask -TaskName 'TRIPEER GitHub Runner'
-
-在 Actions 选择 Deploy to Tencent Cloud (local PC)，点击 Run workflow，选择 main。勾选 dry_run 只测试构建；不勾选则正式上传和激活。
-
-电脑必须联网且 Runner 在线。电脑关机或休眠时无法接收任务，GitHub 会排队等待，超过平台排队期限会失败。
-
-仓库公开，本机 Runner 必须只运行可信代码；新增或修改任何工作流时，不要把 PR 或外部贡献者的代码分配到本机 Runner。自定义标签只是任务路由，不能代替安全隔离。
+需要 Git、GitHub CLI 登录、Node.js 22、npm、OpenSSH、tar 和本机部署私钥。不要与云端 CD 同时运行；GitHub concurrency 只串行化 GitHub 工作流，不能锁住手动本地部署。
