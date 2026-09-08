@@ -79,11 +79,16 @@ export const router = createRouter({
     },
     { path: '/about', redirect: { name: 'about-profile' } },
     {
+      path: '/culture',
+      name: 'corporate-culture',
+      meta: aboutMeta('mission', '企业文化｜宁波全品轩国际贸易有限公司', 'Corporate Culture | Tripeer', '了解全品轩的使命、愿景与价值观。', 'Discover Tripeer’s mission, vision and values.'),
+    },
+    {
       path: '/business/overview',
       name: 'business-overview',
       meta: businessMeta(
         'overview',
-        '业务概览｜宁波全品轩国际贸易有限公司',
+        '业务介绍｜宁波全品轩国际贸易有限公司',
         'Business Overview | Ningbo Tripeer International Trading Co., Ltd.',
         '了解全品轩的消费品供应、制造协同与全球交付服务。',
         'Explore Tripeer’s consumer-goods sourcing, manufacturing coordination and global delivery services.',
@@ -159,7 +164,7 @@ export const router = createRouter({
     {
       path: '/news/company',
       name: 'insight-company',
-      meta: insightMeta('company', '贸易实践｜宁波全品轩国际贸易有限公司', 'Trade Practice | Tripeer', '了解全品轩自2016年以来在消费品国际贸易与出口订单执行中的经验。', 'Explore Tripeer’s experience in consumer-goods trade and export order execution since 2016.'),
+      meta: insightMeta('company', '公司动态｜宁波全品轩国际贸易有限公司', 'Company News | Tripeer', '了解全品轩自2016年以来在消费品国际贸易与出口订单执行中的经验。', 'Explore Tripeer’s experience in consumer-goods trade and export order execution since 2016.'),
     },
     {
       path: '/news/events',
@@ -169,7 +174,7 @@ export const router = createRouter({
     {
       path: '/news/insights',
       name: 'insight-industry',
-      meta: insightMeta('industry', '行业洞察｜宁波全品轩国际贸易有限公司', 'Industry Insights | Tripeer', '关注消费品、采购、产品开发与国际贸易领域的趋势和实践。', 'Discover perspectives on consumer goods, sourcing, product development and international trade.'),
+      meta: insightMeta('industry', '行业动态｜宁波全品轩国际贸易有限公司', 'Industry News | Tripeer', '关注消费品、采购、产品开发与国际贸易领域的趋势和实践。', 'Discover perspectives on consumer goods, sourcing, product development and international trade.'),
     },
     {
       path: '/news/responsibility',
@@ -182,12 +187,12 @@ export const router = createRouter({
       name: 'contact',
       meta: {
         contactTitle: {
-          zh: '联系我们｜宁波全品轩国际贸易有限公司',
-          en: 'Contact Us | Ningbo Tripeer International Trading Co., Ltd.',
+          zh: '合作与求职咨询｜宁波全品轩国际贸易有限公司',
+          en: 'Business & Career Inquiries | Ningbo Tripeer International Trading Co., Ltd.',
         },
         contactDescription: {
-          zh: '联系宁波全品轩国际贸易有限公司，提交产品采购、定制开发、供应链服务或国际贸易合作需求。',
-          en: 'Contact Tripeer about product sourcing, customization, supply-chain services or international trade cooperation.',
+          zh: '联系宁波全品轩国际贸易有限公司，咨询商务合作、项目对接与求职应聘。',
+          en: 'Contact Tripeer about business cooperation, projects and career opportunities.',
         },
       },
     },

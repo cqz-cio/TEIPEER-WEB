@@ -12,7 +12,7 @@ const route = useRoute()
 const contentSets = {
   zh: {
     company: {
-      title: '贸易实践', subtitle: '记录十年订单执行中的经验与方法', label: 'TRADE PRACTICE',
+      title: '公司动态', subtitle: '记录十年订单执行中的经验与方法', label: 'COMPANY NEWS',
       intro: '从2016年成立至今，全品轩在询价、样品、产品与包装确认、供应沟通、质量检查、单证和出运中持续积累经验。本栏目以具体工作方法呈现我们如何理解并推进一笔出口订单。',
       articles: [
         ['从宁波出发：十年贸易执行中的积累', '从最初的需求沟通到样品、订单、单证与出运，真实订单如何推动服务流程逐步清晰。', '2026-08-28', '/assets/trade-2026/insight-history-ningbo.jpg', '发展与实践'],
@@ -30,7 +30,7 @@ const contentSets = {
       ],
     },
     industry: {
-      title: '行业洞察', subtitle: '关注消费趋势与国际贸易实践', label: 'INDUSTRY INSIGHTS',
+      title: '行业动态', subtitle: '关注消费趋势与国际贸易实践', label: 'INDUSTRY NEWS',
       intro: '围绕纸制与一次性日用品、相关消费品、包装、采购和质量检查，分享贴近出口订单执行的观察，为客户评估产品与项目提供参考。',
       articles: [
         ['纸制与一次性日用品的采购关注点', '从材料、尺寸、折叠、包装数量和使用场景，梳理下单前需要确认的产品信息。', '2026-08-20', '/assets/trade-2026/insight-sourcing-material.jpg', '产品采购'],
@@ -50,7 +50,7 @@ const contentSets = {
   },
   en: {
     company: {
-      title: 'Trade Practice', subtitle: 'Methods shaped by a decade of order execution', label: 'TRADE PRACTICE',
+      title: 'Company News', subtitle: 'Methods shaped by a decade of order execution', label: 'COMPANY NEWS',
       intro: 'Since 2016, quotation, sampling, product and packaging approval, supplier communication, quality checks, documents and shipment have shaped the way TRIPEER works.',
       articles: [['From Ningbo: A Decade of Trade Execution', 'How real orders have gradually clarified our approach from requirement to shipment.', '2026-08-28', '/assets/trade-2026/insight-history-ningbo.jpg', 'Development'], ['Turning Requirements into Executable Milestones', 'Confirming specifications, materials, packaging, quantity and timing before execution.', '2026-08-18', '/assets/trade-2026/product-trade-order.jpg', 'Orders'], ['How a Focused Trade Team Keeps Information Clear', 'Shared versions, milestone records and timely feedback reduce information gaps.', '2026-08-08', '/assets/trade-2026/contact-office-consultation.jpg', 'Methods']],
     },
@@ -60,7 +60,7 @@ const contentSets = {
       articles: [['Preparing for Customer Product-selection Meetings', 'Align market, target price, category and delivery expectations before selection.', '2026-08-26', '/assets/trade-2026/contact-office-consultation.jpg', 'Customers'], ['From Event Information to Product Opportunity', 'Use channel, user and commercial goals to evaluate new products.', '2026-08-16', '/assets/trade-2026/insight-sourcing-material.jpg', 'Events'], ['How Sample Reviews Reduce Production Variance', 'Confirm material, color, workmanship and packaging before production.', '2026-08-06', '/assets/trade-2026/business-customization.jpg', 'Sampling']],
     },
     industry: {
-      title: 'Industry Insights', subtitle: 'Consumer trends and international trade practice', label: 'INDUSTRY INSIGHTS',
+      title: 'Industry News', subtitle: 'Consumer trends and international trade practice', label: 'INDUSTRY NEWS',
       intro: 'Practical perspectives on paper-based and disposable products, related consumer goods, packaging, sourcing and quality checks.',
       articles: [['Sourcing Paper-based & Disposable Daily-use Products', 'Key questions around materials, dimensions, folding, pack counts and applications.', '2026-08-20', '/assets/trade-2026/insight-sourcing-material.jpg', 'Sourcing'], ['From Sample to Shipment: Five Quality Checkpoints', 'How samples, materials, production, packaging and final checks connect.', '2026-08-12', '/assets/trade-2026/insight-quality-check.jpg', 'Quality'], ['Keeping Combined Sourcing Efficient and Clear', 'Shared specifications and visible milestones reduce communication and delivery risk.', '2026-08-02', '/assets/trade-2026/matrix-combination.jpg', 'Orders']],
     },
@@ -90,7 +90,7 @@ const remaining = computed(() => content.value.articles.slice(1))
       </div>
       <div class="knowledge-hero-overlay"></div>
       <div class="knowledge-hero-copy">
-        <span>{{ locale === 'zh' ? '贸易实践与洞察' : 'TRADE PRACTICE & INSIGHTS' }}</span>
+        <span>{{ locale === 'zh' ? '新闻动态' : 'NEWS & UPDATES' }}</span>
         <h1>{{ content.title }}</h1>
         <p>{{ content.subtitle }}</p>
       </div>

@@ -1,289 +1,99 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import SiteHeader from '../components/SiteHeader.vue'
 import SiteFooter from '../components/SiteFooter.vue'
-import {
-  PhArrowRight as ArrowRight,
-  PhCheckCircle as CheckCircle,
-  PhClock as Clock,
-  PhCube as Cube,
-  PhFileText as FileText,
-  PhFolderOpen as FolderOpen,
-  PhGlobeHemisphereEast as GlobeHemisphereEast,
-  PhMapPin as MapPin,
-  PhPaperclip as Paperclip,
-  PhShieldCheck as ShieldCheck,
-  PhUsersThree as UsersThree,
-} from '@phosphor-icons/vue'
+import { PhClock as Clock, PhMapPin as MapPin, PhPaperclip as Paperclip, PhInfo as Info } from '@phosphor-icons/vue'
 
 const { locale } = useI18n()
-
-const content = computed(() => locale.value === 'zh'
-  ? {
-      heroTitle: '联系我们',
-      heroSubtitle: '让我们从您的需求开始',
-      heroBody: '无论是纸制与一次性日用品、相关消费品采购，还是产品与包装定制、订单与出口协同，我们都从具体需求开始。',
-      formEyebrow: 'COOPERATION INQUIRY',
-      formTitle: '合作需求',
-      formIntro: '产品参考、规格、材料、包装、数量、目标市场和交期越清晰，我们越能有效评估项目。',
-      fields: {
-        name: '姓名',
-        company: '公司名称',
-        country: '国家/地区',
-        email: '邮箱',
-        phone: '联系电话',
-        inquiry: '咨询类型',
-        category: '产品品类',
-        quantity: '预计采购数量',
-        delivery: '目标交期',
-        message: '需求说明',
-        attachment: '附件上传（可选）',
-      },
-      placeholders: {
-        name: '请输入您的姓名',
-        company: '请输入公司名称',
-        country: '请选择国家/地区',
-        email: '请输入公司邮箱',
-        phone: '请输入联系电话（含国家区号）',
-        inquiry: '请选择咨询类型',
-        category: '请选择或填写产品品类',
-        quantity: '请输入预计采购数量',
-        message: '请描述产品规格、用途、材质、包装、认证及其他关键要求。',
-      },
-      inquiryOptions: ['纸制与一次性日用品', '其他日用消费品采购', '产品与包装定制', '订单与出口协同'],
-      countryOptions: ['中国', '欧洲', '北美', '南美', '中东', '东南亚', '其他地区'],
-      upload: '附件功能暂未开放',
-      uploadHint: '支持 PDF、Word、Excel、JPG、PNG，单个文件不超过10MB',
-      consent: '我已阅读并同意隐私政策，并授权 TRIPEER 为回复本次咨询处理我提交的信息。',
-      submit: '在线咨询暂未开放',
-      unavailableTitle: '在线咨询暂未开放',
-      unavailableBody: '正式联系方式及接收服务尚未启用。本表单仅展示需求信息清单，目前无法填写或提交，也不会保存或发送您的资料。',
-      directTitle: '直接联系',
-      details: [
-        { label: '工作时间', value: '周一至周五 09:00–18:00', icon: Clock },
-        { label: '所在地', value: '中国·浙江·宁波', icon: MapPin },
-      ],
-      responseTitle: '联系渠道尚未启用',
-      responseBody: '正式邮箱与电话确认后将在此公布，当前页面不接收询盘。',
-      processTitle: '合作流程：简单三步，开启合作',
-      steps: [
-        { title: '描述需求', body: '说明产品、用途、规格、包装、数量、市场与目标交期。', icon: FileText },
-        { title: '准备图片或文件', body: '准备参考产品、规格书、包装示意或其他可用资料。', icon: FolderOpen },
-        { title: '确认可行方向', body: '我们评估产品与订单条件，并沟通样品、报价和下一步。', icon: Cube },
-      ],
-      trustTitle: '值得信赖的合作伙伴',
-      trust: [
-        { title: '信息安全与保密', body: '尊重客户资料与商业信息，按合作需要进行内部使用。', icon: ShieldCheck },
-        { title: '专业响应与支持', body: '由相关业务人员跟进，保持清晰、及时的沟通。', icon: UsersThree },
-        { title: '海外订单协同', body: '围绕产品、包装、质量、单证与出口交付提供协调支持。', icon: GlobeHemisphereEast },
-      ],
-    }
-  : {
-      heroTitle: 'Contact Us',
-      heroSubtitle: 'Let’s Start with Your Requirement',
-      heroBody: 'Start with a specific requirement for paper-based and disposable daily-use products, related consumer goods, customization or export coordination.',
-      formEyebrow: 'COOPERATION INQUIRY',
-      formTitle: 'Cooperation Requirements',
-      formIntro: 'Product references, specifications, materials, packaging, quantity, market and timing help us assess the project effectively.',
-      fields: {
-        name: 'Name',
-        company: 'Company',
-        country: 'Country / Region',
-        email: 'Email',
-        phone: 'Phone',
-        inquiry: 'Inquiry Type',
-        category: 'Product Category',
-        quantity: 'Estimated Quantity',
-        delivery: 'Target Delivery',
-        message: 'Requirement Details',
-        attachment: 'Attachment (optional)',
-      },
-      placeholders: {
-        name: 'Your name',
-        company: 'Company name',
-        country: 'Select country / region',
-        email: 'Business email',
-        phone: 'Phone number with country code',
-        inquiry: 'Select inquiry type',
-        category: 'Select or enter a product category',
-        quantity: 'Estimated purchasing quantity',
-        message: 'Describe specifications, use, materials, packaging, certifications and other key requirements.',
-      },
-      inquiryOptions: ['Paper-based & Disposable Products', 'Other Daily-use Consumer Goods', 'Product & Packaging Customization', 'Order & Export Coordination'],
-      countryOptions: ['China', 'Europe', 'North America', 'South America', 'Middle East', 'Southeast Asia', 'Other'],
-      upload: 'Attachments are not yet available',
-      uploadHint: 'PDF, Word, Excel, JPG or PNG, up to 10MB',
-      consent: 'I have read the privacy notice and authorize TRIPEER to process the information submitted to respond to this inquiry.',
-      submit: 'Online Inquiry Unavailable',
-      unavailableTitle: 'Online inquiries are not yet available',
-      unavailableBody: 'Official contact channels and the receiving service are not active yet. This form is a requirements checklist only. Entry and submission are disabled; no information is saved or sent.',
-      directTitle: 'Direct Contact',
-      details: [
-        { label: 'Business Hours', value: 'Mon–Fri 09:00–18:00', icon: Clock },
-        { label: 'Location', value: 'Ningbo, Zhejiang, China', icon: MapPin },
-      ],
-      responseTitle: 'Contact channels are not yet active',
-      responseBody: 'Our official email and phone number will appear here once confirmed. This page does not currently receive inquiries.',
-      processTitle: 'Three Simple Steps to Start',
-      steps: [
-        { title: 'Describe Your Needs', body: 'Share the product, application, specifications, packaging, quantity, market and target date.', icon: FileText },
-        { title: 'Prepare Images or Files', body: 'Prepare reference products, specifications or packaging information.', icon: FolderOpen },
-        { title: 'Confirm a Feasible Direction', body: 'We assess the request and discuss samples, quotation and the next step.', icon: Cube },
-      ],
-      trustTitle: 'A Dependable Cooperation Partner',
-      trust: [
-        { title: 'Confidential Information', body: 'Customer files and commercial information are handled only as needed for cooperation.', icon: ShieldCheck },
-        { title: 'Professional Support', body: 'The relevant team follows up with clear and timely communication.', icon: UsersThree },
-        { title: 'Overseas Order Coordination', body: 'Coordinated support across products, packaging, quality, documents and export delivery.', icon: GlobeHemisphereEast },
-      ],
-    })
-
+const inquiry = ref('')
+const company = ref('')
+const attachment = ref(null)
+const attachmentInput = ref(null)
+const attachmentError = ref(false)
+const isCareer = computed(() => inquiry.value === 'career')
+const content = computed(() => locale.value === 'zh' ? {
+  title: '合作与求职咨询', intro: '无论您是寻求商务合作，还是希望加入我们团队，欢迎留下您的信息与需求。',
+  note: '当前接收服务尚未启用，填写内容和所选附件不会保存或发送。',
+  name: '姓名', nameHint: '请输入您的姓名', type: '联系类型', typeHint: '请选择联系类型', career: '求职应聘', business: '商务合作',
+  company: '公司名称（合作填）', companyHint: '请输入公司名称', companySkip: '求职应聘无需填写公司名称', email: '邮箱', emailHint: '请输入您的邮箱', phone: '联系电话', phoneHint: '请输入您的联系电话',
+  message: '需求说明', messageHint: '如果是合作，请简述您的项目；如果是求职，请说明意向岗位及相关情况。',
+  attachment: '附件上传（可选）', choose: '选择附件', uploadHint: '可添加简历、项目介绍或相关资料', formats: 'PDF、Word、Excel、JPG、PNG，单个文件不超过10MB', remove: '移除附件', invalid: '请选择支持的文件格式，且文件大小不超过10MB。',
+  submit: '提交咨询（暂未开放）', submitHint: '接收服务开通后可提交咨询及附件。', direct: '联系我们', directHint: '商务合作 · 求职应聘', hours: '工作时间', time: '周一至周五 09:00–18:00', location: '所在地', address: '中国 · 浙江 · 宁波', imageAlt: '团队整理产品资料与合作需求',
+} : {
+  title: 'Business & Career Inquiries', intro: 'Whether you are exploring a business partnership or joining our team, share your details and requirements with us.',
+  note: 'Our receiving service is not active yet. Entered details and selected files will not be saved or sent.',
+  name: 'Name', nameHint: 'Your name', type: 'Contact Type', typeHint: 'Select contact type', career: 'Job Application', business: 'Business Cooperation',
+  company: 'Company (business inquiries)', companyHint: 'Company name', companySkip: 'Not required for job applications', email: 'Email', emailHint: 'Your email address', phone: 'Phone', phoneHint: 'Your phone number',
+  message: 'Inquiry Details', messageHint: 'For business cooperation, briefly describe your project. For job applications, specify your desired role and relevant background.',
+  attachment: 'Attachment (optional)', choose: 'Choose attachment', uploadHint: 'Add a resume, project introduction or related materials', formats: 'PDF, Word, Excel, JPG or PNG; maximum 10MB per file', remove: 'Remove attachment', invalid: 'Choose a supported file format no larger than 10MB.',
+  submit: 'Submit Inquiry (unavailable)', submitHint: 'Inquiries and attachments can be submitted once the receiving service is active.', direct: 'Contact Us', directHint: 'Business Cooperation · Careers', hours: 'Business Hours', time: 'Mon–Fri 09:00–18:00', location: 'Location', address: 'Ningbo, Zhejiang, China', imageAlt: 'Team reviewing product materials and cooperation requirements',
+})
+function selectAttachment(event) {
+  const file = event.target.files?.[0]
+  attachmentError.value = false
+  attachment.value = null
+  if (!file) return
+  if (!/\.(pdf|docx?|xlsx?|jpe?g|png)$/i.test(file.name) || file.size > 10 * 1024 * 1024) {
+    attachmentError.value = true
+    event.target.value = ''
+    return
+  }
+  attachment.value = file
+}
+function clearAttachment() {
+  attachment.value = null
+  attachmentError.value = false
+  if (attachmentInput.value) attachmentInput.value.value = ''
+}
 </script>
 
 <template>
   <a class="skip-link" href="#contact-main">{{ locale === 'zh' ? '跳至主要内容' : 'Skip to content' }}</a>
   <SiteHeader />
-
-  <main id="contact-main" class="contact-page">
-    <section class="contact-hero">
-      <div class="contact-hero-media" aria-hidden="true">
-        <img src="/assets/trade-2026/contact-hero-meeting.jpg" alt="" />
-        <img src="/assets/trade-2026/contact-hero-port.jpg" alt="" />
-      </div>
-      <div class="contact-hero-overlay" aria-hidden="true"></div>
-      <div class="contact-shell contact-hero-copy">
-        <h1>{{ content.heroTitle }}</h1>
-        <p>{{ content.heroSubtitle }}</p>
-        <span>{{ content.heroBody }}</span>
-      </div>
-    </section>
-
+  <main id="contact-main" class="contact-page inquiry-redesign">
     <section class="contact-shell contact-inquiry-section">
       <div class="contact-form-column">
         <header class="contact-section-heading">
-          <p>{{ content.formEyebrow }}</p>
-          <h2>{{ content.formTitle }}</h2>
-          <span>{{ content.formIntro }}</span>
+          <p>BUSINESS &amp; CAREER INQUIRIES</p>
+          <h1>{{ content.title }}</h1>
+          <span>{{ content.intro }}</span>
         </header>
-
-        <div id="contact-unavailable" class="contact-unavailable" role="note">
-          <Clock :size="26" aria-hidden="true" />
-          <div><strong>{{ content.unavailableTitle }}</strong><span>{{ content.unavailableBody }}</span></div>
-        </div>
-
-        <form @submit.prevent>
-          <fieldset class="contact-form" disabled aria-describedby="contact-unavailable" :aria-label="content.formTitle">
-          <label class="contact-field">
-            <span>{{ content.fields.name }} <b>*</b></span>
-            <input required type="text" name="name" :placeholder="content.placeholders.name" />
-          </label>
-          <label class="contact-field">
-            <span>{{ content.fields.company }} <b>*</b></span>
-            <input required type="text" name="company" :placeholder="content.placeholders.company" />
-          </label>
-          <label class="contact-field">
-            <span>{{ content.fields.country }} <b>*</b></span>
-            <select required name="country">
-              <option value="" disabled selected>{{ content.placeholders.country }}</option>
-              <option v-for="item in content.countryOptions" :key="item" :value="item">{{ item }}</option>
-            </select>
-          </label>
-          <label class="contact-field">
-            <span>{{ content.fields.email }} <b>*</b></span>
-            <input required type="email" name="email" :placeholder="content.placeholders.email" />
-          </label>
-          <label class="contact-field">
-            <span>{{ content.fields.phone }} <b>*</b></span>
-            <input required type="tel" name="phone" :placeholder="content.placeholders.phone" />
-          </label>
-          <label class="contact-field">
-            <span>{{ content.fields.inquiry }} <b>*</b></span>
-            <select required name="inquiry">
-              <option value="" disabled selected>{{ content.placeholders.inquiry }}</option>
-              <option v-for="item in content.inquiryOptions" :key="item" :value="item">{{ item }}</option>
-            </select>
-          </label>
-          <label class="contact-field">
-            <span>{{ content.fields.category }}</span>
-            <input type="text" name="category" :placeholder="content.placeholders.category" />
-          </label>
-          <label class="contact-field">
-            <span>{{ content.fields.quantity }}</span>
-            <input type="text" name="quantity" :placeholder="content.placeholders.quantity" />
-          </label>
-          <label class="contact-field contact-field-full">
-            <span>{{ content.fields.delivery }}</span>
-            <input type="date" name="delivery" />
-          </label>
-          <label class="contact-field contact-field-full">
-            <span>{{ content.fields.message }} <b>*</b></span>
-            <textarea required name="message" rows="5" :placeholder="content.placeholders.message"></textarea>
-          </label>
-          <label class="contact-upload contact-field-full">
-            <span>{{ content.fields.attachment }}</span>
-            <input type="file" name="attachment" accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png" />
-            <span class="contact-upload-box">
-              <Paperclip :size="26" />
-              <strong>{{ content.upload }}</strong>
-              <small>{{ content.uploadHint }}</small>
-            </span>
-          </label>
-          <label class="contact-consent contact-field-full">
-            <input required type="checkbox" name="consent" />
-            <span>{{ content.consent }}</span>
-          </label>
-          <button class="contact-submit" type="submit">
-            {{ content.submit }}
-            <ArrowRight :size="19" weight="bold" />
-          </button>
+        <p id="contact-unavailable" class="inquiry-note" role="note"><Info :size="18" aria-hidden="true" />{{ content.note }}</p>
+        <form @submit.prevent aria-describedby="contact-unavailable">
+          <fieldset class="contact-form" :aria-label="content.title">
+            <label class="contact-field"><span>{{ content.name }} <b>*</b></span><input required name="name" type="text" autocomplete="name" :placeholder="content.nameHint" /></label>
+            <label class="contact-field"><span>{{ content.type }} <b>*</b></span>
+              <select v-model="inquiry" required name="inquiry"><option disabled value="">{{ content.typeHint }}</option><option value="career">{{ content.career }}</option><option value="business">{{ content.business }}</option></select>
+            </label>
+            <label class="contact-field"><span>{{ content.company }} <b v-if="inquiry === 'business'">*</b></span><input v-model="company" :disabled="isCareer" :required="inquiry === 'business'" name="company" type="text" autocomplete="organization" :placeholder="isCareer ? content.companySkip : content.companyHint" /></label>
+            <label class="contact-field"><span>{{ content.email }} <b>*</b></span><input required name="email" type="email" autocomplete="email" :placeholder="content.emailHint" /></label>
+            <label class="contact-field contact-field-full"><span>{{ content.phone }} <b>*</b></span><input required name="phone" type="tel" autocomplete="tel" :placeholder="content.phoneHint" /></label>
+            <label class="contact-field contact-field-full"><span>{{ content.message }} <b>*</b></span><textarea required name="message" rows="5" :placeholder="content.messageHint"></textarea></label>
+            <div class="contact-upload contact-field-full">
+              <span id="attachment-label">{{ content.attachment }}</span>
+              <label class="inquiry-upload-control">
+                <input ref="attachmentInput" type="file" name="attachment" accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png" aria-labelledby="attachment-label" aria-describedby="attachment-help attachment-error" @change="selectAttachment" />
+                <span class="contact-upload-box"><Paperclip :size="32" aria-hidden="true" /><strong>{{ attachment ? attachment.name : content.choose }}</strong><small>{{ content.uploadHint }}</small><small id="attachment-help">{{ content.formats }}</small></span>
+              </label>
+              <button v-if="attachment" class="inquiry-remove" type="button" @click="clearAttachment">{{ content.remove }}</button>
+              <span id="attachment-error" class="inquiry-file-error" role="alert">{{ attachmentError ? content.invalid : '' }}</span>
+            </div>
+            <div class="inquiry-submit-row contact-field-full"><button class="contact-submit" type="submit" disabled>{{ content.submit }}</button><span>{{ content.submitHint }}</span></div>
           </fieldset>
         </form>
       </div>
-
       <aside class="contact-direct">
         <div class="contact-direct-panel">
-          <h2>{{ content.directTitle }}</h2>
+          <h2>{{ content.direct }}</h2><p class="inquiry-direct-intro">{{ content.directHint }}</p>
           <div class="contact-direct-list">
-            <article v-for="item in content.details" :key="item.label">
-              <component :is="item.icon" :size="30" />
-              <div><span>{{ item.label }}</span><strong>{{ item.value }}</strong></div>
-            </article>
+            <article><Clock :size="34" aria-hidden="true" /><div><span>{{ content.hours }}</span><strong>{{ content.time }}</strong></div></article>
+            <article><MapPin :size="34" aria-hidden="true" /><div><span>{{ content.location }}</span><strong>{{ content.address }}</strong></div></article>
           </div>
-          <div class="contact-response">
-            <CheckCircle :size="31" />
-            <div><strong>{{ content.responseTitle }}</strong><span>{{ content.responseBody }}</span></div>
-          </div>
+          <img class="inquiry-team-image" src="/assets/trade-2026/contact-office-consultation.jpg" :alt="content.imageAlt" />
         </div>
-        <img src="/assets/trade-2026/contact-office-consultation.jpg" :alt="locale === 'zh' ? '全品轩团队整理客户询盘与产品资料' : 'TRIPEER team reviewing inquiry and product materials'" />
       </aside>
     </section>
-
-    <section class="contact-process">
-      <div class="contact-shell">
-        <h2>{{ content.processTitle }}</h2>
-        <div class="contact-process-grid">
-          <article v-for="(item, index) in content.steps" :key="item.title">
-            <span>{{ index + 1 }}</span>
-            <component :is="item.icon" :size="43" />
-            <div><h3>{{ item.title }}</h3><p>{{ item.body }}</p></div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="contact-trust">
-      <div class="contact-shell">
-        <h2>{{ content.trustTitle }}</h2>
-        <div class="contact-trust-grid">
-          <article v-for="item in content.trust" :key="item.title">
-            <component :is="item.icon" :size="46" />
-            <div><h3>{{ item.title }}</h3><p>{{ item.body }}</p></div>
-          </article>
-        </div>
-      </div>
-    </section>
   </main>
-
   <SiteFooter />
 </template>

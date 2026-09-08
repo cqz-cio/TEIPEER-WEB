@@ -14,7 +14,7 @@ import {
   PhMagnifyingGlass as MagnifyingGlass,
   PhPackage as Package,
   PhShieldCheck as ShieldCheck,
-  PhStack as Stack,
+  PhHouseLine as HouseLine,
   PhTarget as Target,
   PhUsersThree as UsersThree,
 } from '@phosphor-icons/vue'
@@ -26,13 +26,11 @@ const aboutNav = computed(() => {
   const zh = [
     { key: 'profile', label: '公司概况', route: 'about-profile' },
     { key: 'history', label: '发展历程', route: 'about-history' },
-    { key: 'mission', label: '使命愿景', route: 'about-mission' },
     { key: 'markets', label: '海外市场', route: 'about-markets' },
   ]
   const en = [
     { key: 'profile', label: 'Company Profile', route: 'about-profile' },
     { key: 'history', label: 'Our Journey', route: 'about-history' },
-    { key: 'mission', label: 'Mission & Vision', route: 'about-mission' },
     { key: 'markets', label: 'Overseas Markets', route: 'about-markets' },
   ]
   return locale.value === 'zh' ? zh : en
@@ -42,13 +40,13 @@ const facts = computed(() => {
   const zh = [
     { value: '2016', label: '成立于宁波', icon: CalendarBlank },
     { value: '10年', label: '贸易执行积累', icon: Cube },
-    { value: '日用消费品', label: '产品供应方向', icon: Stack },
+    { value: '家居用品', label: '品质家居供应', icon: HouseLine },
     { value: '海外市场', label: '出口服务经验', icon: GlobeHemisphereEast },
   ]
   const en = [
     { value: '2016', label: 'Founded in Ningbo', icon: CalendarBlank },
     { value: '10 Years', label: 'Trade Execution', icon: Cube },
-    { value: 'Daily-use Goods', label: 'Product Focus', icon: Stack },
+    { value: 'Home Essentials', label: 'Quality Home Supply', icon: HouseLine },
     { value: 'Overseas Markets', label: 'Export Service', icon: GlobeHemisphereEast },
   ]
   return locale.value === 'zh' ? zh : en
@@ -206,7 +204,7 @@ const commonContent = computed(() => content[locale.value])
       <div class="about-hero-port"><img src="/assets/trade-2026/about-hero-port.jpg" alt="Container terminal serving overseas markets" /></div>
       <div class="about-hero-overlay" aria-hidden="true"></div>
       <div class="about-shell about-hero-copy">
-        <h1>{{ commonContent.heroTitle }}</h1>
+        <h1>{{ route.name === 'corporate-culture' ? (locale === 'zh' ? '企业文化' : 'Corporate Culture') : commonContent.heroTitle }}</h1>
         <p>{{ commonContent.heroSubtitle }}</p>
       </div>
     </section>

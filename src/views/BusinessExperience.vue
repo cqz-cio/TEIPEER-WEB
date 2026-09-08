@@ -34,7 +34,7 @@ const content = computed(() => {
       learnMore: 'Learn more',
       cards: [
         ['Paper-based & Disposable Products', 'Products for hygiene, cleaning and daily-use applications, coordinated around material, dimensions, folding, pack counts and packaging requirements.', 'trade-2026/product-paper-disposable.jpg', HouseLine, 'business-categories'],
-        ['Home & Daily-use Consumer Goods', 'Selected kitchen, storage, cleaning, bathroom and related products sourced according to market, channel and order needs.', 'trade-2026/product-home-daily.jpg', PencilLine, 'business-categories'],
+        ['Home Essentials', 'Selected kitchen, storage, cleaning and bathroom essentials sourced according to market, channel and order needs.', 'trade-2026/product-home-daily.jpg', HouseLine, 'business-categories'],
         ['Product & Packaging Customization', 'Sample, label, packaging structure and carton coordination that turns brand and channel requirements into production-ready details.', 'trade-2026/product-packaging-custom.jpg', Gift, 'business-customization'],
         ['International Trade & Order Services', 'Quotation, sampling, production follow-up, quality checks, documentation, customs and shipping coordination across the order lifecycle.', 'trade-2026/product-trade-order.jpg', Package, 'business-supply'],
       ],
@@ -42,7 +42,7 @@ const content = computed(() => {
       matrixIntro: 'Our product structure starts with publicly visible paper-based and disposable daily-use products, while retaining flexibility for related household, office and customized projects. Final availability, specifications and compliance requirements are confirmed for each inquiry.',
       matrix: [
         ['Paper & Disposable Daily Use', [['Paper hygiene products', 'trade-2026/matrix-paper-hygiene.jpg'], ['Disposable daily-use products', 'trade-2026/matrix-disposable-use.jpg'], ['Commercial-use supplies', 'trade-2026/matrix-commercial-supplies.jpg']], PencilLine],
-        ['Home & Daily Essentials', [['Storage & organization', 'trade-2026/matrix-storage.jpg'], ['Kitchen & table', 'trade-2026/matrix-kitchen.jpg'], ['Cleaning & bathroom', 'trade-2026/matrix-cleaning.jpg']], HouseLine],
+        ['Home Essentials', [['Storage & organization', 'trade-2026/matrix-storage.jpg'], ['Kitchen & table', 'trade-2026/matrix-kitchen.jpg'], ['Cleaning & bathroom', 'trade-2026/matrix-cleaning.jpg']], HouseLine],
         ['Office & Customized Projects', [['Stationery & office', 'trade-2026/matrix-office.jpg'], ['Combination products', 'trade-2026/matrix-combination.jpg'], ['Labels & custom packaging', 'trade-2026/matrix-packaging.jpg']], Gift],
       ],
       customizationTitle: 'From Specifications and Samples to Packaging Execution',
@@ -80,9 +80,9 @@ const content = computed(() => {
   }
 
   return {
-    heroTitle: '主营业务',
+    heroTitle: '业务介绍',
     heroSubtitle: '从产品需求到出口交付',
-    sectionTitle: '主营业务',
+    sectionTitle: '业务介绍',
     overviewTitle: '连接产品需求、供应资源与出口交付',
     overviewParagraphs: [
       '宁波全品轩国际贸易有限公司成立于2016年，专注日用消费品国际贸易。公开可见业务以纸制与一次性日用品为基础，并根据客户项目协调家居日用、办公及相关定制产品。',
@@ -92,7 +92,7 @@ const content = computed(() => {
     learnMore: '了解更多',
     cards: [
       ['纸制与一次性日用品', '围绕卫生、清洁及日常使用场景，根据材料、尺寸、折叠、包装数量和定制要求协调产品与订单。', 'trade-2026/product-paper-disposable.jpg', HouseLine, 'business-categories'],
-      ['家居及日用消费品', '根据市场、渠道和订单需求，协调厨房、收纳、清洁、卫浴及相关日用产品的采购与出口。', 'trade-2026/product-home-daily.jpg', PencilLine, 'business-categories'],
+      ['家居用品', '根据市场、渠道和订单需求，协调厨房、收纳、清洁及卫浴等家居用品的采购与出口。', 'trade-2026/product-home-daily.jpg', HouseLine, 'business-categories'],
       ['产品与包装定制', '通过样品、标签、包装结构和装箱方式的确认，把品牌和渠道要求落实为可执行细节。', 'trade-2026/product-packaging-custom.jpg', Gift, 'business-customization'],
       ['国际贸易与订单服务', '贯通询价、打样、生产跟进、质量检查、单证、报关及出运安排，让订单执行保持清晰。', 'trade-2026/product-trade-order.jpg', Package, 'business-supply'],
     ],
@@ -100,7 +100,7 @@ const content = computed(() => {
     matrixIntro: '以公开可见的纸制与一次性日用品为基础，同时保留家居日用、办公及定制项目所需要的灵活协同能力。具体产品、规格与目标市场合规要求，以每次询盘确认结果为准。',
     matrix: [
       ['纸制与一次性日用品', [['纸制卫生用品', 'trade-2026/matrix-paper-hygiene.jpg'], ['一次性日用产品', 'trade-2026/matrix-disposable-use.jpg'], ['商用场景耗材', 'trade-2026/matrix-commercial-supplies.jpg']], PencilLine],
-      ['家居及日用消费品', [['收纳整理', 'trade-2026/matrix-storage.jpg'], ['厨房与餐桌用品', 'trade-2026/matrix-kitchen.jpg'], ['清洁与卫浴用品', 'trade-2026/matrix-cleaning.jpg']], HouseLine],
+      ['家居用品', [['收纳整理', 'trade-2026/matrix-storage.jpg'], ['厨房与餐桌用品', 'trade-2026/matrix-kitchen.jpg'], ['清洁与卫浴用品', 'trade-2026/matrix-cleaning.jpg']], HouseLine],
       ['办公与定制项目', [['文具及办公用品', 'trade-2026/matrix-office.jpg'], ['组合与渠道产品', 'trade-2026/matrix-combination.jpg'], ['标签与定制包装', 'trade-2026/matrix-packaging.jpg']], Gift],
     ],
     customizationTitle: '从规格与样品确认到包装落地',

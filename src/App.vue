@@ -7,12 +7,12 @@ import {
   PhArrowRight as ArrowRight,
   PhCalendarBlank as CalendarBlank,
   PhCheckCircle as CheckCircle,
-  PhCube as Cube,
+  PhHouseLine as HouseLine,
   PhFileText as FileText,
   PhGlobeHemisphereEast as GlobeHemisphereEast,
-  PhHandshake as Handshake,
-  PhMagnifyingGlass as MagnifyingGlass,
-  PhPackage as Package,
+  PhMountains as Mountains,
+  PhNotePencil as NotePencil,
+  PhChartLineUp as ChartLineUp,
   PhShieldCheck as ShieldCheck,
   PhTarget as Target,
   PhUsersThree as UsersThree,
@@ -24,14 +24,14 @@ const facts = computed(() =>
     ? [
         { value: '2016', label: '成立于宁波', icon: CalendarBlank },
         { value: '10年', label: '贸易执行积累', icon: CheckCircle },
-        { value: '日用消费品', label: '产品供应方向', icon: Cube },
+        { value: '家居用品', label: '品质家居供应', icon: HouseLine },
         { value: '订单协同', label: '从需求到交付', icon: FileText },
         { value: '海外市场', label: '出口服务经验', icon: GlobeHemisphereEast },
       ]
     : [
         { value: '2016', label: 'Founded in Ningbo', icon: CalendarBlank },
         { value: '10 Years', label: 'Trade Execution', icon: CheckCircle },
-        { value: 'Daily-use Goods', label: 'Product Focus', icon: Cube },
+        { value: 'Home Essentials', label: 'Quality Home Supply', icon: HouseLine },
         { value: 'Order Coordination', label: 'Requirement to Delivery', icon: FileText },
         { value: 'Overseas Markets', label: 'Export Service', icon: GlobeHemisphereEast },
       ],
@@ -46,9 +46,9 @@ const businessItems = computed(() => {
       image: '/assets/trade-2026/product-paper-disposable.jpg',
     },
     {
-      title: '家居及日用消费品',
-      subtitle: 'Home & Daily Essentials',
-      body: '根据客户市场与渠道需求，提供厨房、清洁、收纳及相关日用消费品的采购与出口协同。',
+      title: '家居用品',
+      subtitle: 'Home Essentials',
+      body: '根据客户市场与渠道需求，提供厨房、收纳、清洁及卫浴等家居用品的采购与出口协同。',
       image: '/assets/trade-2026/product-home-daily.jpg',
     },
     {
@@ -72,9 +72,9 @@ const businessItems = computed(() => {
       image: '/assets/trade-2026/product-paper-disposable.jpg',
     },
     {
-      title: 'Home & Daily Essentials',
+      title: 'Home Essentials',
       subtitle: 'Storage · Kitchen · Cleaning · Living',
-      body: 'Sourcing and export coordination for kitchen, cleaning, storage and related daily-use products based on market and channel needs.',
+      body: 'Sourcing and export coordination for kitchen, storage, cleaning and bathroom essentials based on market and channel needs.',
       image: '/assets/trade-2026/product-home-daily.jpg',
     },
     {
@@ -93,18 +93,18 @@ const businessItems = computed(() => {
   return locale.value === 'zh' ? zh : en
 })
 
-const capabilities = computed(() => {
+const cultureValues = computed(() => {
   const zh = [
-    { title: '产品匹配与寻源', body: '从使用场景、规格、目标价格与交期出发，匹配更适合项目的产品和供应资源。', icon: MagnifyingGlass },
-    { title: '订单与供应协同', body: '统一样品、数量、包装和生产节点，减少客户、供应商与物流之间的信息偏差。', icon: UsersThree },
-    { title: '质量检查与跟进', body: '把确认样品和产品要求转化为检查重点，并跟踪出货前发现的问题。', icon: ShieldCheck },
-    { title: '出口执行与交付', body: '衔接订单、单证、报关与运输安排，持续反馈关键状态和交付进展。', icon: GlobeHemisphereEast },
+    { title: '可靠', body: '重视承诺，让合作可预期。', icon: ShieldCheck },
+    { title: '专业', body: '清晰流程，细致执行。', icon: NotePencil },
+    { title: '协同', body: '及时沟通，高效配合。', icon: UsersThree },
+    { title: '长期', body: '持续改进，共创长期价值。', icon: ChartLineUp },
   ]
   const en = [
-    { title: 'Product Matching & Sourcing', body: 'Matching products and supply resources to the use case, specifications, target price and delivery plan.', icon: MagnifyingGlass },
-    { title: 'Order & Supply Coordination', body: 'Aligning samples, quantities, packaging and production milestones across the order.', icon: UsersThree },
-    { title: 'Quality Checks & Follow-up', body: 'Turning approved requirements into practical checks and following issues before shipment.', icon: ShieldCheck },
-    { title: 'Export Execution & Delivery', body: 'Connecting orders, documents, customs and transport with visible milestone updates.', icon: GlobeHemisphereEast },
+    { title: 'Reliability', body: 'Honor commitments. Make cooperation dependable.', icon: ShieldCheck },
+    { title: 'Professionalism', body: 'Clear processes. Careful execution.', icon: NotePencil },
+    { title: 'Collaboration', body: 'Timely communication. Effective teamwork.', icon: UsersThree },
+    { title: 'Long-term Focus', body: 'Keep improving. Create lasting value together.', icon: ChartLineUp },
   ]
   return locale.value === 'zh' ? zh : en
 })
@@ -194,41 +194,41 @@ watch(
       </div>
     </section>
 
-    <section id="capabilities" class="section capabilities-section">
+    <section id="culture" class="section home-culture" aria-labelledby="culture-title">
       <div class="container">
-        <div class="section-heading compact-heading">
-          <h2>{{ locale === 'zh' ? '核心能力' : 'Core Capabilities' }}</h2>
+        <div class="culture-top">
+          <div class="culture-copy">
+            <header class="culture-heading">
+              <h2 id="culture-title">{{ locale === 'zh' ? '企业文化' : 'Corporate Culture' }}</h2>
+              <p>{{ locale === 'zh' ? 'CORPORATE CULTURE' : 'OUR MISSION & VALUES' }}</p>
+              <span class="culture-accent" aria-hidden="true"></span>
+            </header>
+            <div class="culture-purpose">
+              <article>
+                <Target :size="68" weight="thin" aria-hidden="true" />
+                <div><h3>{{ t('purpose.mission') }}</h3><p>{{ t('purpose.missionText') }}</p></div>
+              </article>
+              <article>
+                <Mountains :size="68" weight="thin" aria-hidden="true" />
+                <div><h3>{{ t('purpose.vision') }}</h3><p>{{ t('purpose.visionText') }}</p></div>
+              </article>
+            </div>
+          </div>
+          <img class="culture-image" src="/assets/trade-2026/home-overseas-coordination.jpg" :alt="locale === 'zh' ? '港口与集装箱货轮' : 'Container ship and port'" loading="lazy" />
         </div>
-        <div class="capability-grid">
-          <RouterLink v-for="(item, index) in capabilities" :key="item.title" class="capability-item" :to="{ name: ['capability-development', 'capability-supply', 'capability-quality', 'capability-trade'][index] }">
-            <div class="capability-topline"><component :is="item.icon" :size="42" /></div>
-            <h3>{{ item.title }}</h3>
-            <p>{{ item.body }}</p>
-          </RouterLink>
+        <div class="culture-values">
+          <article v-for="item in cultureValues" :key="item.title" class="culture-value">
+            <component :is="item.icon" :size="60" weight="thin" aria-hidden="true" />
+            <div><h3>{{ item.title }}</h3><p>{{ item.body }}</p></div>
+          </article>
         </div>
+        <RouterLink class="text-link culture-link" :to="{ name: 'corporate-culture' }">{{ locale === 'zh' ? '了解企业文化' : 'Explore Our Culture' }} <ArrowRight :size="20" aria-hidden="true" /></RouterLink>
       </div>
     </section>
-
-    <section id="purpose" class="purpose-section">
-      <div class="container purpose-layout">
-        <div class="purpose-copy">
-          <article>
-            <Target :size="34" weight="duotone" />
-            <div><span>{{ t('purpose.mission') }}</span><p>{{ t('purpose.missionText') }}</p></div>
-          </article>
-          <article>
-            <Handshake :size="34" weight="duotone" />
-            <div><span>{{ t('purpose.vision') }}</span><p>{{ t('purpose.visionText') }}</p></div>
-          </article>
-        </div>
-        <img class="map-image" src="/assets/trade-2026/home-overseas-coordination.jpg" :alt="t('purpose.mapAlt')" />
-      </div>
-    </section>
-
     <section id="insights" class="section insights-section">
       <div class="container">
         <div class="section-heading heading-row insights-heading">
-          <div><h2>{{ locale === 'zh' ? '贸易实践' : 'Trade Practice' }}</h2></div>
+          <div><h2>{{ locale === 'zh' ? '新闻动态' : 'News & Updates' }}</h2></div>
           <RouterLink class="text-link" :to="{ name: 'insight-company' }">{{ t('insights.more') }} <ArrowRight :size="18" /></RouterLink>
         </div>
         <div class="insights-grid">
