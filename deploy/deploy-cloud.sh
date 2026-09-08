@@ -94,8 +94,11 @@ stage=$1 archive=$2 release=$3
 test -s "$stage/index.html"
 test -d "$stage/assets"
 test "$(cat "$stage/deploy-version.txt")" = "$release"
-# This archive never crosses the public network; the existing helper removes it.
-timeout --kill-after=5s 30s tar -czf "$archive" -C "$stage" .
+# mktemp keeps the staging root private (0700). Do NOT preserve that mode in
+# the archive's ./ entry: extraction would turn the release root into 0700,
+# denying Nginx access even though index.html itself is readable.
+# Change archive metadata only; leave the temporary directory private.
+timeout --kill-after=5s 30s tar --mode='u=rwX,go=rX' -czf "$archive" -C "$stage" .
 timeout --kill-after=5s 60s sudo -n /usr/local/sbin/tripeer-deploy "$archive" "$release"
 test "$(curl -fsS --connect-timeout 5 --max-time 10 \
   "http://127.0.0.1:18081/deploy-version.txt?release=$release")" = "$release"

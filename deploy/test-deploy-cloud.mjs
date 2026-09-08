@@ -90,6 +90,18 @@ try {
   assert.match(workflow, /event: 'push', status: 'success'/);
   assert.match(workflow, /ref: \$\{\{ steps.source.outputs.sha \}\}/);
   console.log(`PASS workflow invariants; ${count} orchestration scenarios passed`);
+  // Test the actual archive command, not a separately copied implementation.
+  // Linux permissions cannot be faithfully tested on the Windows filesystem.
+  if (process.platform !== 'win32') {
+    const modeResult = spawnSync(bash, ['deploy/test-release-permissions.sh'], {
+      encoding: 'utf8', timeout: 15000
+    });
+    assert.ifError(modeResult.error);
+    assert.equal(modeResult.status, 0, `${modeResult.stdout}\n${modeResult.stderr}`);
+    console.log(modeResult.stdout.trim());
+  } else {
+    console.log('SKIP Linux filesystem permissions locally (covered on Ubuntu CI)');
+  }
   // Exercise the exact inline GitHub API selection code without calling GitHub.
   const inline = workflow.match(/          script: \|\n([\s\S]*?)\n      - name:/)[1]
     .split('\n').map(line => line.replace(/^ {12}/, '')).join('\n');
