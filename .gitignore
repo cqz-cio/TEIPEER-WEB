@@ -1,2 +1,4 @@
 
 work/
+.env.local
+.env.*.local

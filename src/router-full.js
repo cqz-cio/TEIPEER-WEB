@@ -32,6 +32,7 @@ export const router = createRouter({
     return { top: 0 }
   },
   routes: [
+    { path: '/cms-preview', name: 'cms-preview' },
     { path: '/', name: 'home' },
     {
       path: '/about/profile',

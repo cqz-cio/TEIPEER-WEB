@@ -3,6 +3,7 @@ import { computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import SiteHeader from './components/SiteHeader.vue'
 import SiteFooter from './components/SiteFooter.vue'
+import { usePageContent } from './cms/usePageContent.js'
 import {
   PhArrowRight as ArrowRight,
   PhCalendarBlank as CalendarBlank,
@@ -19,6 +20,7 @@ import {
 } from '@phosphor-icons/vue'
 
 const { t, locale } = useI18n()
+const { hero, loading: cmsLoading, error: cmsError, reload: reloadCms } = usePageContent()
 const facts = computed(() =>
   locale.value === 'zh'
     ? [
@@ -139,19 +141,25 @@ watch(
   <SiteHeader />
 
   <main id="main">
-    <section id="home" class="hero-section">
-      <img class="hero-media" src="/assets/trade-2026/home-hero-port.jpg" alt="Container vessel and port operations in Ningbo" />
+    <section v-if="hero" id="home" class="hero-section">
+      <img class="hero-media" :src="hero.image.url" :alt="hero.image.alt" />
       <div class="hero-wash" aria-hidden="true"></div>
       <div class="container hero-content">
         <p class="hero-kicker">RELIABLE TRADE <span>{{ locale === 'zh' ? '清晰协同' : 'ORDER COORDINATION' }}</span></p>
-        <h1>{{ t('hero.title') }}</h1>
-        <p class="hero-subtitle">{{ t('hero.subtitle') }}</p>
-        <p class="hero-body">{{ t('hero.body') }}</p>
+        <h1>{{ hero.title }}</h1>
+        <p class="hero-subtitle">{{ hero.subtitle }}</p>
+        <p class="hero-body">{{ hero.body }}</p>
         <a class="primary-button" href="#business">
           {{ t('hero.cta') }}
           <ArrowRight :size="20" weight="bold" />
         </a>
       </div>
+    </section>
+
+    <section v-if="!hero" class="section container" aria-live="polite">
+      <p v-if="cmsLoading">{{ locale === 'zh' ? '正在加载官网内容…' : 'Loading website content…' }}</p>
+      <p v-else role="alert">{{ cmsError || (locale === 'zh' ? '预览不可用，请从 ERP 重新打开。' : 'Preview unavailable. Reopen it from the ERP.') }}</p>
+      <button v-if="cmsError" type="button" class="primary-button" @click="reloadCms">{{ locale === 'zh' ? '重试' : 'Retry' }}</button>
     </section>
 
     <section id="facts" class="facts-section" aria-label="Company facts">

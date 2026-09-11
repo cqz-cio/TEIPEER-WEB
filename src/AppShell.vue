@@ -8,6 +8,7 @@ import BusinessExperience from './views/BusinessExperience.vue'
 import CapabilityExperience from './views/CapabilityExperience.vue'
 import InsightsExperience from './views/InsightsExperience.vue'
 import ContactExperience from './views/ContactExperience.vue'
+import CmsPreviewExperience from './views/CmsPreviewExperience.vue'
 import { createMotionController } from './motion'
 import './about.css'
 import './business.css'
@@ -53,7 +54,8 @@ onBeforeUnmount(() => motionController?.destroy())
 </script>
 
 <template>
-  <LegacyHome v-if="isHome" />
+  <CmsPreviewExperience v-if="route.name === 'cms-preview'" />
+  <LegacyHome v-else-if="isHome" />
   <BusinessExperience v-else-if="isBusiness" />
   <CapabilityExperience v-else-if="isCapability" />
   <InsightsExperience v-else-if="isInsight" />

@@ -27,6 +27,7 @@ const navGroups = computed(() => [
 ])
 
 const setLocale = (nextLocale) => {
+  if (route.name === 'cms-preview') return
   locale.value = nextLocale
   localStorage.setItem('tripeer-locale', nextLocale)
   closeMenu()

@@ -1,6 +1,7 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
 import {
   PhArrowUp as ArrowUp,
   PhCaretDown as CaretDown,
@@ -16,6 +17,7 @@ const socialIcons = [
 ]
 
 const { locale } = useI18n()
+const route = useRoute()
 const mobileQuery = window.matchMedia('(max-width: 640px)')
 const isMobile = ref(mobileQuery.matches)
 const expandedGroups = ref({})
@@ -106,6 +108,7 @@ const content = computed(() => {
 })
 
 const setLocale = () => {
+  if (route.name === 'cms-preview') return
   const nextLocale = locale.value === 'zh' ? 'en' : 'zh'
   locale.value = nextLocale
   localStorage.setItem('tripeer-locale', nextLocale)

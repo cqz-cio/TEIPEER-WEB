@@ -1,0 +1,33 @@
+# Include inside the website server block.
+# Replace TRIPEER_TENANT_ID before enabling. Keep ERP admin APIs private to the ERP admin site.
+location = /cms-api/seo/page/public {
+    proxy_pass http://127.0.0.1:48080/app-api/seo/page/public?siteId=1&pageKey=home&locale=$arg_locale;
+    proxy_set_header tenant-id TRIPEER_TENANT_ID;
+    proxy_set_header Authorization "";
+    proxy_set_header Cookie "";
+    proxy_set_header visit-tenant-id "";
+    proxy_set_header tenant-visit-id "";
+    proxy_hide_header Cache-Control;
+    add_header Cache-Control "private, no-store" always;
+}
+location = /cms-api/seo/page/preview/exchange {
+    proxy_pass http://127.0.0.1:48080/app-api/seo/page/preview/exchange;
+    proxy_set_header tenant-id TRIPEER_TENANT_ID;
+    proxy_set_header Authorization "";
+    proxy_set_header Cookie "";
+    proxy_set_header visit-tenant-id "";
+    proxy_set_header tenant-visit-id "";
+    add_header Cache-Control "private, no-store" always;
+    add_header X-Robots-Tag "noindex, nofollow, noarchive" always;
+}
+location = /cms-api/seo/page/preview {
+    proxy_pass http://127.0.0.1:48080/app-api/seo/page/preview;
+    proxy_set_header tenant-id TRIPEER_TENANT_ID;
+    proxy_set_header Authorization "";
+    proxy_set_header Cookie "";
+    proxy_set_header visit-tenant-id "";
+    proxy_set_header tenant-visit-id "";
+    add_header Cache-Control "private, no-store" always;
+    add_header X-Robots-Tag "noindex, nofollow, noarchive" always;
+}
+location /cms-api/ { return 404; }
