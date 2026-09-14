@@ -3,6 +3,14 @@
 官网：`http://124.220.2.69:18081`。测试 ERP：`http://124.220.2.69/admin/`。
 2026-09-14 已核实测试 ERP 的 Flyway V050 成功，TRIPEER 实际 tenantId 为 `163`。
 
+## 当前测试环境状态（2026-09-14）
+
+- CMS 已开启，`VITE_CMS_ENABLED=true`；站点 URL 与预览地址均已保存。
+- 中文与英文首页已初始化、预览并发布为第 1 版；公开官网已验证读取 CMS 内容及切换语言。
+- ERP 菜单修复 `2c4acf69` 已通过 [ERP CD - test](https://github.com/cqz-cio/furniture/actions/runs/34803256826) 第 2 次运行。首次运行因磁盘空间不足停止；清理两个 8 月遗留的未完成上传缓存后重跑成功，数据库及备份未删除。
+- 官网运行代码 `14ac94b`，已通过 [官网部署](https://github.com/cqz-cio/TEIPEER-WEB/actions/runs/34804354595)。
+- 当前范围仅为首页首屏文字与图片；日常操作见 [ERP 操作说明](erp-operations.md)。品牌运营实际登录账号尚未创建。
+
 ## 首次准备
 
 1. 管理员在 TRIPEER 租户中将站点 1 的官网地址和草稿预览地址都设置为 `http://124.220.2.69:18081`。
