@@ -78,12 +78,22 @@ jobs:
         working-directory: source
         env:
           RELEASE_ID: ${{ steps.source.outputs.release }}
+          VITE_CMS_ENABLED: ${{ vars.VITE_CMS_ENABLED || 'false' }}
+          CMS_UPSTREAM: ${{ vars.CMS_UPSTREAM }}
+          CMS_TENANT_ID: ${{ vars.CMS_TENANT_ID }}
         run: |
           timeout --kill-after=10s 180s npm run build
           test -s dist/index.html
           test -d dist/assets
           printf '%s\n' "$RELEASE_ID" > dist/deploy-version.txt
           du -sh dist
+
+      - name: Require published CMS content before activation
+        working-directory: source
+        env:
+          VITE_CMS_ENABLED: ${{ vars.VITE_CMS_ENABLED || 'false' }}
+          CMS_SITE_URL: http://124.220.2.69:18081
+        run: timeout --kill-after=5s 30s node deploy/check-cms-ready.mjs
 
       - name: Configure verified SSH identity
         if: ${{ !inputs.dry_run }}
