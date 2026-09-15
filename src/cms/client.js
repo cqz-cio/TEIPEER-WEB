@@ -59,11 +59,14 @@ export function validatePageResponse(data) {
   return data
 }
 
-export function isImageUrl(value) {
+export function isImageUrl(value, pageProtocol = globalThis.location?.protocol) {
   if (typeof value !== 'string') return false
   if (value.startsWith('/assets/') && !/[\\\\%?#]/.test(value) && !value.includes('..')) return true
   try {
     const url = new URL(value)
-    return url.protocol === 'https:' && !url.username && !url.password && !url.search && !url.hash
+    const testMedia = pageProtocol === 'http:' && url.protocol === 'http:'
+      && /^\/admin-api\/infra\/file\/[0-9]+\/get\/website-media\/[0-9]+\/[A-Za-z0-9/.-]+$/.test(url.pathname)
+      && !value.includes('..')
+    return (url.protocol === 'https:' || testMedia) && !url.username && !url.password && !url.search && !url.hash
   } catch { return false }
 }

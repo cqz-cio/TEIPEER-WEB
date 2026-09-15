@@ -55,6 +55,15 @@ test('proxy requires a real tenant and rejects credential-bearing upstreams', ()
   assert.throws(() => cmsProxyOptions({ VITE_CMS_ENABLED: 'true' }), /CMS_TENANT_ID/)
   assert.throws(() => cmsProxyOptions({ CMS_UPSTREAM: 'http://user:password@localhost', CMS_TENANT_ID: '500' }), /Invalid/)
 })
+
+test('managed HTTP media is accepted only on HTTP test pages', () => {
+  const media = 'http://124.220.2.69/admin-api/infra/file/1/get/website-media/163/abc/image.png'
+  assert.equal(isImageUrl(media, 'http:'), true)
+  assert.equal(isImageUrl(media, 'https:'), false)
+  assert.equal(isImageUrl('http://example.com/arbitrary.jpg', 'http:'), false)
+  assert.equal(isImageUrl(media + '?token=x', 'http:'), false)
+  assert.equal(isImageUrl(media.replace('/abc/', '/../../abc/'), 'http:'), false)
+})
 test('proxy pins site and page, strips admin identity, and cannot forward arbitrary routes', () => {
   const proxy = cmsProxyOptions({ CMS_TENANT_ID: '500', CMS_UPSTREAM: 'http://localhost:48080' })
   assert.equal(proxy.rewrite('/cms-api/admin-api/system/user'), '/__cms_route_not_allowed__')
