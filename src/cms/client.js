@@ -7,7 +7,7 @@ export class CmsError extends Error {
 }
 
 export function createCmsClient({ baseUrl = '/cms-api', fetchImpl = globalThis.fetch, timeoutMs = 10000 } = {}) {
-  async function request(path, { body, session, signal } = {}) {
+  async function request(path, { body, session, sessionHeader = 'X-Page-Preview-Session', signal } = {}) {
     const controller = new AbortController()
     const abort = () => controller.abort()
     if (signal?.aborted) abort()
@@ -21,7 +21,7 @@ export function createCmsClient({ baseUrl = '/cms-api', fetchImpl = globalThis.f
         referrerPolicy: 'same-origin',
         headers: {
           ...(body ? { 'Content-Type': 'application/json' } : {}),
-          ...(session ? { 'X-Page-Preview-Session': session } : {}),
+          ...(session ? { [sessionHeader]: session } : {}),
         },
         body: body ? JSON.stringify(body) : undefined,
         signal: controller.signal,
@@ -36,6 +36,14 @@ export function createCmsClient({ baseUrl = '/cms-api', fetchImpl = globalThis.f
     }
   }
   return {
+    getNavigation(locale, signal) { return request('/seo/navigation/public?siteId=1&locale=' + encodeURIComponent(locale), { signal }) },
+    getArticles(locale, page = 1, signal) { return request('/seo/blog/public?siteId=1&pageSize=24&page=' + page + '&locale=' + encodeURIComponent(locale), { signal }) },
+    getArticle(slug, locale, signal) {
+      if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) throw new CmsError('文章地址无效。')
+      return request('/seo/blog/public/' + slug + '?siteId=1&locale=' + encodeURIComponent(locale), { signal })
+    },
+    exchangeSiteTicket(ticket, signal) { return request('/seo/site-preview/exchange', { body: { ticket }, signal }) },
+    getSitePreview(session, signal) { return request('/seo/site-preview/snapshot', { session, sessionHeader: 'X-Site-Preview-Session', signal }) },
     getPublishedPage(locale, signal) {
       return request('/seo/page/public?siteId=1&pageKey=home&locale=' + encodeURIComponent(locale), { signal })
     },

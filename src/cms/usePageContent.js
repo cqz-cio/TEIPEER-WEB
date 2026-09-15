@@ -2,7 +2,7 @@ import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 import { createCmsClient, validatePageResponse, CmsError } from './client.js'
-import { previewPage } from './preview-context.js'
+import { previewPage, previewActive } from './preview-context.js'
 
 export function usePageContent() {
   const { locale, t } = useI18n()
@@ -10,7 +10,7 @@ export function usePageContent() {
   const page = ref(null)
   const loading = ref(false)
   const error = ref('')
-  const preview = computed(() => route.name === 'cms-preview')
+  const preview = computed(() => previewActive.value)
   const enabled = import.meta.env.VITE_CMS_ENABLED === 'true'
   let activeRequest
   let generation = 0
@@ -46,7 +46,7 @@ export function usePageContent() {
       if (current === generation) loading.value = false
     }
   }
-  watch([locale, () => route.name], reload, { immediate: true })
+  watch([locale, previewActive, () => route.name], reload, { immediate: true })
   onBeforeUnmount(() => { generation++; activeRequest?.abort() })
   return { hero, loading, error, reload, preview }
 }

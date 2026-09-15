@@ -3,6 +3,10 @@ import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 import SiteSearch from './SiteSearch.vue'
+import CmsNavigationItems from './CmsNavigationItems.vue'
+import { useNavigation } from '../cms/useNavigation.js'
+import { previewActive } from '../cms/preview-context.js'
+const cmsNavigation = useNavigation()
 import { PhCaretDown as CaretDown, PhList as List, PhX as X } from '@phosphor-icons/vue'
 
 const { t, locale } = useI18n()
@@ -27,7 +31,7 @@ const navGroups = computed(() => [
 ])
 
 const setLocale = (nextLocale) => {
-  if (route.name === 'cms-preview') return
+  if (previewActive.value) return
   locale.value = nextLocale
   localStorage.setItem('tripeer-locale', nextLocale)
   closeMenu()
@@ -67,7 +71,14 @@ onBeforeUnmount(() => window.removeEventListener('resize', handleResize))
         <img src="/assets/tripeer-logo-transparent.png" alt="TRIPEER" />
       </RouterLink>
 
-      <nav class="desktop-nav" :aria-label="locale === 'zh' ? '主要导航' : 'Primary navigation'">
+      <nav v-if="cmsNavigation" class="desktop-nav" :aria-label="locale === 'zh' ? '主要导航' : 'Primary navigation'">
+        <div v-for="item in cmsNavigation.items" :key="item.key" class="header-nav-group">
+          <RouterLink v-if="item.href" :to="item.href" class="header-nav-link" :class="{ active: route.path === item.href }">{{ item.label }}</RouterLink>
+          <button v-else class="header-nav-link header-nav-parent" type="button" aria-haspopup="true">{{ item.label }}<CaretDown :size="14" /></button>
+          <div v-if="item.children.length" class="header-dropdown"><CmsNavigationItems :items="item.children" /></div>
+        </div>
+      </nav>
+      <nav v-else class="desktop-nav" :aria-label="locale === 'zh' ? '主要导航' : 'Primary navigation'">
         <RouterLink class="header-nav-link" :class="{ active: route.name === 'home' && !route.hash }" :to="{ name: 'home' }">
           {{ t('nav.home') }}
         </RouterLink>
@@ -118,6 +129,8 @@ onBeforeUnmount(() => window.removeEventListener('resize', handleResize))
 
     <nav v-if="menuOpen" class="mobile-nav" :aria-label="locale === 'zh' ? '移动端导航' : 'Mobile navigation'">
       <SiteSearch mobile @navigate="closeMenu" />
+      <CmsNavigationItems v-if="cmsNavigation" :items="cmsNavigation.items" />
+      <template v-else>
       <RouterLink :to="{ name: 'home' }" @click="closeMenu">{{ t('nav.home') }}</RouterLink>
 
       <template v-for="group in navGroups" :key="group.key">
@@ -134,6 +147,7 @@ onBeforeUnmount(() => window.removeEventListener('resize', handleResize))
       </template>
 
       <RouterLink :to="{ name: 'contact' }" @click="closeMenu">{{ t('nav.contact') }}</RouterLink>
+      </template>
       <div class="mobile-language">
         <button type="button" @click="setLocale('zh')">中文</button>
         <button type="button" @click="setLocale('en')">English</button>

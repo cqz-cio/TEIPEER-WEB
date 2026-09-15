@@ -1,5 +1,7 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, watch, onBeforeUnmount } from 'vue'
+import { createCmsClient, isImageUrl } from '../cms/client.js'
+import { validateArticle } from '../cms/navigation.js'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 import { PhArrowRight as ArrowRight, PhCalendarBlank as Calendar, PhTag as Tag } from '@phosphor-icons/vue'
@@ -9,6 +11,25 @@ import SiteFooter from '../components/SiteFooter.vue'
 const { locale } = useI18n()
 const route = useRoute()
 
+const cmsArticles = ref([])
+const cmsPage = ref(1)
+const cmsTotal = ref(0)
+const cmsError = ref('')
+const cmsLoading = ref(false)
+let cmsController, cmsGeneration = 0
+async function loadCmsArticles() {
+  const current = ++cmsGeneration; cmsController?.abort(); cmsError.value = ''
+  if (import.meta.env.VITE_CMS_ENABLED !== 'true') return
+  cmsController = new AbortController(); cmsLoading.value = true
+  try {
+    const result = await createCmsClient().getArticles(locale.value === 'zh' ? 'zh-CN' : 'en', cmsPage.value, cmsController.signal)
+    if (current !== cmsGeneration) return
+    cmsArticles.value = result.items.map(validateArticle); cmsTotal.value = result.total
+  } catch { if (current === cmsGeneration) cmsError.value = locale.value === 'zh' ? '最新文章暂时无法加载。' : 'Latest articles are temporarily unavailable.' }
+  finally { if (current === cmsGeneration) cmsLoading.value = false }
+}
+watch(locale, () => { cmsPage.value = 1; cmsArticles.value = []; loadCmsArticles() }, { immediate: true })
+onBeforeUnmount(() => { cmsGeneration++; cmsController?.abort() })
 const contentSets = {
   zh: {
     company: {
@@ -102,6 +123,17 @@ const remaining = computed(() => content.value.articles.slice(1))
       <p>{{ content.intro }}</p>
     </section>
 
+    <section v-if="currentKey === 'company'" class="knowledge-shell news-feature-section">
+      <h2 v-if="cmsArticles.length">{{ locale === 'zh' ? '最新发布' : 'Latest updates' }}</h2>
+      <p v-if="cmsError" role="status">{{ cmsError }} <button @click="loadCmsArticles">{{ locale === 'zh' ? '重试' : 'Retry' }}</button></p>
+      <div class="news-card-grid">
+        <article v-for="article in cmsArticles" :key="article.id" class="news-card">
+          <img v-if="isImageUrl(article.coverImage?.url)" :src="article.coverImage.url" :alt="article.coverImage.alt" />
+          <div><span class="news-category">{{ article.label }}</span><h3><RouterLink :to="{ name: 'cms-article', params: { slug: article.slug } }">{{ article.title }}</RouterLink></h3><p>{{ article.summary }}</p><time>{{ article.displayDate }}</time></div>
+        </article>
+      </div>
+      <div v-if="cmsTotal > 24"><button :disabled="cmsLoading || cmsPage <= 1" @click="cmsPage--; loadCmsArticles()">{{ locale === 'zh' ? '上一页' : 'Previous' }}</button> {{ cmsPage }} <button :disabled="cmsLoading || cmsPage * 24 >= cmsTotal" @click="cmsPage++; loadCmsArticles()">{{ locale === 'zh' ? '下一页' : 'Next' }}</button></div>
+    </section>
     <section class="knowledge-shell news-feature-section">
       <article class="news-feature-card">
         <img :src="featured[3]" :alt="featured[0]" />

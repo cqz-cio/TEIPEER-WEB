@@ -33,6 +33,7 @@ export const router = createRouter({
   },
   routes: [
     { path: '/cms-preview', name: 'cms-preview' },
+    { path: '/blog/:slug([a-z0-9-]+)', name: 'cms-article' },
     { path: '/', name: 'home' },
     {
       path: '/about/profile',

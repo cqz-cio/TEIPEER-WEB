@@ -45,7 +45,7 @@ jobs:
         run: npm run build
 
       - name: Test CMS client and deployment readiness checks
-        run: timeout --kill-after=5s 60s node --test tests/cms.test.js tests/cms-readiness.test.js
+        run: timeout --kill-after=5s 60s node --test tests/cms.test.js tests/cms-readiness.test.js tests/cms-preview-traffic.test.js
 
       - name: Verify build output
         run: |
