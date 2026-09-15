@@ -37,6 +37,7 @@ test('page views exclude previews, missing consent and potentially identifying q
   assert.equal(pageView('/contact', settings).eventType, 5)
   for (const path of ['/cms-preview', '/preview/blog', '/contact?email=a@b', '/#token', '//host/x', '/%2e%2e']) assert.equal(pageView(path, settings), null)
   assert.equal(pageView('/', { ...settings, preview: true }), null)
+  assert.equal(pageView('/blog/product-preview', settings).pagePath, '/blog/product-preview')
   assert.equal(pageView('/', { consent: false }), null)
   assert.match(randomId(), /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/)
 })

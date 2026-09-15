@@ -6,7 +6,7 @@ export function randomId(cryptoImpl = globalThis.crypto) {
 }
 
 export function pageView(path, { preview = false, consent = false, id = randomId } = {}) {
-  if (preview || !consent || typeof path !== 'string' || !/^\/(?:[a-z0-9-]+\/?)*$/.test(path) || path.includes('preview')) return null
+  if (preview || !consent || typeof path !== 'string' || !/^\/(?:[a-z0-9-]+\/?)*$/.test(path) || /^\/(?:cms-preview|preview)(?:\/|$)/.test(path)) return null
   return { eventId: id(), eventType: 5, pagePath: path, deviceType: 9 }
 }
 
