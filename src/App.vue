@@ -141,19 +141,19 @@ watch(
   <SiteHeader />
 
   <main id="main">
-    <section v-if="hero" id="home" class="hero-section">
-      <img class="hero-media" :src="hero.image.url" :alt="hero.image.alt" />
-      <div class="hero-wash" aria-hidden="true"></div>
-      <div class="container hero-content">
-        <p class="hero-kicker">RELIABLE TRADE <span>{{ locale === 'zh' ? '清晰协同' : 'ORDER COORDINATION' }}</span></p>
-        <h1>{{ hero.title }}</h1>
-        <p class="hero-subtitle">{{ hero.subtitle }}</p>
-        <p class="hero-body">{{ hero.body }}</p>
-        <a class="primary-button" href="#business">
-          {{ t('hero.cta') }}
-          <ArrowRight :size="20" weight="bold" />
-        </a>
-      </div>
+    <section v-if="hero" id="home" class="hero-section" aria-labelledby="home-title">
+      <h1 id="home-title" class="hero-accessible-title">{{ hero.title }}</h1>
+      <video
+        class="hero-video"
+        src="/assets/company-introduction.mp4"
+        poster="/assets/company-introduction.jpg"
+        controls
+        playsinline
+        preload="metadata"
+        :aria-label="locale === 'zh' ? '全品轩公司介绍视频' : 'Tripeer company introduction video'"
+      >
+        <a href="/assets/company-introduction.mp4">{{ locale === 'zh' ? '下载公司介绍视频' : 'Download the company introduction video' }}</a>
+      </video>
     </section>
 
     <section v-if="!hero" class="section container" aria-live="polite">
