@@ -15,8 +15,8 @@ const lightweight = window.matchMedia('(max-width: 760px)').matches
   || connection?.saveData
   || ['slow-2g', '2g'].includes(connection?.effectiveType)
 const source = lightweight
-  ? '/assets/company-introduction-web-720p-v1.mp4'
-  : '/assets/company-introduction-web-1080p-v1.mp4'
+  ? '/assets/company-introduction-wide-960-v2.mp4'
+  : '/assets/company-introduction-wide-1920-v2.mp4'
 const showControls = computed(() => pointerInside.value || keyboardFocused.value
   || touchControls || autoplayBlocked.value || fullscreen.value)
 
@@ -46,7 +46,7 @@ onBeforeUnmount(() => document.removeEventListener('fullscreenchange', updateFul
     ref="player"
     class="hero-video"
     :src="source"
-    poster="/assets/company-introduction.jpg"
+    poster="/assets/company-introduction-wide-v2.jpg"
     autoplay
     muted
     loop
