@@ -3,6 +3,7 @@ import { computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import SiteHeader from './components/SiteHeader.vue'
 import SiteFooter from './components/SiteFooter.vue'
+import HeroVideo from './components/HeroVideo.vue'
 import { usePageContent } from './cms/usePageContent.js'
 import {
   PhArrowRight as ArrowRight,
@@ -143,17 +144,7 @@ watch(
   <main id="main">
     <section v-if="hero" id="home" class="hero-section" aria-labelledby="home-title">
       <h1 id="home-title" class="hero-accessible-title">{{ hero.title }}</h1>
-      <video
-        class="hero-video"
-        src="/assets/company-introduction.mp4"
-        poster="/assets/company-introduction.jpg"
-        controls
-        playsinline
-        preload="metadata"
-        :aria-label="locale === 'zh' ? '全品轩公司介绍视频' : 'Tripeer company introduction video'"
-      >
-        <a href="/assets/company-introduction.mp4">{{ locale === 'zh' ? '下载公司介绍视频' : 'Download the company introduction video' }}</a>
-      </video>
+      <HeroVideo />
     </section>
 
     <section v-if="!hero" class="section container" aria-live="polite">
@@ -180,7 +171,7 @@ watch(
           <RouterLink class="primary-button about-button" :to="{ name: 'about-profile' }">{{ t('about.cta') }} <ArrowRight :size="18" /></RouterLink>
         </div>
         <figure class="about-figure">
-          <img src="/assets/trade-2026/home-about-team.jpg" :alt="t('about.imageAlt')" />
+          <img src="/assets/trade-2026/home-about-team.jpg" :alt="t('about.imageAlt')" loading="lazy" decoding="async" fetchpriority="low" />
         </figure>
       </div>
     </section>
@@ -192,7 +183,7 @@ watch(
         </div>
         <div class="business-grid">
           <RouterLink v-for="(item, index) in businessItems" :key="item.title" class="business-card" :to="{ name: ['business-categories', 'business-categories', 'business-customization', 'business-supply'][index] }">
-            <img :src="item.image" :alt="item.title" />
+            <img :src="item.image" :alt="item.title" loading="lazy" decoding="async" fetchpriority="low" />
             <div class="business-card-body">
               <h3>{{ item.title }}</h3>
               <ArrowRight :size="18" aria-hidden="true" />
@@ -241,7 +232,7 @@ watch(
         </div>
         <div class="insights-grid">
           <RouterLink v-for="(item, index) in insights" :key="item.title" class="insight-card" :to="{ name: index === 0 ? 'insight-company' : 'insight-industry' }">
-            <img :src="item.image" :alt="item.title" />
+            <img :src="item.image" :alt="item.title" loading="lazy" decoding="async" fetchpriority="low" />
             <div class="insight-body">
               <h3>{{ item.title }}</h3>
               <p>{{ item.body }}</p>
