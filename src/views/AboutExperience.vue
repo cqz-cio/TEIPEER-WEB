@@ -5,6 +5,7 @@ import { companyCopy } from '../company-copy.js'
 import { useRoute } from 'vue-router'
 import SiteHeader from '../components/SiteHeader.vue'
 import SiteFooter from '../components/SiteFooter.vue'
+import CultureValues from '../components/CultureValues.vue'
 import {
 
   PhCheckCircle as CheckCircle,
@@ -247,16 +248,7 @@ const commonContent = computed(() => content[locale.value])
               <p v-if="item.body">{{ item.body }}</p>
             </article>
           </div>
-          <section class="about-principles">
-            <h3>{{ currentContent.principlesTitle }}</h3>
-            <div>
-              <article v-for="(item, index) in currentContent.principles" :key="item.title">
-                <span>{{ String(index + 1).padStart(2, '0') }}</span>
-                <h4>{{ item.title }}</h4>
-                <p v-if="item.body">{{ item.body }}</p>
-              </article>
-            </div>
-          </section>
+          <CultureValues :items="currentContent.principles" :label="currentContent.principlesTitle" />
         </template>
 
         <template v-else>

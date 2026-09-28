@@ -5,6 +5,7 @@ import { companyCopy } from './company-copy.js'
 import SiteHeader from './components/SiteHeader.vue'
 import SiteFooter from './components/SiteFooter.vue'
 import HeroVideo from './components/HeroVideo.vue'
+import CultureValues from './components/CultureValues.vue'
 import { usePageContent } from './cms/usePageContent.js'
 import {
   PhArrowRight as ArrowRight,
@@ -14,10 +15,7 @@ import {
   PhFileText as FileText,
   PhGlobeHemisphereEast as GlobeHemisphereEast,
   PhMountains as Mountains,
-  PhChartLineUp as ChartLineUp,
-  PhShieldCheck as ShieldCheck,
   PhTarget as Target,
-  PhUsersThree as UsersThree,
 } from '@phosphor-icons/vue'
 
 const { t, tm, locale } = useI18n()
@@ -95,10 +93,6 @@ const businessItems = computed(() => {
   ]
   return locale.value === 'zh' ? zh : en
 })
-
-const cultureValues = computed(() => companyCopy[locale.value].values.map((item, index) => ({
-  ...item, icon: [UsersThree, ChartLineUp, ShieldCheck][index],
-})))
 
 const insights = computed(() => {
   const zh = [
@@ -202,12 +196,7 @@ watch(
           </div>
           <img class="culture-image" src="/assets/trade-2026/home-overseas-coordination.jpg" :alt="locale === 'zh' ? '港口与集装箱货轮' : 'Container ship and port'" loading="lazy" />
         </div>
-        <div class="culture-values">
-          <article v-for="item in cultureValues" :key="item.title" class="culture-value">
-            <component :is="item.icon" :size="60" weight="thin" aria-hidden="true" />
-            <div><h3>{{ item.title }}</h3><p v-if="item.body">{{ item.body }}</p></div>
-          </article>
-        </div>
+        <CultureValues :items="companyCopy[locale].values" :label="locale === 'zh' ? '价值观' : 'Our Values'" />
         <RouterLink class="text-link culture-link" :to="{ name: 'corporate-culture' }">{{ locale === 'zh' ? '了解企业文化' : 'Explore Our Culture' }} <ArrowRight :size="20" aria-hidden="true" /></RouterLink>
       </div>
     </section>
