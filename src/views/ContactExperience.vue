@@ -5,7 +5,7 @@ import SiteHeader from '../components/SiteHeader.vue'
 import SiteFooter from '../components/SiteFooter.vue'
 import { PhClock as Clock, PhMapPin as MapPin, PhPaperclip as Paperclip, PhInfo as Info } from '@phosphor-icons/vue'
 
-const { locale } = useI18n()
+const { t, locale } = useI18n()
 const inquiry = ref('')
 const company = ref('')
 const attachment = ref(null)
@@ -13,21 +13,21 @@ const attachmentInput = ref(null)
 const attachmentError = ref(false)
 const isCareer = computed(() => inquiry.value === 'career')
 const content = computed(() => locale.value === 'zh' ? {
-  title: '合作与求职咨询', intro: '无论您是寻求商务合作，还是希望加入我们团队，欢迎留下您的信息与需求。',
+  title: t('contact.title'), intro: t('contact.body'),
   note: '当前接收服务尚未启用，填写内容和所选附件不会保存或发送。',
   name: '姓名', nameHint: '请输入您的姓名', type: '联系类型', typeHint: '请选择联系类型', career: '求职应聘', business: '商务合作',
   company: '公司名称（合作填）', companyHint: '请输入公司名称', companySkip: '求职应聘无需填写公司名称', email: '邮箱', emailHint: '请输入您的邮箱', phone: '联系电话', phoneHint: '请输入您的联系电话',
   message: '需求说明', messageHint: '如果是合作，请简述您的项目；如果是求职，请说明意向岗位及相关情况。',
   attachment: '附件上传（可选）', choose: '选择附件', uploadHint: '可添加简历、项目介绍或相关资料', formats: 'PDF、Word、Excel、JPG、PNG，单个文件不超过10MB', remove: '移除附件', invalid: '请选择支持的文件格式，且文件大小不超过10MB。',
-  submit: '提交咨询（暂未开放）', submitHint: '接收服务开通后可提交咨询及附件。', direct: '联系我们', directHint: '商务合作 · 求职应聘', hours: '工作时间', time: '周一至周五 09:00–18:00', location: '所在地', address: '中国 · 浙江 · 宁波', imageAlt: '团队整理产品资料与合作需求',
+  submit: '提交咨询（暂未开放）', submitHint: '接收服务开通后可提交咨询及附件。', direct: '联系我们', directHint: '商务合作 · 求职应聘', hours: '工作时间', time: '周一至周五 08:45-17:45', location: '所在地', address: '中国 · 浙江 · 宁波', imageAlt: '团队整理产品资料与合作需求',
 } : {
-  title: 'Business & Career Inquiries', intro: 'Whether you are exploring a business partnership or joining our team, share your details and requirements with us.',
+  title: t('contact.title'), intro: t('contact.body'),
   note: 'Our receiving service is not active yet. Entered details and selected files will not be saved or sent.',
   name: 'Name', nameHint: 'Your name', type: 'Contact Type', typeHint: 'Select contact type', career: 'Job Application', business: 'Business Cooperation',
   company: 'Company (business inquiries)', companyHint: 'Company name', companySkip: 'Not required for job applications', email: 'Email', emailHint: 'Your email address', phone: 'Phone', phoneHint: 'Your phone number',
   message: 'Inquiry Details', messageHint: 'For business cooperation, briefly describe your project. For job applications, specify your desired role and relevant background.',
   attachment: 'Attachment (optional)', choose: 'Choose attachment', uploadHint: 'Add a resume, project introduction or related materials', formats: 'PDF, Word, Excel, JPG or PNG; maximum 10MB per file', remove: 'Remove attachment', invalid: 'Choose a supported file format no larger than 10MB.',
-  submit: 'Submit Inquiry (unavailable)', submitHint: 'Inquiries and attachments can be submitted once the receiving service is active.', direct: 'Contact Us', directHint: 'Business Cooperation · Careers', hours: 'Business Hours', time: 'Mon–Fri 09:00–18:00', location: 'Location', address: 'Ningbo, Zhejiang, China', imageAlt: 'Team reviewing product materials and cooperation requirements',
+  submit: 'Submit Inquiry (unavailable)', submitHint: 'Inquiries and attachments can be submitted once the receiving service is active.', direct: 'Contact Us', directHint: 'Business Cooperation · Careers', hours: 'Business Hours', time: 'Mon–Fri 08:45-17:45', location: 'Location', address: 'Ningbo, Zhejiang, China', imageAlt: 'Team reviewing product materials and cooperation requirements',
 })
 function selectAttachment(event) {
   const file = event.target.files?.[0]

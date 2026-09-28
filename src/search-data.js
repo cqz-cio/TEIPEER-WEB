@@ -16,18 +16,18 @@ export const siteSearchItems = [
   },
   {
     type: 'page', to: { name: 'about-markets' },
-    zh: ['海外市场', '立足宁波，为海外进口商、批发商和渠道客户提供清晰协同。', '海外 国际 市场 宁波 港口 进口商 批发'],
-    en: ['Overseas Markets', 'Clear coordination for overseas importers, wholesalers and channel partners.', 'overseas international markets Ningbo port importer wholesale'],
+    zh: ['海外市场', '立足宁波，为海外零售商、品牌商、进口商、餐饮与酒店企业及电商客户提供采购管理服务。', '海外 国际 市场 宁波 港口 进口商 批发'],
+    en: ['Overseas Markets', 'Sourcing management for overseas retailers, brands, importers, foodservice businesses, hotel contractors and e-commerce customers.', 'overseas international markets Ningbo port importer wholesale'],
   },
   {
     type: 'page', to: { name: 'business-overview' },
-    zh: ['业务介绍', '消费品供应、制造协同与全球交付服务概览。', '主营业务 外贸 国际贸易 消费品 采购'],
-    en: ['Business Overview', 'Consumer-goods sourcing, manufacturing coordination and delivery.', 'business trade sourcing procurement consumer goods'],
+    zh: ['业务介绍', '一次性食品包装、实木家具与一站式采购管理服务概览。', '主营业务 外贸 国际贸易 食品包装 实木家具 采购'],
+    en: ['Business Overview', 'Disposable food packaging, solid wood furniture and one-stop sourcing management.', 'business trade sourcing procurement food packaging solid wood furniture'],
   },
   {
     type: 'page', to: { name: 'business-categories' },
-    zh: ['产品品类', '纸制与一次性日用品、家居日用、办公及定制项目。', '产品 纸制 一次性 卫生 日用 收纳 厨房 清洁 家居 办公 包装'],
-    en: ['Product Categories', 'Paper-based and disposable products, home essentials, office and customized projects.', 'products paper disposable hygiene storage kitchen cleaning home office packaging'],
+    zh: ['产品品类', '一次性食品包装产品与实木家具，覆盖纸类、塑料、木质产品及餐厅、客厅、卧室家具。', '产品 一次性 食品 包装 纸类 塑料 木质 纸杯 餐盒 刀叉勺 吸管 实木 家具 餐厅 客厅 卧室 餐桌椅 床架 衣柜'],
+    en: ['Product Categories', 'Disposable food packaging and solid wood furniture: paper, plastic and wooden products, plus dining room, living room and bedroom furniture.', 'products disposable food packaging paper plastic wooden solid wood furniture dining living bedroom tables chairs beds wardrobes'],
   },
   {
     type: 'page', to: { name: 'business-customization' },

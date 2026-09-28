@@ -8,7 +8,7 @@ import { PhArrowRight as ArrowRight, PhCalendarBlank as Calendar, PhTag as Tag }
 import SiteHeader from '../components/SiteHeader.vue'
 import SiteFooter from '../components/SiteFooter.vue'
 
-const { locale } = useI18n()
+const { t, locale } = useI18n()
 const route = useRoute()
 
 const cmsArticles = ref([])
@@ -47,14 +47,14 @@ const contentSets = {
       articles: [
         ['采购需求沟通前应准备哪些信息', '产品参考、规格、用途、数量、包装、目标市场与交期越清晰，后续评估越有效。', '2026-08-26', '/assets/trade-2026/contact-office-consultation.jpg', '需求沟通'],
         ['如何从大量产品信息中筛选可执行方向', '结合渠道、用户、目标价格、起订量和交期，建立更实际的产品判断标准。', '2026-08-16', '/assets/trade-2026/insight-sourcing-material.jpg', '产品筛选'],
-        ['样品确认如何减少后续量产偏差', '在量产前确认材质、尺寸、外观、折叠、标签与包装，为订单建立共同基准。', '2026-08-06', '/assets/trade-2026/business-customization.jpg', '样品协同'],
+        ['样品确认如何减少后续量产偏差', '在量产前确认材质、尺寸、外观、结构、标签与包装，为订单建立共同基准。', '2026-08-06', '/assets/trade-2026/business-customization.jpg', '样品协同'],
       ],
     },
     industry: {
       title: '行业动态', subtitle: '关注消费趋势与国际贸易实践', label: 'INDUSTRY NEWS',
-      intro: '围绕纸制与一次性日用品、相关消费品、包装、采购和质量检查，分享贴近出口订单执行的观察，为客户评估产品与项目提供参考。',
+      intro: '围绕一次性食品包装产品、实木家具、采购和质量检查，分享贴近出口订单执行的观察，为客户评估产品与项目提供参考。',
       articles: [
-        ['纸制与一次性日用品的采购关注点', '从材料、尺寸、折叠、包装数量和使用场景，梳理下单前需要确认的产品信息。', '2026-08-20', '/assets/trade-2026/insight-sourcing-material.jpg', '产品采购'],
+        ['一次性食品包装产品的采购关注点', '从材料、尺寸、包装数量和使用场景，梳理下单前需要确认的产品信息。', '2026-08-20', '/assets/trade-2026/insight-sourcing-material.jpg', '产品采购'],
         ['从样品到出货：五个质量确认节点', '梳理样品、物料、生产、包装与出货检查之间的关系。', '2026-08-12', '/assets/trade-2026/insight-quality-check.jpg', '质量实践'],
         ['组合采购如何兼顾效率与清晰度', '通过统一规格、供应匹配和节点管理，降低多产品订单中的沟通与交付风险。', '2026-08-02', '/assets/trade-2026/matrix-combination.jpg', '订单协同'],
       ],
@@ -82,8 +82,8 @@ const contentSets = {
     },
     industry: {
       title: 'Industry News', subtitle: 'Consumer trends and international trade practice', label: 'INDUSTRY NEWS',
-      intro: 'Practical perspectives on paper-based and disposable products, related consumer goods, packaging, sourcing and quality checks.',
-      articles: [['Sourcing Paper-based & Disposable Daily-use Products', 'Key questions around materials, dimensions, folding, pack counts and applications.', '2026-08-20', '/assets/trade-2026/insight-sourcing-material.jpg', 'Sourcing'], ['From Sample to Shipment: Five Quality Checkpoints', 'How samples, materials, production, packaging and final checks connect.', '2026-08-12', '/assets/trade-2026/insight-quality-check.jpg', 'Quality'], ['Keeping Combined Sourcing Efficient and Clear', 'Shared specifications and visible milestones reduce communication and delivery risk.', '2026-08-02', '/assets/trade-2026/matrix-combination.jpg', 'Orders']],
+      intro: 'Practical perspectives on disposable food packaging, solid wood furniture, sourcing and quality checks.',
+      articles: [['Sourcing Disposable Food Packaging', 'Key questions around materials, dimensions, pack counts and applications.', '2026-08-20', '/assets/trade-2026/insight-sourcing-material.jpg', 'Sourcing'], ['From Sample to Shipment: Five Quality Checkpoints', 'How samples, materials, production, packaging and final checks connect.', '2026-08-12', '/assets/trade-2026/insight-quality-check.jpg', 'Quality'], ['Keeping Combined Sourcing Efficient and Clear', 'Shared specifications and visible milestones reduce communication and delivery risk.', '2026-08-02', '/assets/trade-2026/matrix-combination.jpg', 'Orders']],
     },
     responsibility: {
       title: 'Responsibility & Sustainability', subtitle: 'Connecting partners through compliance and long-term thinking', label: 'RESPONSIBILITY & SUSTAINABILITY',
@@ -166,8 +166,8 @@ const remaining = computed(() => content.value.articles.slice(1))
     </section>
 
     <section class="knowledge-shell business-cta">
-      <div><h2>{{ locale === 'zh' ? '想进一步了解我们的业务？' : 'Want to learn more about our business?' }}</h2><p>{{ locale === 'zh' ? '欢迎联系我们，讨论产品、采购与国际贸易合作需求。' : 'Talk to us about product, sourcing and international trade requirements.' }}</p></div>
-      <RouterLink :to="{ name: 'contact' }">{{ locale === 'zh' ? '联系我们' : 'Contact Us' }} <ArrowRight :size="20" /></RouterLink>
+      <div><h2>{{ t('contact.title') }}</h2><p>{{ t('contact.body') }}</p></div>
+      <RouterLink :to="{ name: 'contact' }">{{ t('contact.cta') }} <ArrowRight :size="20" /></RouterLink>
     </section>
   </main>
   <SiteFooter />

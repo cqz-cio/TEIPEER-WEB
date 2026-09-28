@@ -53,8 +53,8 @@ export const router = createRouter({
         'history',
         '发展历程｜宁波全品轩国际贸易有限公司',
         'Our Journey | Ningbo Tripeer International Trading Co., Ltd.',
-        '回顾全品轩自2016年成立以来在消费品国际贸易与供应链服务领域的积累。',
-        'Explore Tripeer’s journey in consumer-goods trade and supply-chain services since 2016.',
+        '回顾全品轩自2016年创立以来在一次性食品包装、实木家具出口贸易与全球供应链管理领域的积累。',
+        'Explore Tripeer’s journey in disposable food packaging, solid wood furniture exports and global supply-chain management since 2016.',
       ),
     },
     {
@@ -64,8 +64,8 @@ export const router = createRouter({
         'mission',
         '使命愿景｜宁波全品轩国际贸易有限公司',
         'Mission & Vision | Ningbo Tripeer International Trading Co., Ltd.',
-        '了解全品轩连接优质制造与全球需求的使命、愿景与服务原则。',
-        'Discover Tripeer’s mission, vision and service principles for connecting quality manufacturing with global demand.',
+        '了解全品轩让中国制造誉满全球、培养外贸经营人才的使命、2035年愿景与价值观。',
+        'Discover Tripeer’s mission to build a global reputation for Chinese manufacturing and develop trade leaders, its 2035 vision and its values.',
       ),
     },
     {
@@ -92,8 +92,8 @@ export const router = createRouter({
         'overview',
         '业务介绍｜宁波全品轩国际贸易有限公司',
         'Business Overview | Ningbo Tripeer International Trading Co., Ltd.',
-        '了解全品轩的消费品供应、制造协同与全球交付服务。',
-        'Explore Tripeer’s consumer-goods sourcing, manufacturing coordination and global delivery services.',
+        '了解全品轩的一次性食品包装产品、实木家具与一站式采购管理服务。',
+        'Explore Tripeer’s disposable food packaging, solid wood furniture and one-stop sourcing management services.',
       ),
     },
     {
@@ -103,8 +103,8 @@ export const router = createRouter({
         'categories',
         '产品品类｜宁波全品轩国际贸易有限公司',
         'Product Categories | Ningbo Tripeer International Trading Co., Ltd.',
-        '了解全品轩的纸制与一次性日用品、家居日用、办公及定制项目方向。',
-        'Explore Tripeer’s paper-based and disposable products, household essentials, office and customized project categories.',
+        '了解全品轩的一次性食品包装产品与实木家具，涵盖纸类、塑料、木质产品及餐厅、客厅、卧室家具。',
+        'Explore Tripeer’s disposable food packaging and solid wood furniture: paper, plastic and wooden products, plus dining room, living room and bedroom furniture.',
       ),
     },
     {

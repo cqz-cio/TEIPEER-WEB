@@ -16,7 +16,7 @@ const socialIcons = [
   { key: 'wechat', icon: WechatLogo, size: 25, weight: 'fill' },
 ]
 
-const { locale } = useI18n()
+const { t, locale } = useI18n()
 const route = useRoute()
 const mobileQuery = window.matchMedia('(max-width: 640px)')
 const isMobile = ref(mobileQuery.matches)
@@ -28,7 +28,7 @@ let socialFeedbackTimer
 const content = computed(() => {
   if (locale.value === 'en') {
     return {
-      summary: 'Founded in 2016 and rooted in Ningbo, TRIPEER connects daily-use consumer product requirements with clear order coordination and export delivery.',
+      summary: t('footer.summary'),
       location: 'TRIPEER · NINGBO · CHINA',
       groups: [
         {
@@ -50,8 +50,8 @@ const content = computed(() => {
           key: 'culture', title: 'Corporate Culture', links: [{ label: 'Corporate Culture', to: { name: 'corporate-culture' } }],
         },
       ],
-      contactTitle: 'Contact',
-      contactBody: 'Share a product reference, specifications, quantity, packaging and target date to start a practical discussion.',
+      contactTitle: t('contact.title'),
+      contactBody: t('contact.body'),
       contactDetails: ['Location: Ningbo, Zhejiang, China', 'Official contact channels are not yet active.'],
       socialTitle: 'FOLLOW & CONTACT',
       socialLabels: ['LinkedIn', 'Email', 'WeChat'],
@@ -68,7 +68,7 @@ const content = computed(() => {
   }
 
   return {
-    summary: '宁波全品轩国际贸易有限公司成立于2016年，专注日用消费品国际贸易，以清晰的订单协同连接产品需求与出口交付。',
+    summary: t('footer.summary'),
     location: 'TRIPEER · NINGBO · CHINA',
     groups: [
       {
@@ -90,8 +90,8 @@ const content = computed(() => {
         key: 'culture', title: '企业文化', links: [{ label: '企业文化', to: { name: 'corporate-culture' } }],
       },
     ],
-    contactTitle: '联系合作',
-    contactBody: '请提供产品参考、规格、数量、包装与目标交期，让我们从具体需求开始沟通。',
+    contactTitle: t('contact.title'),
+    contactBody: t('contact.body'),
     contactDetails: ['所在地：中国·浙江·宁波', '正式联系渠道尚未启用'],
     socialTitle: '关注与联系',
     socialLabels: ['LinkedIn', '电子邮箱', '微信'],

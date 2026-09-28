@@ -1,40 +1,40 @@
 <script setup>
 import { computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { companyCopy } from './company-copy.js'
 import SiteHeader from './components/SiteHeader.vue'
 import SiteFooter from './components/SiteFooter.vue'
 import HeroVideo from './components/HeroVideo.vue'
 import { usePageContent } from './cms/usePageContent.js'
 import {
   PhArrowRight as ArrowRight,
-  PhCalendarBlank as CalendarBlank,
+  PhPackage as Package,
   PhCheckCircle as CheckCircle,
   PhHouseLine as HouseLine,
   PhFileText as FileText,
   PhGlobeHemisphereEast as GlobeHemisphereEast,
   PhMountains as Mountains,
-  PhNotePencil as NotePencil,
   PhChartLineUp as ChartLineUp,
   PhShieldCheck as ShieldCheck,
   PhTarget as Target,
   PhUsersThree as UsersThree,
 } from '@phosphor-icons/vue'
 
-const { t, locale } = useI18n()
+const { t, tm, locale } = useI18n()
 const { hero, loading: cmsLoading, error: cmsError, reload: reloadCms } = usePageContent()
 const facts = computed(() =>
   locale.value === 'zh'
     ? [
-        { value: '2016', label: '成立于宁波', icon: CalendarBlank },
+        { value: '一次性食品包装', label: '餐饮包装供应', icon: Package },
         { value: '10年', label: '贸易执行积累', icon: CheckCircle },
-        { value: '家居用品', label: '品质家居供应', icon: HouseLine },
+        { value: '实木家具', label: '品质家具供应', icon: HouseLine },
         { value: '订单协同', label: '从需求到交付', icon: FileText },
         { value: '海外市场', label: '出口服务经验', icon: GlobeHemisphereEast },
       ]
     : [
-        { value: '2016', label: 'Founded in Ningbo', icon: CalendarBlank },
+        { value: 'Food Packaging', label: 'Disposable Food Packaging', icon: Package },
         { value: '10 Years', label: 'Trade Execution', icon: CheckCircle },
-        { value: 'Home Essentials', label: 'Quality Home Supply', icon: HouseLine },
+        { value: 'Solid Wood Furniture', label: 'Quality Furniture Supply', icon: HouseLine },
         { value: 'Order Coordination', label: 'Requirement to Delivery', icon: FileText },
         { value: 'Overseas Markets', label: 'Export Service', icon: GlobeHemisphereEast },
       ],
@@ -43,15 +43,15 @@ const facts = computed(() =>
 const businessItems = computed(() => {
   const zh = [
     {
-      title: '纸制与一次性日用品',
-      subtitle: 'Paper-based & Disposable Products',
-      body: '围绕卫生、清洁及日常使用场景，协调产品规格、材料、折叠方式、包装数量与定制要求。',
+      title: '一次性食品包装产品',
+      subtitle: 'Disposable Food Packaging',
+      body: '涵盖纸杯、餐盒、外卖打包盒、刀叉勺、吸管、餐巾纸、烘焙包装、铝箔容器及环保可降解包装，服务餐饮、零售、酒店与外卖等场景。',
       image: '/assets/trade-2026/product-paper-disposable.jpg',
     },
     {
-      title: '家居用品',
-      subtitle: 'Home Essentials',
-      body: '根据客户市场与渠道需求，提供厨房、收纳、清洁及卫浴等家居用品的采购与出口协同。',
+      title: '实木家具',
+      subtitle: 'Solid Wood Furniture',
+      body: '涵盖餐桌椅、床架、床头柜、衣柜、书架、茶几及定制实木家具，服务家居零售、酒店工程、品牌商、进口商和跨境电商卖家。',
       image: '/assets/trade-2026/product-home-daily.jpg',
     },
     {
@@ -69,15 +69,15 @@ const businessItems = computed(() => {
   ]
   const en = [
     {
-      title: 'Paper-based & Disposable Products',
-      subtitle: 'Hygiene · Cleaning · Daily Use',
-      body: 'Coordinating specifications, materials, folding, pack counts and customization for hygiene, cleaning and daily-use applications.',
+      title: 'Disposable Food Packaging',
+      subtitle: 'Paper · Plastic · Wood',
+      body: 'Paper cups, meal containers, takeaway boxes, cutlery, straws, napkins, bakery packaging, aluminum foil containers and biodegradable packaging for foodservice, retail, hotels and takeaway businesses.',
       image: '/assets/trade-2026/product-paper-disposable.jpg',
     },
     {
-      title: 'Home Essentials',
-      subtitle: 'Storage · Kitchen · Cleaning · Living',
-      body: 'Sourcing and export coordination for kitchen, storage, cleaning and bathroom essentials based on market and channel needs.',
+      title: 'Solid Wood Furniture',
+      subtitle: 'Dining Room · Living Room · Bedroom',
+      body: 'Dining tables and chairs, bed frames, bedside tables, wardrobes, bookcases, coffee tables and custom solid wood furniture for home retailers, hotel projects, brands, importers and e-commerce sellers.',
       image: '/assets/trade-2026/product-home-daily.jpg',
     },
     {
@@ -96,31 +96,19 @@ const businessItems = computed(() => {
   return locale.value === 'zh' ? zh : en
 })
 
-const cultureValues = computed(() => {
-  const zh = [
-    { title: '可靠', body: '重视承诺，让合作可预期。', icon: ShieldCheck },
-    { title: '专业', body: '清晰流程，细致执行。', icon: NotePencil },
-    { title: '协同', body: '及时沟通，高效配合。', icon: UsersThree },
-    { title: '长期', body: '持续改进，共创长期价值。', icon: ChartLineUp },
-  ]
-  const en = [
-    { title: 'Reliability', body: 'Honor commitments. Make cooperation dependable.', icon: ShieldCheck },
-    { title: 'Professionalism', body: 'Clear processes. Careful execution.', icon: NotePencil },
-    { title: 'Collaboration', body: 'Timely communication. Effective teamwork.', icon: UsersThree },
-    { title: 'Long-term Focus', body: 'Keep improving. Create lasting value together.', icon: ChartLineUp },
-  ]
-  return locale.value === 'zh' ? zh : en
-})
+const cultureValues = computed(() => companyCopy[locale.value].values.map((item, index) => ({
+  ...item, icon: [UsersThree, ChartLineUp, ShieldCheck][index],
+})))
 
 const insights = computed(() => {
   const zh = [
     { title: '从宁波出发：十年贸易执行中的积累', body: '从询价、样品到单证和出运，回顾全品轩如何在真实订单中逐步完善服务方式。', date: '2026-08-28', image: '/assets/trade-2026/insight-history-ningbo.jpg' },
-    { title: '纸制与一次性日用品的采购关注点', body: '从材料、尺寸、包装到使用场景，梳理海外采购中需要前置确认的关键内容。', date: '2026-08-20', image: '/assets/trade-2026/insight-sourcing-material.jpg' },
+    { title: '一次性食品包装产品的采购关注点', body: '从材料、尺寸、包装到使用场景，梳理海外采购中需要前置确认的关键内容。', date: '2026-08-20', image: '/assets/trade-2026/insight-sourcing-material.jpg' },
     { title: '从样品到出货：五个质量确认节点', body: '把产品要求落实到样品、物料、生产、包装和出货检查，降低订单执行偏差。', date: '2026-08-12', image: '/assets/trade-2026/insight-quality-check.jpg' },
   ]
   const en = [
     { title: 'From Ningbo: A Decade of Trade Execution', body: 'How real orders have shaped our approach to quotation, sampling, documentation and export delivery.', date: '2026-08-28', image: '/assets/trade-2026/insight-history-ningbo.jpg' },
-    { title: 'Sourcing Paper-based & Disposable Daily-use Products', body: 'Key questions around materials, dimensions, packaging and applications before an order begins.', date: '2026-08-20', image: '/assets/trade-2026/insight-sourcing-material.jpg' },
+    { title: 'Sourcing Disposable Food Packaging', body: 'Key questions around materials, dimensions, packaging and applications before an order begins.', date: '2026-08-20', image: '/assets/trade-2026/insight-sourcing-material.jpg' },
     { title: 'From Sample to Shipment: Five Quality Checkpoints', body: 'Connecting samples, materials, production, packaging and final checks to reduce execution variance.', date: '2026-08-12', image: '/assets/trade-2026/insight-quality-check.jpg' },
   ]
   return locale.value === 'zh' ? zh : en
@@ -166,8 +154,7 @@ watch(
       <div class="container split-layout">
         <div class="section-copy">
           <h2>{{ t('about.title') }}</h2>
-          <p>{{ t('about.paragraph1') }}</p>
-          <p>{{ t('about.paragraph2') }}</p>
+          <p v-for="paragraph in tm('about.paragraphs')" :key="paragraph">{{ paragraph }}</p>
           <RouterLink class="primary-button about-button" :to="{ name: 'about-profile' }">{{ t('about.cta') }} <ArrowRight :size="18" /></RouterLink>
         </div>
         <figure class="about-figure">
@@ -218,7 +205,7 @@ watch(
         <div class="culture-values">
           <article v-for="item in cultureValues" :key="item.title" class="culture-value">
             <component :is="item.icon" :size="60" weight="thin" aria-hidden="true" />
-            <div><h3>{{ item.title }}</h3><p>{{ item.body }}</p></div>
+            <div><h3>{{ item.title }}</h3><p v-if="item.body">{{ item.body }}</p></div>
           </article>
         </div>
         <RouterLink class="text-link culture-link" :to="{ name: 'corporate-culture' }">{{ locale === 'zh' ? '了解企业文化' : 'Explore Our Culture' }} <ArrowRight :size="20" aria-hidden="true" /></RouterLink>

@@ -17,7 +17,7 @@ import {
 import SiteHeader from '../components/SiteHeader.vue'
 import SiteFooter from '../components/SiteFooter.vue'
 
-const { locale } = useI18n()
+const { t, locale } = useI18n()
 const route = useRoute()
 
 const routeNames = {
@@ -238,8 +238,8 @@ const related = computed(() => {
     </section>
 
     <section class="knowledge-shell business-cta">
-      <div><h2>{{ locale === 'zh' ? '有采购需求或合作想法？' : 'Have a sourcing requirement or project idea?' }}</h2><p>{{ locale === 'zh' ? '欢迎联系我们，获取适合您市场与项目的产品及供应链建议。' : 'Talk to us for product and supply-chain recommendations suited to your market.' }}</p></div>
-      <RouterLink :to="{ name: 'contact' }">{{ locale === 'zh' ? '联系合作' : 'Contact Us' }} <ArrowRight :size="20" /></RouterLink>
+      <div><h2>{{ t('contact.title') }}</h2><p>{{ t('contact.body') }}</p></div>
+      <RouterLink :to="{ name: 'contact' }">{{ t('contact.cta') }} <ArrowRight :size="20" /></RouterLink>
     </section>
   </main>
   <SiteFooter />

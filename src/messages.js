@@ -1,8 +1,10 @@
+import { companyCopy } from './company-copy.js'
+
 export const messages = {
   zh: {
     meta: {
       title: '宁波全品轩国际贸易有限公司 | TRIPEER',
-      description: '专注日用消费品、纸制与一次性用品的国际贸易服务，提供产品匹配、订单协同、质量检查与出口交付支持。',
+      description: '专注一次性食品包装产品与实木家具的出口贸易和全球供应链管理，提供产品研发、采购、质量控制与国际物流协调等一站式服务。',
     },
     nav: {
       home: '首页',
@@ -17,21 +19,20 @@ export const messages = {
       eyebrow: 'TRIPEER · NINGBO · CHINA',
       title: '连接可靠供应，\n让每一批订单清晰交付',
       subtitle: 'Connecting Reliable Supply\nwith Overseas Markets',
-      body: '宁波全品轩国际贸易有限公司成立于2016年，立足宁波，围绕日用消费品、纸制与一次性用品开展国际贸易服务，将客户需求、产品与包装、质量检查和出口交付连接成清晰的订单流程。',
+      body: '宁波全品轩国际贸易有限公司创立于2016年，立足宁波，专注一次性食品包装产品与实木家具的出口贸易和全球供应链管理，连接中国制造与全球客户。',
       cta: '了解我们的业务',
     },
     about: {
       label: '关于全品轩',
-      title: '始于2016，以订单执行积累长期信任',
-      paragraph1: '宁波全品轩国际贸易有限公司是一家专注日用消费品国际贸易的专业企业。十年来，我们从真实订单出发，持续理解海外客户对产品、规格、包装、数量与交期的具体要求。',
-      paragraph2: '围绕产品匹配、供应商协同、打样确认、生产跟进、质量检查、贸易单证与出口交付，我们逐步形成灵活、清晰、可追踪的服务方式。',
+      title: companyCopy.zh.title,
+      paragraphs: companyCopy.zh.paragraphs,
       cta: '进一步了解我们',
       imageAlt: '现代国际贸易办公空间',
     },
     business: {
       label: '主营业务',
-      title: '以多品类供应能力，回应不同市场需求',
-      intro: '以纸制与一次性日用品、家居日用及相关消费品为基础，为海外进口商、批发商和渠道客户提供灵活的产品供应与国际贸易支持。',
+      title: '聚焦两大核心品类，服务全球客户',
+      intro: '围绕一次性食品包装产品与实木家具，为零售商、品牌商、进口商、餐饮供应链企业、酒店工程商及跨境电商客户提供产品供应与采购管理服务。',
     },
     capabilities: {
       label: '核心能力',
@@ -40,9 +41,9 @@ export const messages = {
     },
     purpose: {
       mission: '使命',
-      missionText: '准确理解客户需求，连接合适的产品与供应资源，让跨境采购和出口交付更加清晰、可靠。',
+      missionText: companyCopy.zh.mission,
       vision: '愿景',
-      visionText: '以专业执行、及时沟通和持续改进，成为海外客户长期信赖的消费品贸易合作伙伴。',
+      visionText: companyCopy.zh.vision,
       mapAlt: '全球贸易服务网络示意图',
     },
     insights: {
@@ -53,12 +54,12 @@ export const messages = {
     },
     contact: {
       eyebrow: 'LET’S WORK TOGETHER',
-      title: '有采购需求或合作计划？',
-      body: '告诉我们产品名称或参考图片、规格、数量、包装和目标交期，我们将据此评估并与您沟通下一步。',
-      cta: '提交合作需求',
+      title: '合作与求职咨询',
+      body: '无论您是寻求商务合作，还是希望加入我们团队，欢迎留下您的信息与需求。',
+      cta: '立即咨询',
     },
     footer: {
-      summary: '立足宁波，专注日用消费品国际贸易，以清晰协同连接产品需求与出口交付。',
+      summary: '立足宁波，专注一次性食品包装产品与实木家具的出口贸易和全球供应链管理。',
       company: '公司介绍',
       services: '主营业务',
       contact: '联系合作',
@@ -72,7 +73,7 @@ export const messages = {
   en: {
     meta: {
       title: 'Ningbo Tripeer International Trading Co., Ltd. | TRIPEER',
-      description: 'International trade services for daily-use consumer goods, paper-based and disposable products, with coordinated sourcing, quality checks and export delivery.',
+      description: 'Export trade and global supply-chain management for disposable food packaging and solid wood furniture, from product development and sourcing to quality control and international logistics coordination.',
     },
     nav: {
       home: 'Home',
@@ -87,21 +88,20 @@ export const messages = {
       eyebrow: 'TRIPEER · NINGBO · CHINA',
       title: 'Reliable Supply.\nClearer Delivery.',
       subtitle: 'Connecting Reliable Supply\nwith Overseas Markets',
-      body: 'Founded in Ningbo in 2016, TRIPEER supports international trade in daily-use consumer goods, paper-based and disposable products, connecting customer requirements, product and packaging details, quality checks and export delivery.',
+      body: 'Founded in Ningbo in 2016, TRIPEER specializes in the export of disposable food packaging and solid wood furniture and in global supply-chain management, connecting Chinese manufacturing with customers worldwide.',
       cta: 'Explore Our Business',
     },
     about: {
       label: 'About Tripeer',
-      title: 'Since 2016, Building Trust Through Order Execution',
-      paragraph1: 'TRIPEER is a professional international trading company focused on daily-use consumer goods. Over the past decade, we have learned from real orders and the specific product, packaging, quantity and timing requirements of overseas customers.',
-      paragraph2: 'Our work connects product matching, supplier coordination, sampling, production follow-up, quality checks, trade documentation and export delivery through a flexible and visible process.',
+      title: companyCopy.en.title,
+      paragraphs: companyCopy.en.paragraphs,
       cta: 'Learn More About Us',
       imageAlt: 'Modern international trade office',
     },
     business: {
       label: 'Our Business',
-      title: 'Multi-category sourcing for diverse markets',
-      intro: 'Built around paper-based and disposable daily-use products, household essentials and related consumer goods, our services support importers, wholesalers and channel partners with flexible sourcing and trade execution.',
+      title: 'Two core categories for global markets',
+      intro: 'We supply disposable food packaging and solid wood furniture and manage sourcing for retailers, brands, importers, foodservice businesses, hotel contractors and cross-border e-commerce customers.',
     },
     capabilities: {
       label: 'Core Capabilities',
@@ -110,9 +110,9 @@ export const messages = {
     },
     purpose: {
       mission: 'Mission',
-      missionText: 'Understand requirements accurately, connect the right products and supply resources, and make cross-border sourcing and delivery clearer and more dependable.',
+      missionText: companyCopy.en.mission,
       vision: 'Vision',
-      visionText: 'To become a trusted long-term consumer-goods trade partner through professional execution, timely communication and continuous improvement.',
+      visionText: companyCopy.en.vision,
       mapAlt: 'Illustration of the global trade service network',
     },
     insights: {
@@ -123,12 +123,12 @@ export const messages = {
     },
     contact: {
       eyebrow: 'LET’S WORK TOGETHER',
-      title: 'Have a Sourcing Requirement or Project?',
-      body: 'Share the product or reference image, specifications, quantity, packaging and target date, and we will assess the request and discuss the next step.',
-      cta: 'Submit a Requirement',
+      title: 'Business & Career Inquiries',
+      body: 'Whether you are exploring a business partnership or joining our team, share your details and requirements with us.',
+      cta: 'Contact Us',
     },
     footer: {
-      summary: 'Rooted in Ningbo, connecting product requirements with export delivery through clear consumer-goods trade coordination.',
+      summary: 'Rooted in Ningbo, specializing in export trade and global supply-chain management for disposable food packaging and solid wood furniture.',
       company: 'Company',
       services: 'Business',
       contact: 'Contact',

@@ -572,6 +572,10 @@
   grid-template-columns: repeat(4, 1fr);
 }
 
+.about-principles > div {
+  grid-template-columns: repeat(3, 1fr);
+}
+
 .about-principles article,
 .about-client-section article {
   min-height: 150px;
