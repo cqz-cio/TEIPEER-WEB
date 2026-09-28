@@ -322,10 +322,7 @@
 }
 
 .about-profile-intro {
-  display: grid;
-  grid-template-columns: minmax(280px, .88fr) minmax(560px, 1.6fr);
-  gap: 44px;
-  align-items: center;
+  width: 100%;
 }
 
 .about-prose p,
@@ -350,6 +347,7 @@
 }
 
 .about-facts-row {
+  margin-top: 36px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   border-left: 1px solid #e0e5ec;
@@ -706,7 +704,6 @@
   .about-header-inner { width: min(100% - 32px, 1440px); }
   .about-desktop-nav { gap: 18px; }
   .about-desktop-nav > a, .about-nav-parent { font-size: 14px; }
-  .about-profile-intro { grid-template-columns: 1fr; }
   .about-process-layout { grid-template-columns: 1fr; }
   .about-process-layout > img { max-height: 290px; }
 }
@@ -862,10 +859,6 @@
     white-space: normal !important;
     overflow-wrap: anywhere !important;
     word-break: break-all !important;
-  }
-
-  .about-profile-intro .about-facts-row {
-    display: grid;
   }
 }
 

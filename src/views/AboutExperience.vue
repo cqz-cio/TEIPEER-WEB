@@ -38,14 +38,14 @@ const aboutNav = computed(() => {
 
 const facts = computed(() => {
   const zh = [
-    { value: '一次性食品包装', label: '餐饮包装供应', icon: Package },
     { value: '10年', label: '贸易执行积累', icon: Cube },
+    { value: '一次性食品包装', label: '餐饮包装供应', icon: Package },
     { value: '实木家具', label: '品质家具供应', icon: HouseLine },
     { value: '海外市场', label: '出口服务经验', icon: GlobeHemisphereEast },
   ]
   const en = [
-    { value: 'Food Packaging', label: 'Disposable Food Packaging', icon: Package },
     { value: '10 Years', label: 'Trade Execution', icon: Cube },
+    { value: 'Food Packaging', label: 'Disposable Food Packaging', icon: Package },
     { value: 'Solid Wood Furniture', label: 'Quality Furniture Supply', icon: HouseLine },
     { value: 'Overseas Markets', label: 'Export Service', icon: GlobeHemisphereEast },
   ]
@@ -203,13 +203,13 @@ const commonContent = computed(() => content[locale.value])
             <div class="about-prose">
               <p v-for="paragraph in currentContent.paragraphs" :key="paragraph">{{ paragraph }}</p>
             </div>
-            <div class="about-facts-row">
-              <article v-for="fact in facts" :key="fact.value">
-                <component :is="fact.icon" :size="38" aria-hidden="true" />
-                <strong>{{ fact.value }}</strong>
-                <span>{{ fact.label }}</span>
-              </article>
-            </div>
+          </div>
+          <div class="about-facts-row">
+            <article v-for="fact in facts" :key="fact.value">
+              <component :is="fact.icon" :size="38" aria-hidden="true" />
+              <strong>{{ fact.value }}</strong>
+              <span>{{ fact.label }}</span>
+            </article>
           </div>
           <section class="about-process-section">
             <h3>{{ currentContent.lowerTitle }}</h3>

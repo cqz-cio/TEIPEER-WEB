@@ -25,15 +25,15 @@ const { hero, loading: cmsLoading, error: cmsError, reload: reloadCms } = usePag
 const facts = computed(() =>
   locale.value === 'zh'
     ? [
-        { value: '一次性食品包装', label: '餐饮包装供应', icon: Package },
         { value: '10年', label: '贸易执行积累', icon: CheckCircle },
+        { value: '一次性食品包装', label: '餐饮包装供应', icon: Package },
         { value: '实木家具', label: '品质家具供应', icon: HouseLine },
         { value: '订单协同', label: '从需求到交付', icon: FileText },
         { value: '海外市场', label: '出口服务经验', icon: GlobeHemisphereEast },
       ]
     : [
-        { value: 'Food Packaging', label: 'Disposable Food Packaging', icon: Package },
         { value: '10 Years', label: 'Trade Execution', icon: CheckCircle },
+        { value: 'Food Packaging', label: 'Disposable Food Packaging', icon: Package },
         { value: 'Solid Wood Furniture', label: 'Quality Furniture Supply', icon: HouseLine },
         { value: 'Order Coordination', label: 'Requirement to Delivery', icon: FileText },
         { value: 'Overseas Markets', label: 'Export Service', icon: GlobeHemisphereEast },
@@ -154,7 +154,7 @@ watch(
       <div class="container split-layout">
         <div class="section-copy">
           <h2>{{ t('about.title') }}</h2>
-          <p v-for="paragraph in tm('about.paragraphs')" :key="paragraph">{{ paragraph }}</p>
+          <p v-for="paragraph in tm('about.paragraphs').slice(0, 2)" :key="paragraph">{{ paragraph }}</p>
           <RouterLink class="primary-button about-button" :to="{ name: 'about-profile' }">{{ t('about.cta') }} <ArrowRight :size="18" /></RouterLink>
         </div>
         <figure class="about-figure">
