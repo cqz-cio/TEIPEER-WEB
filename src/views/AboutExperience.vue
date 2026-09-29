@@ -181,8 +181,7 @@ const commonContent = computed(() => content[locale.value])
 
   <main id="main" class="about-page">
     <section class="about-hero">
-      <div class="about-hero-office"><img src="/assets/trade-2026/about-hero-team.jpg" alt="TRIPEER trade coordination team" /></div>
-      <div class="about-hero-port"><img src="/assets/trade-2026/about-hero-port.jpg" alt="Container terminal serving overseas markets" /></div>
+      <img class="about-hero-panorama" src="/assets/trade-2026/company-city-panorama.png" :alt="locale === 'zh' ? '蓝天下的滨水城市天际线' : 'Waterfront city skyline under a blue sky'" width="2848" height="800" fetchpriority="high" />
       <div class="about-hero-overlay" aria-hidden="true"></div>
       <div class="about-shell about-hero-copy">
         <h1>{{ route.name === 'corporate-culture' ? (locale === 'zh' ? '企业文化' : 'Corporate Culture') : commonContent.heroTitle }}</h1>

@@ -27,7 +27,7 @@ export const messages = {
       title: companyCopy.zh.title,
       paragraphs: companyCopy.zh.paragraphs,
       cta: '进一步了解我们',
-      imageAlt: '现代国际贸易办公空间',
+      imageAlt: '港口起重机、集装箱货轮与城市天际线',
     },
     business: {
       label: '主营业务',
@@ -96,7 +96,7 @@ export const messages = {
       title: companyCopy.en.title,
       paragraphs: companyCopy.en.paragraphs,
       cta: 'Learn More About Us',
-      imageAlt: 'Modern international trade office',
+      imageAlt: 'Port cranes, a container ship and the city skyline',
     },
     business: {
       label: 'Our Business',

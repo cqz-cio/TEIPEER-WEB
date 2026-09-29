@@ -155,36 +155,22 @@
 .about-hero {
   position: relative;
   height: clamp(240px, 20vw, 320px);
-  display: grid;
-  grid-template-columns: 38% 62%;
   overflow: hidden;
   background: #0d2548;
 }
 
-.about-hero-office,
-.about-hero-port {
-  min-width: 0;
-}
-
-.about-hero img {
+.about-hero-panorama {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.about-hero-office img {
-  object-position: center;
-  filter: brightness(.56) saturate(.82);
-}
-
-.about-hero-port img {
-  object-position: 58% center;
+  object-position: center bottom;
 }
 
 .about-hero-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(7, 27, 57, .16);
+  background: linear-gradient(90deg, rgba(7, 27, 57, .56), rgba(7, 27, 57, .32) 38%, rgba(7, 27, 57, .04) 75%);
 }
 
 .about-hero-copy {
@@ -724,7 +710,9 @@
   .about-mobile-subnav a.router-link-active { color: #133b78; font-weight: 750; }
   .about-mobile-language { display: flex; gap: 10px; padding-top: 18px; }
   .about-mobile-language button { padding: 8px 14px; border: 1px solid #dfe4eb; font-weight: 700; }
-  .about-hero { height: 300px; grid-template-columns: 48% 52%; }
+  .about-hero { height: 300px; }
+  .about-hero-panorama { object-position: 24% bottom; }
+  .about-hero-overlay { background: linear-gradient(180deg, rgba(7, 27, 57, .08), rgba(7, 27, 57, .58)); }
   .about-hero-copy { justify-content: flex-end; padding-bottom: 34px; }
   .about-hero-copy h1 { font-size: 38px; }
   .about-hero-copy p { max-width: 340px; font-size: 16px; }
@@ -752,9 +740,7 @@
 }
 
 @media (max-width: 520px) {
-  .about-hero { height: 330px; grid-template-columns: 100%; }
-  .about-hero-office { display: none; }
-  .about-hero-port img { object-position: 68% center; filter: brightness(.72); }
+  .about-hero { height: 330px; }
   .about-hero-copy h1 { font-size: 34px; }
   .about-facts-row { grid-template-columns: 1fr; border-left: 0; }
   .about-facts-row article { flex-direction: row; justify-content: flex-start; gap: 14px; min-height: 86px; border-right: 0; border-bottom: 1px solid #e0e5ec; text-align: left; }

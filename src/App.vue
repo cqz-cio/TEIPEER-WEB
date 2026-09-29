@@ -152,7 +152,7 @@ watch(
           <RouterLink class="primary-button about-button" :to="{ name: 'about-profile' }">{{ t('about.cta') }} <ArrowRight :size="18" /></RouterLink>
         </div>
         <figure class="about-figure">
-          <img src="/assets/trade-2026/home-about-team.jpg" :alt="t('about.imageAlt')" loading="lazy" decoding="async" fetchpriority="low" />
+          <img src="/assets/trade-2026/home-about-port.png" :alt="t('about.imageAlt')" loading="lazy" decoding="async" fetchpriority="low" />
         </figure>
       </div>
     </section>
