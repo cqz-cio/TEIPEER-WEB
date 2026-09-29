@@ -194,7 +194,7 @@ watch(
               </article>
             </div>
           </div>
-          <img class="culture-image" src="/assets/trade-2026/home-overseas-coordination.jpg" :alt="locale === 'zh' ? '港口与集装箱货轮' : 'Container ship and port'" loading="lazy" />
+          <img class="culture-image" src="/assets/trade-2026/home-culture-wall.webp" :alt="locale === 'zh' ? 'TRIPEER 企业文化展示墙' : 'TRIPEER corporate culture display wall'" loading="lazy" />
         </div>
         <CultureValues :items="companyCopy[locale].values" :label="locale === 'zh' ? '价值观' : 'Our Values'" />
         <RouterLink class="text-link culture-link" :to="{ name: 'corporate-culture' }">{{ locale === 'zh' ? '了解企业文化' : 'Explore Our Culture' }} <ArrowRight :size="20" aria-hidden="true" /></RouterLink>

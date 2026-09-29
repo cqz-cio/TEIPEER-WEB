@@ -214,7 +214,7 @@ const commonContent = computed(() => content[locale.value])
           <section class="about-process-section">
             <h3>{{ currentContent.lowerTitle }}</h3>
             <div class="about-process-layout">
-              <img src="/assets/trade-2026/about-profile-inspection.jpg" :alt="locale === 'zh' ? '产品、包装与订单协同检查' : 'Product, packaging and order coordination check'" />
+              <img src="/assets/trade-2026/home-business-order-coordination.webp" :alt="locale === 'zh' ? '仓储货架、港口与货轮，连接订单协同和海外交付' : 'Warehouse, port and container ship connecting order coordination with overseas delivery'" />
               <div class="about-process-grid">
                 <article v-for="(item, index) in processes" :key="item.title">
                   <div><component :is="item.icon" :size="36" /><span>{{ String(index + 1).padStart(2, '0') }}</span></div>
