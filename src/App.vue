@@ -44,25 +44,25 @@ const businessItems = computed(() => {
       title: '一次性食品包装产品',
       subtitle: 'Disposable Food Packaging',
       body: '涵盖纸杯、餐盒、外卖打包盒、刀叉勺、吸管、餐巾纸、烘焙包装、铝箔容器及环保可降解包装，服务餐饮、零售、酒店与外卖等场景。',
-      image: '/assets/trade-2026/product-paper-disposable.jpg',
+      image: '/assets/trade-2026/home-business-food-packaging.webp',
     },
     {
       title: '实木家具',
       subtitle: 'Solid Wood Furniture',
       body: '涵盖餐桌椅、床架、床头柜、衣柜、书架、茶几及定制实木家具，服务家居零售、酒店工程、品牌商、进口商和跨境电商卖家。',
-      image: '/assets/trade-2026/product-home-daily.jpg',
+      image: '/assets/trade-2026/home-business-solid-wood.webp',
     },
     {
       title: '产品与包装定制',
       subtitle: 'Product & Packaging Customization',
       body: '围绕品牌、标签、包装结构与装箱方式推进样品确认，并衔接后续批量生产。',
-      image: '/assets/trade-2026/product-packaging-custom.jpg',
+      image: '/assets/trade-2026/home-business-customization.webp',
     },
     {
       title: '国际贸易与订单协同',
       subtitle: 'International Trade & Order Coordination',
       body: '连接询价、打样、生产跟进、质量检查、贸易单证与出运安排，让订单状态保持清晰。',
-      image: '/assets/trade-2026/product-trade-order.jpg',
+      image: '/assets/trade-2026/home-business-order-coordination.webp',
     },
   ]
   const en = [
@@ -70,25 +70,25 @@ const businessItems = computed(() => {
       title: 'Disposable Food Packaging',
       subtitle: 'Paper · Plastic · Wood',
       body: 'Paper cups, meal containers, takeaway boxes, cutlery, straws, napkins, bakery packaging, aluminum foil containers and biodegradable packaging for foodservice, retail, hotels and takeaway businesses.',
-      image: '/assets/trade-2026/product-paper-disposable.jpg',
+      image: '/assets/trade-2026/home-business-food-packaging.webp',
     },
     {
       title: 'Solid Wood Furniture',
       subtitle: 'Dining Room · Living Room · Bedroom',
       body: 'Dining tables and chairs, bed frames, bedside tables, wardrobes, bookcases, coffee tables and custom solid wood furniture for home retailers, hotel projects, brands, importers and e-commerce sellers.',
-      image: '/assets/trade-2026/product-home-daily.jpg',
+      image: '/assets/trade-2026/home-business-solid-wood.webp',
     },
     {
       title: 'Product & Packaging Customization',
       subtitle: 'Branding · Labels · Packing',
       body: 'Coordinating branding, labels, packaging structures, carton requirements and sample approval before production.',
-      image: '/assets/trade-2026/product-packaging-custom.jpg',
+      image: '/assets/trade-2026/home-business-customization.webp',
     },
     {
       title: 'International Trade & Order Coordination',
       subtitle: 'Sampling · Quality · Documentation · Delivery',
       body: 'Connecting quotation, sampling, production follow-up, quality checks, trade documents and shipping arrangements.',
-      image: '/assets/trade-2026/product-trade-order.jpg',
+      image: '/assets/trade-2026/home-business-order-coordination.webp',
     },
   ]
   return locale.value === 'zh' ? zh : en
