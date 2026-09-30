@@ -173,7 +173,7 @@ const related = computed(() => {
   <SiteHeader />
   <main id="capability-main" class="knowledge-page capability-experience">
     <section class="knowledge-hero">
-      <img :src="content.image" alt="" />
+      <img src="/assets/trade-2026/company-city-panorama.png" alt="" width="2848" height="800" fetchpriority="high" />
       <div class="knowledge-hero-overlay"></div>
       <div class="knowledge-hero-copy">
         <span>{{ locale === 'zh' ? '核心能力' : 'CORE CAPABILITIES' }}</span>

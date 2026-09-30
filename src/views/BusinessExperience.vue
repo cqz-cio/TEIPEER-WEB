@@ -38,12 +38,12 @@ const content = computed(() => {
       matrixTitle: 'Product Category Matrix',
       matrixIntro: 'Our core business comprises disposable food packaging and solid wood furniture, supported by flexible coordination services. Product selection, specifications and target-market compliance standards are subject to final confirmation for each inquiry.',
       matrix: [
-        ['Disposable Food Packaging', [['Paper Products', 'trade-2026/matrix-paper-hygiene.jpg'], ['Plastic Products', 'trade-2026/matrix-disposable-use.jpg'], ['Wooden Products', 'trade-2026/matrix-commercial-supplies.jpg']], PencilLine],
-        ['Solid Wood Furniture', [['Dining Room Furniture', 'trade-2026/matrix-storage.jpg'], ['Living Room Furniture', 'trade-2026/matrix-kitchen.jpg'], ['Bedroom Furniture', 'trade-2026/matrix-cleaning.jpg']], HouseLine],
+        ['Disposable Food Packaging', [['Paper Products', 'trade-2026/category-paper-products.webp'], ['Plastic Products', 'trade-2026/category-plastic-products.webp'], ['Wooden Products', 'trade-2026/category-wooden-products.webp']], PencilLine],
+        ['Solid Wood Furniture', [['Dining Room Furniture', 'trade-2026/category-dining-room.webp'], ['Living Room Furniture', 'trade-2026/category-living-room.webp'], ['Bedroom Furniture', 'trade-2026/category-bedroom.webp']], HouseLine],
       ],
       customizationTitle: 'From Specifications and Samples to Packaging Execution',
       customizationIntro: 'Customization begins with practical order information. We translate the target market, application, specifications, pack count, labeling and timing into details that suppliers can execute, then coordinate samples, revisions and production confirmation.',
-      customizationImageAlt: 'Product samples and packaging coordination',
+      customizationImageAlt: 'Illustrated process for requirements, product and packaging selection, sample approval, production inspection and delivery',
       customizationSteps: [
         ['01', 'Requirement Definition', 'Confirm the target market, application, dimensions, material, pack count, quantity, target price and delivery window.'],
         ['02', 'Product & Packaging Direction', 'Coordinate feasible product, label, inner-pack and carton options based on available supply resources.'],
@@ -91,12 +91,12 @@ const content = computed(() => {
     matrixTitle: '产品品类矩阵',
     matrixIntro: '公司核心业务包含一次性食品包装产品与实木家具两大板块，可提供灵活协同服务。产品选型、规格参数及目标市场合规标准，均以询盘最终确认内容为准。',
     matrix: [
-      ['一次性食品包装产品', [['纸类产品', 'trade-2026/matrix-paper-hygiene.jpg'], ['塑料产品', 'trade-2026/matrix-disposable-use.jpg'], ['木质产品', 'trade-2026/matrix-commercial-supplies.jpg']], PencilLine],
-      ['实木家具', [['餐厅家具', 'trade-2026/matrix-storage.jpg'], ['客厅家具', 'trade-2026/matrix-kitchen.jpg'], ['卧室家具', 'trade-2026/matrix-cleaning.jpg']], HouseLine],
+      ['一次性食品包装产品', [['纸类产品', 'trade-2026/category-paper-products.webp'], ['塑料产品', 'trade-2026/category-plastic-products.webp'], ['木质产品', 'trade-2026/category-wooden-products.webp']], PencilLine],
+      ['实木家具', [['餐厅家具', 'trade-2026/category-dining-room.webp'], ['客厅家具', 'trade-2026/category-living-room.webp'], ['卧室家具', 'trade-2026/category-bedroom.webp']], HouseLine],
     ],
     customizationTitle: '从规格与样品确认到包装落地',
     customizationIntro: '定制从具体订单信息开始。我们把目标市场、使用场景、产品规格、包装数量、标签与交期转化为供应商可执行的细节，再协调样品、修改与量产确认。',
-    customizationImageAlt: '产品样品与包装协同',
+    customizationImageAlt: '需求与规格确认、产品与包装方向、打样定稿、生产质检及交付的四格流程插画',
     customizationSteps: [
       ['01', '需求与规格确认', '明确目标市场、使用场景、尺寸、材料、包装数量、采购量、目标价格和交付窗口。'],
       ['02', '产品与包装方向', '结合可用供应资源，协调产品、标签、内包装、外箱与装箱方式的可行方案。'],
@@ -138,8 +138,7 @@ const currentKey = computed(() => route.meta.businessKey || 'overview')
   <main id="business-main" class="business-page">
     <section class="business-hero" aria-labelledby="business-hero-title">
       <div class="business-hero-media" aria-hidden="true">
-        <img src="/assets/trade-2026/business-hero-products.jpg" alt="" />
-        <img src="/assets/trade-2026/business-hero-shipping.jpg" alt="" />
+        <img src="/assets/trade-2026/company-city-panorama.png" alt="" width="2848" height="800" fetchpriority="high" />
       </div>
       <div class="business-hero-shade" aria-hidden="true"></div>
       <div class="business-hero-copy">
@@ -175,7 +174,7 @@ const currentKey = computed(() => route.meta.businessKey || 'overview')
             <article v-for="column in content.matrix" :key="column[0]" class="business-matrix-column">
               <header><component :is="column[2]" :size="25" /><h3>{{ column[0] }}</h3></header>
               <div v-for="item in column[1]" :key="item[0]" class="business-matrix-item">
-                <img :src="'/assets/' + item[1]" :alt="item[0]" />
+                <img :src="'/assets/' + item[1]" :alt="item[0]" width="1280" height="720" loading="lazy" decoding="async" />
                 <strong>{{ item[0] }}</strong>
               </div>
             </article>
@@ -186,7 +185,7 @@ const currentKey = computed(() => route.meta.businessKey || 'overview')
           <header class="business-heading"><h2>{{ content.customizationTitle }}</h2></header>
           <div class="business-intro-copy business-page-intro"><p>{{ content.customizationIntro }}</p></div>
           <div class="business-customization-layout">
-            <figure><img src="/assets/trade-2026/business-customization.jpg" :alt="content.customizationImageAlt" /></figure>
+            <figure class="business-customization-illustration"><img src="/assets/trade-2026/business-customization-process.webp" :alt="content.customizationImageAlt" width="1280" height="891" loading="lazy" decoding="async" /></figure>
             <div class="business-customization-steps">
               <article v-for="step in content.customizationSteps" :key="step[0]">
                 <span>{{ step[0] }}</span>

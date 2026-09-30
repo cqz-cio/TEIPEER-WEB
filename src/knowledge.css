@@ -31,7 +31,7 @@
   object-fit: cover;
 }
 
-.capability-experience .knowledge-hero > img { object-position: center 56%; }
+.capability-experience .knowledge-hero > img { object-position: center bottom; }
 
 .knowledge-hero-overlay {
   background: linear-gradient(90deg, rgba(6, 24, 52, .82) 0%, rgba(6, 24, 52, .55) 46%, rgba(6, 24, 52, .28) 100%);
@@ -251,17 +251,17 @@
 }
 
 .insights-hero-media {
-  display: grid;
-  grid-template-columns: 1.08fr .96fr .96fr;
+  display: block;
 }
 
 .insights-hero-media img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center bottom;
 }
 
-.insights-hero-media img:nth-child(2) { object-position: center; }
 .insights-hero .knowledge-hero-overlay { background: rgba(7, 24, 50, .64); }
 
 .insights-intro {
@@ -393,8 +393,8 @@
   .knowledge-proof-grid { grid-template-columns: 1fr; }
   .related-pages { grid-template-columns: 1fr; align-items: start; }
   .related-pages nav { grid-template-columns: 1fr; }
-  .insights-hero-media { grid-template-columns: 1fr; }
-  .insights-hero-media img:not(:first-child) { display: none; }
+  .insights-hero-media img,
+  .capability-experience .knowledge-hero > img { object-position: 24% bottom; }
   .news-feature-card { grid-template-columns: 1fr; }
   .news-feature-card > img { min-height: 270px; max-height: 320px; }
   .news-card-grid { grid-template-columns: 1fr; }

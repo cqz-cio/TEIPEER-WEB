@@ -105,9 +105,7 @@ const remaining = computed(() => content.value.articles.slice(1))
   <main id="insight-main" class="knowledge-page insights-experience">
     <section class="knowledge-hero insights-hero">
       <div class="insights-hero-media" aria-hidden="true">
-        <img src="/assets/trade-2026/insight-hero-history.jpg" alt="" />
-        <img src="/assets/trade-2026/insight-hero-products.jpg" alt="" />
-        <img src="/assets/trade-2026/insight-hero-quality.jpg" alt="" />
+        <img src="/assets/trade-2026/company-city-panorama.png" alt="" width="2848" height="800" fetchpriority="high" />
       </div>
       <div class="knowledge-hero-overlay"></div>
       <div class="knowledge-hero-copy">
