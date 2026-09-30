@@ -170,7 +170,7 @@
 .about-hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(7, 27, 57, .56), rgba(7, 27, 57, .32) 38%, rgba(7, 27, 57, .04) 75%);
+  background: var(--inner-hero-overlay);
 }
 
 .about-hero-copy {
@@ -712,7 +712,6 @@
   .about-mobile-language button { padding: 8px 14px; border: 1px solid #dfe4eb; font-weight: 700; }
   .about-hero { height: 300px; }
   .about-hero-panorama { object-position: 24% bottom; }
-  .about-hero-overlay { background: linear-gradient(180deg, rgba(7, 27, 57, .08), rgba(7, 27, 57, .58)); }
   .about-hero-copy { justify-content: flex-end; padding-bottom: 34px; }
   .about-hero-copy h1 { font-size: 38px; }
   .about-hero-copy p { max-width: 340px; font-size: 16px; }

@@ -36,7 +36,7 @@
   object-position: center bottom;
 }
 
-.business-hero-shade { background: rgba(7, 18, 34, .43); }
+.business-hero-shade { background: var(--inner-hero-overlay); }
 
 .business-hero-copy {
   position: relative;

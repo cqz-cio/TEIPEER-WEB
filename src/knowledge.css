@@ -34,7 +34,7 @@
 .capability-experience .knowledge-hero > img { object-position: center bottom; }
 
 .knowledge-hero-overlay {
-  background: linear-gradient(90deg, rgba(6, 24, 52, .82) 0%, rgba(6, 24, 52, .55) 46%, rgba(6, 24, 52, .28) 100%);
+  background: var(--inner-hero-overlay);
 }
 
 .knowledge-hero-copy {
@@ -262,8 +262,6 @@
   object-position: center bottom;
 }
 
-.insights-hero .knowledge-hero-overlay { background: rgba(7, 24, 50, .64); }
-
 .insights-intro {
   padding-block: clamp(44px, 5vw, 70px) 30px;
 }
@@ -381,7 +379,6 @@
   .knowledge-shell,
   .knowledge-hero-copy { width: min(calc(100% - 32px), var(--knowledge-shell)); }
   .knowledge-hero { min-height: 330px; }
-  .knowledge-hero-overlay { background: rgba(7, 24, 50, .66); }
   .knowledge-hero-copy { text-align: center; }
   .knowledge-hero-copy h1 { font-size: 43px; }
   .knowledge-hero-copy p { font-size: 18px; }
