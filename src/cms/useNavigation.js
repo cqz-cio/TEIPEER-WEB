@@ -1,7 +1,7 @@
 import { computed, onBeforeUnmount, shallowRef, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { createCmsClient } from './client.js'
-import { validateNavigation } from './navigation.js'
+import { validateNavigation, withCompanyNewsNavigation } from './navigation.js'
 import { previewActive, previewNavigation } from './preview-context.js'
 export function useNavigation() {
   const { locale } = useI18n()
@@ -20,5 +20,8 @@ export function useNavigation() {
     } catch { /* Keep the bundled navigation available during an upstream outage. */ }
   }, { immediate: true })
   onBeforeUnmount(() => { generation++; controller?.abort() })
-  return computed(() => previewActive.value ? previewNavigation.value : published.value)
+  return computed(() => withCompanyNewsNavigation(
+    previewActive.value ? previewNavigation.value : published.value,
+    locale.value,
+  ))
 }

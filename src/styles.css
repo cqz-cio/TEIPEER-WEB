@@ -338,6 +338,7 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--orange-dark); o
 .global-footer-contact { align-self: stretch; padding-left: 34px; border-left: 1px solid #354252; }
 .global-footer-contact > p { margin: 0 0 18px; color: #b4bfcd; font-size: 13px; line-height: 1.75; }
 .global-footer-contact-details { display: grid; gap: 7px; padding: 0; margin: 0; color: #b4bfcd; font-size: 12px; line-height: 1.55; list-style: none; }
+.global-footer-email:hover { color: #fff; text-decoration: underline; }
 .global-footer-contact-button { display: inline-flex; align-items: center; justify-content: center; min-height: 42px; padding-inline: 22px; color: #fff; background: var(--navy); font-size: 13px; font-weight: 750; transition: background .18s ease, transform .18s ease; }
 .global-footer-contact-button:hover,
 .global-footer-contact-button:focus-visible { background: var(--navy-dark); transform: translateY(-2px); }
@@ -360,7 +361,6 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--orange-dark); o
   cursor: pointer;
   transition: color .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease, transform .18s ease;
 }
-.global-footer-social-button.is-linkedin { color: #0a66c2; }
 .global-footer-social-button svg { display: block; }
 .global-footer-social-button:hover,
 .global-footer-social-button:focus-visible {
@@ -370,39 +370,16 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--orange-dark); o
   box-shadow: 0 8px 18px rgba(13, 68, 142, .18);
   transform: translateY(-2px);
 }
-.global-footer-social-button.is-linkedin:hover,
-.global-footer-social-button.is-linkedin:focus-visible { border-color: #0a66c2; background: #0a66c2; }
+.global-footer-social-button:disabled { cursor: default; }
+.global-footer-social-button:disabled:hover {
+  color: #dce4ef;
+  border-color: #465467;
+  background: #222d3a;
+  box-shadow: 0 2px 8px rgba(17, 52, 95, .05);
+  transform: none;
+}
 .global-footer-social-button:focus-visible { outline: 2px solid rgba(245, 122, 37, .72); outline-offset: 3px; }
 .global-footer-social-button:active { box-shadow: 0 3px 8px rgba(13, 68, 142, .14); transform: translateY(0); }
-.global-footer-social-status { min-height: 18px; margin: 8px 0 0; color: #8f9bad; font-size: 11px; line-height: 1.55; }
-.global-footer-friends-wrap { margin-top: 4px; }
-.global-footer-friends {
-  width: 100%;
-  min-height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 0 12px;
-  border: 1px solid #465467;
-  border-radius: 0;
-  color: #b4bfcd;
-  background: #222d3a;
-  font-size: 12px;
-  text-align: left;
-  transition: color .18s ease, border-color .18s ease, box-shadow .18s ease;
-}
-.global-footer-friends:hover,
-.global-footer-friends:focus-visible,
-.global-footer-friends.is-open { color: #fff; border-color: #75849a; box-shadow: 0 5px 14px rgba(0,0,0,.16); }
-.global-footer-friends:focus-visible { outline: 2px solid rgba(245, 122, 37, .72); outline-offset: 3px; }
-.global-footer-friends svg { flex: 0 0 auto; transition: transform .18s ease; }
-.global-footer-friends.is-open svg { transform: rotate(180deg); }
-.global-footer-friends-panel { margin-top: 6px; padding: 11px 12px; border: 1px solid #465467; color: #b4bfcd; background: #222d3a; font-size: 11px; line-height: 1.55; }
-.footer-friends-panel-enter-active,
-.footer-friends-panel-leave-active { transition: opacity .16s ease, transform .16s ease; }
-.footer-friends-panel-enter-from,
-.footer-friends-panel-leave-to { opacity: 0; transform: translateY(-4px); }
 
 .global-footer-bottom { border-top: 1px solid #303b49; background: #121922; }
 .global-footer-bottom-inner { width: min(1240px, calc(100% - 72px)); min-height: 64px; margin-inline: auto; display: flex; align-items: center; justify-content: space-between; gap: 28px; color: #8f9bad; font-size: 11px; }

@@ -15,6 +15,25 @@ export function validateNavigation(value, locale) {
   }
   return { ...value, items: walk(value.items) }
 }
+export function withCompanyNewsNavigation(value, locale) {
+  if (!value) return value
+  const companyPath = '/news/company'
+  const items = value.items
+    .filter(item => item.href !== '/news/insights')
+    .map(item => {
+      const newsDirectory = item.key.toLowerCase() === 'news'
+        || item.label === '新闻动态' || item.label === 'News & Updates'
+        || (item.children.length > 0 && item.children.every(child => child.href.startsWith('/news/')))
+      if (!newsDirectory && item.href !== companyPath) return item
+      return {
+        ...item,
+        label: locale === 'en' ? 'Company News' : '公司动态',
+        href: companyPath,
+        children: [],
+      }
+    })
+  return { ...value, items }
+}
 export function validateArticle(value) {
   if (!value || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value.slug || '') || typeof value.title !== 'string'
       || typeof value.summary !== 'string' || !Array.isArray(value.sections)

@@ -17,7 +17,6 @@ const dismissedDropdown = ref('')
 
 const isAbout = computed(() => String(route.name || '').startsWith('about-'))
 const isBusiness = computed(() => String(route.name || '').startsWith('business-'))
-const isInsight = computed(() => String(route.name || '').startsWith('insight-'))
 
 const aboutNav = computed(() => locale.value === 'zh'
   ? [{ label: '公司概况', route: 'about-profile' }, { label: '发展历程', route: 'about-history' }, { label: '海外市场', route: 'about-markets' }]
@@ -26,7 +25,7 @@ const aboutNav = computed(() => locale.value === 'zh'
 const navGroups = computed(() => [
   { key: 'about', label: t('nav.about'), active: isAbout.value, items: aboutNav.value, aria: locale.value === 'zh' ? '公司介绍二级导航' : 'About submenu' },
   { key: 'business', label: locale.value === 'zh' ? '业务介绍' : 'Business', active: isBusiness.value, route: 'business-overview' },
-  { key: 'news', label: locale.value === 'zh' ? '新闻动态' : 'News & Updates', active: isInsight.value, items: locale.value === 'zh' ? [{ label: '行业动态', route: 'insight-industry' }, { label: '公司动态', route: 'insight-company' }] : [{ label: 'Industry News', route: 'insight-industry' }, { label: 'Company News', route: 'insight-company' }], aria: locale.value === 'zh' ? '新闻动态二级导航' : 'News submenu' },
+  { key: 'news', label: locale.value === 'zh' ? '公司动态' : 'Company News', active: route.name === 'insight-company', route: 'insight-company' },
   { key: 'culture', label: locale.value === 'zh' ? '企业文化' : 'Corporate Culture', active: route.name === 'corporate-culture', route: 'corporate-culture' },
 ])
 

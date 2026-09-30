@@ -6,24 +6,17 @@ import {
   PhArrowUp as ArrowUp,
   PhCaretDown as CaretDown,
   PhEnvelopeSimple as EnvelopeSimple,
-  PhLinkedinLogo as LinkedinLogo,
-  PhWechatLogo as WechatLogo,
+  PhTiktokLogo as TiktokLogo,
 } from '@phosphor-icons/vue'
 
-const socialIcons = [
-  { key: 'linkedin', icon: LinkedinLogo, size: 23, weight: 'fill' },
-  { key: 'email', icon: EnvelopeSimple, size: 22, weight: 'regular' },
-  { key: 'wechat', icon: WechatLogo, size: 25, weight: 'fill' },
-]
+const contactEmail = 'hr@nbtrendz.com'
+const emailHref = 'mailto:' + contactEmail
 
 const { t, locale } = useI18n()
 const route = useRoute()
 const mobileQuery = window.matchMedia('(max-width: 640px)')
 const isMobile = ref(mobileQuery.matches)
 const expandedGroups = ref({})
-const socialFeedback = ref('')
-const friendLinksOpen = ref(false)
-let socialFeedbackTimer
 
 const content = computed(() => {
   if (locale.value === 'en') {
@@ -44,7 +37,7 @@ const content = computed(() => {
           key: 'business', title: 'Business', links: [{ label: 'Business', to: { name: 'business-overview' } }],
         },
         {
-          key: 'news', title: 'News & Updates', links: [{ label: 'Industry News', to: { name: 'insight-industry' } }, { label: 'Company News', to: { name: 'insight-company' } }],
+          key: 'news', title: 'Company News', links: [{ label: 'Company News', to: { name: 'insight-company' } }],
         },
         {
           key: 'culture', title: 'Corporate Culture', links: [{ label: 'Corporate Culture', to: { name: 'corporate-culture' } }],
@@ -52,12 +45,10 @@ const content = computed(() => {
       ],
       contactTitle: t('contact.title'),
       contactBody: t('contact.body'),
-      contactDetails: ['Location: Ningbo, Zhejiang, China', 'Official contact channels are not yet active.'],
+      contactDetails: ['Location: Ningbo, Zhejiang, China'],
+      emailLabel: 'Email',
       socialTitle: 'FOLLOW & CONTACT',
-      socialLabels: ['LinkedIn', 'Email', 'WeChat'],
-      socialPending: 'Official account details will be enabled once confirmed.',
-      friendLinks: 'Partner links (available after confirmation)',
-      friendLinksPending: 'Partner link details will be available once confirmed.',
+      douyinPending: 'Douyin account details pending',
       rights: '© 2016–2026 Ningbo Tripeer International Trading Co., Ltd.',
       privacy: 'Privacy',
       sitemap: 'Sitemap',
@@ -84,7 +75,7 @@ const content = computed(() => {
         key: 'business', title: '业务介绍', links: [{ label: '业务介绍', to: { name: 'business-overview' } }],
       },
       {
-        key: 'news', title: '新闻动态', links: [{ label: '行业动态', to: { name: 'insight-industry' } }, { label: '公司动态', to: { name: 'insight-company' } }],
+        key: 'news', title: '公司动态', links: [{ label: '公司动态', to: { name: 'insight-company' } }],
       },
       {
         key: 'culture', title: '企业文化', links: [{ label: '企业文化', to: { name: 'corporate-culture' } }],
@@ -92,12 +83,10 @@ const content = computed(() => {
     ],
     contactTitle: t('contact.title'),
     contactBody: t('contact.body'),
-    contactDetails: ['所在地：中国·浙江·宁波', '正式联系渠道尚未启用'],
+    contactDetails: ['所在地：中国·浙江·宁波'],
+    emailLabel: '邮箱',
     socialTitle: '关注与联系',
-    socialLabels: ['LinkedIn', '电子邮箱', '微信'],
-    socialPending: '官方账号信息确认后启用。',
-    friendLinks: '友情链接（合作伙伴确认后启用）',
-    friendLinksPending: '合作伙伴链接信息确认后开放。',
+    douyinPending: '抖音账号待提供',
     rights: '© 2016–2026 宁波全品轩国际贸易有限公司 版权所有',
     privacy: '隐私政策',
     sitemap: '网站地图',
@@ -116,14 +105,6 @@ const setLocale = () => {
 
 const backToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
 
-const handleSocialClick = (index) => {
-  window.clearTimeout(socialFeedbackTimer)
-  socialFeedback.value = `${content.value.socialLabels[index]}：${content.value.socialPending}`
-  socialFeedbackTimer = window.setTimeout(() => {
-    socialFeedback.value = ''
-  }, 3200)
-}
-
 const syncMobile = () => {
   isMobile.value = mobileQuery.matches
 }
@@ -134,10 +115,7 @@ const handleGroupToggle = (key, event) => {
 }
 
 onMounted(() => mobileQuery.addEventListener('change', syncMobile))
-onBeforeUnmount(() => {
-  mobileQuery.removeEventListener('change', syncMobile)
-  window.clearTimeout(socialFeedbackTimer)
-})
+onBeforeUnmount(() => mobileQuery.removeEventListener('change', syncMobile))
 </script>
 
 <template>
@@ -172,53 +150,29 @@ onBeforeUnmount(() => {
         <p>{{ content.contactBody }}</p>
         <ul class="global-footer-contact-details">
           <li v-for="item in content.contactDetails" :key="item">{{ item }}</li>
+          <li>
+            {{ content.emailLabel }}{{ locale === 'zh' ? '：' : ': ' }}<a class="global-footer-email" :href="emailHref">{{ contactEmail }}</a>
+          </li>
         </ul>
         <div class="global-footer-social-title">{{ content.socialTitle }}</div>
-        <div class="global-footer-social" :aria-label="content.socialPending">
+        <div class="global-footer-social" :aria-label="content.socialTitle">
           <button
-            v-for="(item, index) in socialIcons"
-            :key="item.key"
-            class="global-footer-social-button"
-            :class="`is-${item.key}`"
+            class="global-footer-social-button is-douyin"
             type="button"
-            :title="`${content.socialLabels[index]}：${content.socialPending}`"
-            :aria-label="`${content.socialLabels[index]}。${content.socialPending}`"
-            aria-describedby="footer-social-status"
-            @click="handleSocialClick(index)"
+            disabled
+            :title="content.douyinPending"
+            :aria-label="content.douyinPending"
           >
-            <component
-              :is="item.icon"
-              :size="item.size"
-              :weight="item.weight"
-              aria-hidden="true"
-            />
+            <TiktokLogo :size="24" weight="fill" aria-hidden="true" />
           </button>
-        </div>
-        <p id="footer-social-status" class="global-footer-social-status" aria-live="polite">
-          {{ socialFeedback }}
-        </p>
-        <div class="global-footer-friends-wrap">
-          <button
-            class="global-footer-friends"
-            :class="{ 'is-open': friendLinksOpen }"
-            type="button"
-            :aria-expanded="friendLinksOpen"
-            aria-controls="footer-friend-links-panel"
-            @click="friendLinksOpen = !friendLinksOpen"
+          <a
+            class="global-footer-social-button is-email"
+            :href="emailHref"
+            :title="content.emailLabel + ': ' + contactEmail"
+            :aria-label="content.emailLabel + ': ' + contactEmail"
           >
-            <span>{{ content.friendLinks }}</span>
-            <CaretDown :size="15" weight="bold" aria-hidden="true" />
-          </button>
-          <Transition name="footer-friends-panel">
-            <div
-              v-if="friendLinksOpen"
-              id="footer-friend-links-panel"
-              class="global-footer-friends-panel"
-              role="status"
-            >
-              {{ content.friendLinksPending }}
-            </div>
-          </Transition>
+            <EnvelopeSimple :size="22" weight="regular" aria-hidden="true" />
+          </a>
         </div>
       </section>
     </div>
