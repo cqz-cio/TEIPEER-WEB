@@ -1,9 +1,9 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import SiteHeader from '../components/SiteHeader.vue'
 import SiteFooter from '../components/SiteFooter.vue'
-import { PhClock as Clock, PhMapPin as MapPin, PhPaperclip as Paperclip, PhInfo as Info } from '@phosphor-icons/vue'
+import { PhClock as Clock, PhMapPin as MapPin, PhPaperclip as Paperclip, PhInfo as Info, PhCopy as Copy, PhCheck as Check, PhNavigationArrow as NavigationArrow } from '@phosphor-icons/vue'
 
 const { t, locale } = useI18n()
 const inquiry = ref('')
@@ -12,6 +12,11 @@ const attachment = ref(null)
 const attachmentInput = ref(null)
 const attachmentError = ref(false)
 const isCareer = computed(() => inquiry.value === 'career')
+const officeMapUrl = 'https://surl.amap.com/anhssUOTcKa'
+const copyingAddress = ref(false)
+const addressCopied = ref(false)
+const addressCopyFailed = ref(false)
+let addressFeedbackTimer
 const content = computed(() => locale.value === 'zh' ? {
   title: t('contact.title'), intro: t('contact.body'),
   note: '当前接收服务尚未启用，填写内容和所选附件不会保存或发送。',
@@ -19,7 +24,11 @@ const content = computed(() => locale.value === 'zh' ? {
   company: '公司名称（合作填）', companyHint: '请输入公司名称', companySkip: '求职应聘无需填写公司名称', email: '邮箱', emailHint: '请输入您的邮箱', phone: '联系电话', phoneHint: '请输入您的联系电话',
   message: '需求说明', messageHint: '如果是合作，请简述您的项目；如果是求职，请说明意向岗位及相关情况。',
   attachment: '附件上传（可选）', choose: '选择附件', uploadHint: '可添加简历、项目介绍或相关资料', formats: 'PDF、Word、Excel、JPG、PNG，单个文件不超过10MB', remove: '移除附件', invalid: '请选择支持的文件格式，且文件大小不超过10MB。',
-  submit: '提交咨询（暂未开放）', submitHint: '接收服务开通后可提交咨询及附件。', direct: '联系我们', directHint: '商务合作 · 求职应聘', hours: '工作时间', time: '周一至周五 08:45-17:45', location: '所在地', address: '中国 · 浙江 · 宁波', imageAlt: '团队整理产品资料与合作需求',
+  submit: '提交咨询（暂未开放）', submitHint: '接收服务开通后可提交咨询及附件。', direct: '联系我们', directHint: '商务合作 · 求职应聘', hours: '工作时间', time: '周一至周五 08:45-17:45', location: '办公地址',
+  address: '浙江省宁波市高新区翔云北路199号深蓝大厦7号楼802室',
+  addressLines: ['浙江省宁波市高新区', '翔云北路199号深蓝大厦', '7号楼802室'],
+  copyAddress: '复制地址', copyingAddress: '复制中', addressCopied: '已复制', copyFailed: '未能自动复制，请长按或选中上方地址复制。',
+  mapAlt: '全品轩办公位置示意：深蓝大厦位于翔云北路东侧、腊梅路北侧', mapCaption: '位置示意，以高德导航为准', directions: '查看路线', openMap: '在新窗口打开全品轩的高德地图定位',
 } : {
   title: t('contact.title'), intro: t('contact.body'),
   note: 'Our receiving service is not active yet. Entered details and selected files will not be saved or sent.',
@@ -27,8 +36,63 @@ const content = computed(() => locale.value === 'zh' ? {
   company: 'Company (business inquiries)', companyHint: 'Company name', companySkip: 'Not required for job applications', email: 'Email', emailHint: 'Your email address', phone: 'Phone', phoneHint: 'Your phone number',
   message: 'Inquiry Details', messageHint: 'For business cooperation, briefly describe your project. For job applications, specify your desired role and relevant background.',
   attachment: 'Attachment (optional)', choose: 'Choose attachment', uploadHint: 'Add a resume, project introduction or related materials', formats: 'PDF, Word, Excel, JPG or PNG; maximum 10MB per file', remove: 'Remove attachment', invalid: 'Choose a supported file format no larger than 10MB.',
-  submit: 'Submit Inquiry (unavailable)', submitHint: 'Inquiries and attachments can be submitted once the receiving service is active.', direct: 'Contact Us', directHint: 'Business Cooperation · Careers', hours: 'Business Hours', time: 'Mon–Fri 08:45-17:45', location: 'Location', address: 'Ningbo, Zhejiang, China', imageAlt: 'Team reviewing product materials and cooperation requirements',
+  submit: 'Submit Inquiry (unavailable)', submitHint: 'Inquiries and attachments can be submitted once the receiving service is active.', direct: 'Contact Us', directHint: 'Business Cooperation · Careers', hours: 'Business Hours', time: 'Mon–Fri 08:45-17:45', location: 'Office Address',
+  address: 'Room 802, Building 7, Shenlan Building, 199 Xiangyun North Road, Ningbo High-tech Zone, Zhejiang, China',
+  addressLines: ['Ningbo High-tech Zone, Zhejiang, China', '199 Xiangyun North Road, Shenlan Building', 'Room 802, Building 7'],
+  copyAddress: 'Copy address', copyingAddress: 'Copying', addressCopied: 'Copied', copyFailed: 'Unable to copy automatically. Select the address above to copy it.',
+  mapAlt: 'Office location schematic: Shenlan Building is east of Xiangyun North Road and north of Lamei Road', mapCaption: 'Location schematic. Follow Amap for navigation.', directions: 'View directions', openMap: 'Open the Tripeer office location in Amap in a new tab',
 })
+function resetAddressFeedback() {
+  clearTimeout(addressFeedbackTimer)
+  addressCopied.value = false
+  addressCopyFailed.value = false
+}
+watch(locale, resetAddressFeedback)
+onBeforeUnmount(() => clearTimeout(addressFeedbackTimer))
+
+function copyAddressWithSelection(value) {
+  const previousFocus = document.activeElement
+  const copyField = document.createElement('textarea')
+  copyField.value = value
+  copyField.readOnly = true
+  copyField.style.cssText = 'position:fixed;left:-9999px;top:0;font-size:16px;'
+  document.body.appendChild(copyField)
+  try {
+    copyField.focus({ preventScroll: true })
+    copyField.select()
+    return document.execCommand('copy')
+  } finally {
+    copyField.remove()
+    previousFocus?.focus?.({ preventScroll: true })
+  }
+}
+
+async function copyOfficeAddress() {
+  if (copyingAddress.value) return
+  resetAddressFeedback()
+  copyingAddress.value = true
+  const value = content.value.address
+  let copied = false
+  try {
+    if (window.isSecureContext && navigator.clipboard?.writeText) {
+      try {
+        await navigator.clipboard.writeText(value)
+        copied = true
+      } catch {
+        copied = copyAddressWithSelection(value)
+      }
+    } else {
+      copied = copyAddressWithSelection(value)
+    }
+    addressCopied.value = copied
+    addressCopyFailed.value = !copied
+    if (copied) addressFeedbackTimer = setTimeout(resetAddressFeedback, 3000)
+  } catch {
+    addressCopyFailed.value = true
+  } finally {
+    copyingAddress.value = false
+  }
+}
 function selectAttachment(event) {
   const file = event.target.files?.[0]
   attachmentError.value = false
@@ -87,10 +151,27 @@ function clearAttachment() {
         <div class="contact-direct-panel">
           <h2>{{ content.direct }}</h2><p class="inquiry-direct-intro">{{ content.directHint }}</p>
           <div class="contact-direct-list">
-            <article><Clock :size="34" aria-hidden="true" /><div><span>{{ content.hours }}</span><strong>{{ content.time }}</strong></div></article>
-            <article><MapPin :size="34" aria-hidden="true" /><div><span>{{ content.location }}</span><strong>{{ content.address }}</strong></div></article>
+            <article><Clock :size="32" aria-hidden="true" /><div><span>{{ content.hours }}</span><strong>{{ content.time }}</strong></div></article>
+            <article class="inquiry-address-row">
+              <MapPin :size="32" aria-hidden="true" />
+              <div>
+                <span>{{ content.location }}</span>
+                <address class="inquiry-office-address"><span v-for="line in content.addressLines" :key="line">{{ line }}</span></address>
+                <button class="inquiry-copy-address" type="button" :disabled="copyingAddress" :aria-busy="copyingAddress" @click="copyOfficeAddress">
+                  <Check v-if="addressCopied" :size="20" aria-hidden="true" /><Copy v-else :size="20" aria-hidden="true" />
+                  {{ copyingAddress ? content.copyingAddress : addressCopied ? content.addressCopied : content.copyAddress }}
+                </button>
+                <p class="inquiry-copy-status" :class="{ 'inquiry-copy-status-hidden': !addressCopyFailed }" role="status" aria-live="polite">{{ addressCopyFailed ? content.copyFailed : addressCopied ? content.addressCopied : '' }}</p>
+              </div>
+            </article>
           </div>
-          <img class="inquiry-team-image" src="/assets/trade-2026/contact-office-consultation.jpg" :alt="content.imageAlt" />
+          <figure class="inquiry-office-location">
+            <a class="inquiry-map-link" :href="officeMapUrl" target="_blank" rel="noopener noreferrer" :aria-label="content.openMap">
+              <img class="inquiry-office-map" src="/assets/trade-2026/contact-office-location.png" :alt="content.mapAlt" width="1448" height="1086" decoding="async" />
+            </a>
+            <figcaption>{{ content.mapCaption }}</figcaption>
+          </figure>
+          <a class="inquiry-map-directions" :href="officeMapUrl" target="_blank" rel="noopener noreferrer" :aria-label="content.openMap"><NavigationArrow :size="23" weight="fill" aria-hidden="true" />{{ content.directions }}</a>
         </div>
       </aside>
     </section>

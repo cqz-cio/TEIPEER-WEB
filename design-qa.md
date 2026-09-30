@@ -1,39 +1,67 @@
-# Design QA — 2026-09-02 image refresh
+# 联系页办公地图 — Design QA
 
-## Scope
+日期：2026-09-30。实施依据：用户确认的联系卡片效果图及随后明确的“确认”实施指令。
 
-- Selected direction: Option 1, authentic Ningbo international-trade documentary photography.
-- Updated surfaces: homepage, company profile, business/products, capabilities, insights, and contact.
-- Layout, typography, colors, copy, routing, and interaction code were intentionally preserved.
-- Replaced the former repetitive imagery with 36 purpose-made raster assets covering port logistics, sample review, paper/disposable products, packaging, sourcing, quality control, warehouse operations, trade documents, and customer coordination.
+## Findings
 
-## Visual truth and evidence
+没有遗留的 P0、P1 或 P2 问题。
 
-- Selected visual reference: `C:\Users\admin\.codex\generated_images\01a05c51-58b4-77f2-818d-8cbd95edc1ad\exec-270dd962-2bb2-426c-8f6c-033907c1e49d.png`
-- Reference dimensions: 859 x 1831 px.
-- Target state: Chinese-language company website, desktop composition, with the existing responsive layout retained.
-- Asset contact sheet: `D:\TEIPEER WEB\work\trade-2026-contact-sheet-small.jpg` (960 x 1410 px).
-- Implementation screenshot: unavailable. The in-app browser could not initialize because the Windows sandbox failed while applying deny-read ACLs.
+- P3，示意图：生成的道路、建筑细节与效果图略有差异，但主要道路、河道、全品轩标记和深蓝大厦的关系一致。地图保留“位置示意，以高德导航为准”说明；精确导航使用用户提供的高德定位链接。该差异可接受。
+- P3，图标和字体：采用项目既有 Phosphor 图标以及 Noto Sans SC / Inter 字体，线条和字体渲染与生成效果图有细微差异。层级、内容与品牌样式一致，无需继续修改。
 
-## Verification performed
+## 比较目标与证据
 
-- All 36 source references resolve to files under `public/assets/trade-2026`.
-- Missing referenced assets: 0.
-- Production build: passed with Vite 7.1.7; 1580 modules transformed; completed in 2.46 seconds.
-- Build log: `D:\TEIPEER WEB\work\codex-logs\image-build-20260902-102850.out.log`.
-- The contact sheet was reviewed for subject variation, palette consistency, obvious anatomy defects, watermark/text artifacts, and repeated-file usage.
+- 视觉依据：`C:\Users\admin\.codex\generated_images\01a0f0b1-61f3-7e02-964e-805d6667f53a\exec-4d62f7da-1dc5-487c-9069-cbf044da95b4.png`。
+- 源图：1122 × 1402 像素。卡片区域位于 x=213、y=88，约 697 × 1256 像素。
+- 实现：`http://127.0.0.1:53070/#/contact`，本地生产构建预览。
+- 桌面视口：1440 × 1100 CSS px，deviceScaleFactor=1；完整页面截图为 1440 × 1698 像素。
+- 实现卡片：410.34375 × 745.8125 CSS px；截图编码尺寸 410 × 745 像素。
+- 归一化：源卡片按 410.34375 / 697 等比例缩放，得到约 410.34 × 739.44 px；实现截图按相同卡片宽度显示。未更改证据图片内容。
+- 状态：中文、浅色主题、默认复制状态、实际项目内容。最终截图使用浏览器的减少动态效果偏好，使页面按自身样式显示稳定状态，避免截取进入动画中间帧。
+- 联合比较证据：`D:\TEIPEER WEB\work\contact-location-qa\comparison.png`，1000 × 1000 像素；同一张截图同时显示源图和实现。
+- 页面上下文：`D:\TEIPEER WEB\work\contact-location-qa\desktop-zh.png`。
+- 原尺寸组件证据：`D:\TEIPEER WEB\work\contact-location-qa\panel-desktop-zh.png`。
+- 手机证据：`D:\TEIPEER WEB\work\contact-location-qa\panel-390-zh.png`，354 × 710 像素；`panel-320-zh.png`，284 × 658 像素；`panel-320-en.png`，284 × 728 像素。
+- 英文与交互状态证据：同目录的 `panel-desktop-en.png`、`copy-failure.png`、`keyboard-focus.png`。
+- 本次是单个联系卡片的实现。联合比较已按实际组件尺寸展示整个卡片，地址、复制操作、地图标签和导航按钮可清晰检查；另行查看原尺寸卡片确认文字与图片质量，不需要额外放大的区域比较。
 
-## Fidelity review
+## 五项必要视觉检查
 
-- Image direction: aligned to the selected documentary trade direction, using navy, white, kraft, steel, and restrained orange accents.
-- Company fit: imagery focuses on Ningbo port logistics, trade coordination, sourcing, sampling, quality checks, packaging, and paper/disposable product categories.
-- Repetition: each content slot now points to a distinct asset; closely related product scenes share a coherent art direction but do not reuse the same file.
-- Full-page source-to-implementation comparison: blocked because a browser-rendered implementation capture is unavailable.
-- Focused component comparison: blocked for the same reason; the asset contact sheet verifies the source imagery only, not final in-page cropping or responsive rendering.
-- Console errors and interaction regressions: not checked because the selected in-app browser could not launch.
+| 检查面 | 结果 |
+| --- | --- |
+| 字体与层级 | 沿用本地 Inter Variable 和 Noto Sans SC Variable。标题 30px/700，地址 16px/400，楼号房间 16px/700，路线按钮 19px/700。地址不截断，中文与英文都能换行，层级与确认稿一致。 |
+| 间距与布局 | 卡片与现有表单并列，调整标题行高、行间留白和复制区域，完整卡片高度与归一化效果图相差约 6px，比例一致。小屏按现有布局排列，320、390、768px 均无横向溢出。 |
+| 颜色与状态 | 沿用品牌深蓝 #133b78、白色文字和浅色分隔线；导航橙色 #ee6810，悬停使用既有深橙色。白色按钮文字与背景对比约 3.17:1，使用 19px 加粗文字。键盘焦点具有 3px 白色轮廓。 |
+| 图片质量与资产 | 使用实际生成的 1448 × 1086 PNG，4:3 比例完整显示，无拉伸、占位或代码绘图替代。道路标签可读，蓝色河道和橙色定位标记符合确认方向。 |
+| 内容 | 完整地址为浙江省宁波市高新区翔云北路199号深蓝大厦7号楼802室。地图及按钮都指向 https://surl.amap.com/anhssUOTcKa；可见文字保留示意说明。英文文本、复制结果、替代文字与链接名称齐全。 |
 
-## Final result
+## 比较历史
 
-`blocked`
+1. 第一轮为 blocked：`work/contact-location-qa/iteration-1/comparison.png`。卡片高度约 806px，标题行高及地址操作附近留白过大，地图位置明显偏低，属于 P2 的布局节奏差异。调整标题行高、内容行间距、地址字重、复制按钮高度和地图间距；卡片收紧至约 745px。首轮截图还处于进入动画中间帧，此项是捕获状态问题；通过浏览器减少动态效果偏好修正，不计作视觉实现修正。
+2. 第二轮为 blocked：`work/contact-location-qa/iteration-2/comparison.png`。布局差异已修正；路线按钮文字缩至 17px 后，可读性与确认稿的醒目操作层级有差距，属于 P2。恢复 19px 加粗文字。
+3. 第三轮为 passed：最终 `work/contact-location-qa/comparison.png`。已重新捕获并在同一联合比较中检查，先前间距和按钮文字问题解决，余下仅为上述可接受的 P3 差异。
 
-The implementation and production build are complete, but Product Design visual QA cannot be marked passed until the rendered pages are captured and compared at matching viewports.
+## 行为与构建验证
+
+- 生产构建通过：Vite 7.1.7，最终构建耗时 2.65s。
+- 构建日志：`D:\TEIPEER WEB\work\codex-logs\contact-location-build-20260930-135550.out.log`；stderr 无构建错误。
+- 浏览器检查：26 项通过；结果保存于 `D:\TEIPEER WEB\work\contact-location-qa\result.json`。
+- 中文和英文完整地址可复制。模拟 Clipboard API 不可用时，选择复制的兼容路径也成功；临时输入框清理并恢复焦点。复制失败时显示人工复制提示，切换语言后清除反馈。
+- 点击路线按钮实际打开独立高德标签页，并解析到用户提供的全品轩 POI。地图图片链接具有相同地址。
+- 320、390、768px 视口无横向溢出，地址适配；手机复制操作和路线按钮具有至少 44px 点击高度；英文 320px 也通过布局检查。
+- 键盘可依次访问复制地址、地图链接、路线按钮，路线焦点轮廓可见。
+- 浏览器应用异常和错误日志为 0，本地请求失败为 0；检查使用 Chrome，未覆盖 Safari 或真实手机设备。
+- 现有咨询表单的禁用提交行为保留。无需地图 JavaScript SDK 或 API Key；未部署线上。
+- 临时检查浏览器已关闭；构建预览保留运行。开发预览加载异常的进程树已关闭，诊断保留在 `work/codex-logs`。
+- 旧的全站图片检查报告保存在 `work/contact-location-qa/design-qa-before.md`。本报告只评估本次联系卡片修改。
+
+## Implementation Checklist
+
+- [x] 放入实际地图资产并写入完整办公地址。
+- [x] 实现地址复制、失败提示及高德链接。
+- [x] 保留既有表单和其他页面行为。
+- [x] 对照确认稿修正 P2 差异并重新捕获。
+- [x] 验证中英文、手机布局、键盘操作及生产构建。
+- [x] 留下本地预览和可复查的视觉证据。
+
+final result: passed
