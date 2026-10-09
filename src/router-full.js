@@ -166,7 +166,7 @@ export const router = createRouter({
     {
       path: '/news/company',
       name: 'insight-company',
-      meta: insightMeta('company', '公司动态｜宁波全品轩国际贸易有限公司', 'Company News | Tripeer', '了解全品轩自2016年以来在消费品国际贸易与出口订单执行中的经验。', 'Explore Tripeer’s experience in consumer-goods trade and export order execution since 2016.'),
+      meta: insightMeta('company', '公司动态｜宁波全品轩国际贸易有限公司', 'Company News | Tripeer', '月满中秋，情暖团队。记录全品轩2026年中秋趣味主题活动，分享团队相聚的温暖时光。', 'A full moon and a close-knit team: highlights from Tripeer’s 2026 Mid-Autumn gathering.'),
     },
     {
       path: '/news/events',

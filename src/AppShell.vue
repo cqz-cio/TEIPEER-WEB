@@ -8,6 +8,7 @@ import AboutExperience from './views/AboutExperience.vue'
 import BusinessExperience from './views/BusinessExperience.vue'
 import CapabilityExperience from './views/CapabilityExperience.vue'
 import InsightsExperience from './views/InsightsExperience.vue'
+import CompanyNewsExperience from './views/CompanyNewsExperience.vue'
 import ContactExperience from './views/ContactExperience.vue'
 import CmsPreviewExperience from './views/CmsPreviewExperience.vue'
 import CmsArticleExperience from './views/CmsArticleExperience.vue'
@@ -77,6 +78,7 @@ onBeforeUnmount(() => motionController?.destroy())
   <LegacyHome v-else-if="isHome" />
   <BusinessExperience v-else-if="isBusiness" />
   <CapabilityExperience v-else-if="isCapability" />
+  <CompanyNewsExperience v-else-if="route.name === 'insight-company'" />
   <InsightsExperience v-else-if="isInsight" />
   <ContactExperience v-else-if="isContact" />
   <AboutExperience v-else />

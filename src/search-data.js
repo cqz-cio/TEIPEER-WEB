@@ -50,9 +50,9 @@ export const siteSearchItems = [
     en: ['Core Capabilities', 'Product matching, order coordination, quality checks and trade execution.', 'capabilities product matching sourcing quality order documents customs'],
   },
   {
-    type: 'section', to: { name: 'home', hash: '#insights' },
-    zh: ['公司动态', '十年订单执行、产品采购与质量检查经验。', '实践 洞察 订单 产品 采购 质量 文章'],
-    en: ['Company News', 'Order execution, product sourcing and quality-check experience.', 'trade practice insights orders sourcing quality articles'],
+    type: 'page', to: { name: 'insight-company' },
+    zh: ['公司动态｜月满中秋，情暖团队', '2026年中秋趣味主题活动圆满举办，回顾猜灯谜、嗑瓜子与套圈游戏的温暖时刻。', '公司动态 新闻 中秋 团建 团队 活动 视频 月满中秋 猜灯谜 嗑瓜子 套圈'],
+    en: ['Company News | Mid-Autumn Together', 'Highlights from our 2026 Mid-Autumn team gathering.', 'company news mid autumn festival team gathering lantern riddles ring toss video'],
   },
   {
     type: 'page', to: { name: 'contact' },
