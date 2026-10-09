@@ -11,6 +11,7 @@ import {
 
 const contactEmail = 'hr@nbtrendz.com'
 const emailHref = 'mailto:' + contactEmail
+const douyinHref = 'https://www.douyin.com/user/MS4wLjABAAAAGPHZ2xRGPN61qemPA3ImuPuxu55--Y_oS5NuPAmyv7BRvN3bBkK7B1fAzVyaS4_P'
 
 const { t, locale } = useI18n()
 const route = useRoute()
@@ -48,7 +49,7 @@ const content = computed(() => {
       contactDetails: ['Location: Ningbo, Zhejiang, China'],
       emailLabel: 'Email',
       socialTitle: 'FOLLOW & CONTACT',
-      douyinPending: 'Douyin account details pending',
+      douyinLabel: 'Visit our Douyin profile (opens in a new tab)',
       rights: '© 2016–2026 Ningbo Tripeer International Trading Co., Ltd.',
       privacy: 'Privacy',
       sitemap: 'Sitemap',
@@ -86,7 +87,7 @@ const content = computed(() => {
     contactDetails: ['所在地：中国·浙江·宁波'],
     emailLabel: '邮箱',
     socialTitle: '关注与联系',
-    douyinPending: '抖音账号待提供',
+    douyinLabel: '访问抖音主页（新标签页打开）',
     rights: '© 2016–2026 宁波全品轩国际贸易有限公司 版权所有',
     privacy: '隐私政策',
     sitemap: '网站地图',
@@ -156,15 +157,16 @@ onBeforeUnmount(() => mobileQuery.removeEventListener('change', syncMobile))
         </ul>
         <div class="global-footer-social-title">{{ content.socialTitle }}</div>
         <div class="global-footer-social" :aria-label="content.socialTitle">
-          <button
+          <a
             class="global-footer-social-button is-douyin"
-            type="button"
-            disabled
-            :title="content.douyinPending"
-            :aria-label="content.douyinPending"
+            :href="douyinHref"
+            target="_blank"
+            rel="noopener noreferrer"
+            :title="content.douyinLabel"
+            :aria-label="content.douyinLabel"
           >
             <TiktokLogo :size="24" weight="fill" aria-hidden="true" />
-          </button>
+          </a>
           <a
             class="global-footer-social-button is-email"
             :href="emailHref"
