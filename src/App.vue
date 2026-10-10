@@ -2,6 +2,7 @@
 import { computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { companyCopy } from './company-copy.js'
+import { midAutumn2026, midAutumnAssets } from './content/mid-autumn-2026.js'
 import SiteHeader from './components/SiteHeader.vue'
 import SiteFooter from './components/SiteFooter.vue'
 import HeroVideo from './components/HeroVideo.vue'
@@ -95,17 +96,15 @@ const businessItems = computed(() => {
 })
 
 const insights = computed(() => {
-  const zh = [
-    { title: '从宁波出发：十年贸易执行中的积累', body: '从询价、样品到单证和出运，回顾全品轩如何在真实订单中逐步完善服务方式。', date: '2026-08-28', image: '/assets/trade-2026/insight-history-ningbo.jpg' },
-    { title: '一次性食品包装产品的采购关注点', body: '从材料、尺寸、包装到使用场景，梳理海外采购中需要前置确认的关键内容。', date: '2026-08-20', image: '/assets/trade-2026/insight-sourcing-material.jpg' },
-    { title: '从样品到出货：五个质量确认节点', body: '把产品要求落实到样品、物料、生产、包装和出货检查，降低订单执行偏差。', date: '2026-08-12', image: '/assets/trade-2026/insight-quality-check.jpg' },
-  ]
-  const en = [
-    { title: 'From Ningbo: A Decade of Trade Execution', body: 'How real orders have shaped our approach to quotation, sampling, documentation and export delivery.', date: '2026-08-28', image: '/assets/trade-2026/insight-history-ningbo.jpg' },
-    { title: 'Sourcing Disposable Food Packaging', body: 'Key questions around materials, dimensions, packaging and applications before an order begins.', date: '2026-08-20', image: '/assets/trade-2026/insight-sourcing-material.jpg' },
-    { title: 'From Sample to Shipment: Five Quality Checkpoints', body: 'Connecting samples, materials, production, packaging and final checks to reduce execution variance.', date: '2026-08-12', image: '/assets/trade-2026/insight-quality-check.jpg' },
-  ]
-  return locale.value === 'zh' ? zh : en
+  const article = midAutumn2026[locale.value === 'zh' ? 'zh' : 'en']
+  return [{
+    title: `${article.title}${locale.value === 'zh' ? '｜' : ': '}${article.subtitle}`,
+    body: article.summary,
+    // The website publication date, rather than the date of the activity.
+    date: '2026-10-09',
+    image: midAutumnAssets.cover,
+    routeName: 'insight-company',
+  }]
 })
 
 watch(
@@ -207,8 +206,8 @@ watch(
           <RouterLink class="text-link" :to="{ name: 'insight-company' }">{{ t('insights.more') }} <ArrowRight :size="18" /></RouterLink>
         </div>
         <div class="insights-grid">
-          <RouterLink v-for="(item, index) in insights" :key="item.title" class="insight-card" :to="{ name: index === 0 ? 'insight-company' : 'insight-industry' }">
-            <img :src="item.image" :alt="item.title" loading="lazy" decoding="async" fetchpriority="low" />
+          <RouterLink v-for="item in insights" :key="item.routeName" class="insight-card" :to="{ name: item.routeName }">
+            <img :src="item.image" :alt="item.title" width="2048" height="1152" loading="lazy" decoding="async" fetchpriority="low" />
             <div class="insight-body">
               <h3>{{ item.title }}</h3>
               <p>{{ item.body }}</p>

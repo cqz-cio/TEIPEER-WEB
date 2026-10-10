@@ -1,4 +1,5 @@
 export const midAutumnAssets = {
+  cover: '/assets/news/mid-autumn-2026/cover-landscape.jpg',
   video: '/assets/news/mid-autumn-2026/activity-720.mp4',
   videoPoster: '/assets/news/mid-autumn-2026/video-poster.jpg',
   festivalPoster: '/assets/news/mid-autumn-2026/festival-poster.png',
